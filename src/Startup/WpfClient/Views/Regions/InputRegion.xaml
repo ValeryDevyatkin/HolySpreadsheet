@@ -4,7 +4,33 @@
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels = "clr-namespace:ViewModels.ViewModels;assembly=ViewModels"
-             mc:Ignorable = "d"
-             d:DataContext = "{viewModels:MainViewModel}">
-    <Grid />
+             xmlns:theme = "clr-namespace:WpfClient.Theme"
+             mc:Ignorable = "d">
+
+    <d:Control.DataContext>
+        <viewModels:MainViewModel />
+    </d:Control.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+            <RowDefinition Height = "*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row = "0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "*" />
+                <ColumnDefinition Width = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+                <ColumnDefinition Width = "Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column = "0"
+                    Content = "Copy From Clipboard" />
+            <Button Grid.Column = "2"
+                    Content = "Download From File" />
+        </Grid>
+
+        <RichTextBox Grid.Row = "2" />
+    </Grid>
+
 </UserControl>

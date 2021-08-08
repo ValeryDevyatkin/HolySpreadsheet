@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\tools\src\BAJIEPA.Senticode.Wpf\BAJIEPA.Senticode.Wpf.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
 </Project>

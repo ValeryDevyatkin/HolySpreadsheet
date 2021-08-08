@@ -4,7 +4,8 @@
                       xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:base = "clr-namespace:BAJIEPA.Senticode.Wpf.Base;assembly=BAJIEPA.Senticode.Wpf"
                       xmlns:viewModels = "clr-namespace:ViewModels.ViewModels;assembly=ViewModels"
-                      xmlns:views = "clr-namespace:WpfClient.Views">
+                      xmlns:views = "clr-namespace:WpfClient.Views"
+                      x:ClassModifier = "internal">
 
     <Application.Resources>
         <ResourceDictionary>

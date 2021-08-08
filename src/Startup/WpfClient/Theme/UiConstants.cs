@@ -6,9 +6,9 @@ namespace WpfClient.Theme
     {
         #region Spacing
 
-        public const double TextSpacing = 5d;
-        public const double InnerSpacing = 15d;
-        public const double OuterSpacing = 30d;
+        public const double TextSpacing = 2d;
+        public const double InnerSpacing = 5d;
+        public const double OuterSpacing = 10d;
 
         public static readonly GridLength TextSpacingGridLength = new GridLength(TextSpacing);
         public static readonly GridLength InnerSpacingGridLength = new GridLength(InnerSpacing);

@@ -6,8 +6,11 @@
              xmlns:viewModels = "clr-namespace:ViewModels.ViewModels;assembly=ViewModels"
              xmlns:theme = "clr-namespace:WpfClient.Theme"
              xmlns:regions = "clr-namespace:WpfClient.Views.Regions"
-             mc:Ignorable = "d"
-             d:DataContext = "{viewModels:MainViewModel}">
+             mc:Ignorable = "d">
+
+    <d:Control.DataContext>
+        <viewModels:MainViewModel />
+    </d:Control.DataContext>
 
     <Grid>
         <Grid.ColumnDefinitions>

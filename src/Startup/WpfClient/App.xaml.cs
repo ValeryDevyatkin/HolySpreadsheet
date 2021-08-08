@@ -7,7 +7,7 @@ using ViewModels;
 
 namespace WpfClient
 {
-    public partial class App
+    internal partial class App
     {
         public App() : base(ServiceLocator.Container)
         {

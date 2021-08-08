@@ -1,8 +1,8 @@
 ﻿namespace WpfClient.Views
 {
-    public partial class ContentView
+    public partial class MainRegion
     {
-        public ContentView()
+        public MainRegion()
         {
             InitializeComponent();
         }

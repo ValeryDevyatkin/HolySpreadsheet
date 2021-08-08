@@ -6,4 +6,13 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Unity.Container" Version="5.11.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\Services.csproj" />
+    <ProjectReference Include="..\..\ViewModels\ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>

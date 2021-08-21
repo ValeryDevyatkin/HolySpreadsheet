@@ -16,14 +16,70 @@
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto" />
             <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
             <RowDefinition Height = "*" />
+            <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+            <RowDefinition Height = "Auto" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row = "0">
-            <controls:EnumRadioGroup GroupValue = "{Binding OutputDelimiter, Mode=OneWay}" />
+        <controls:ParserConfigurationControl Grid.Row = "0"
+                                             DataContext = "{Binding OutputParserConfiguration, Mode=OneTime}" />
+
+        <GroupBox Grid.Row = "2"
+                  Header = "Text Style:">
+            <controls:EnumRadioGroup GroupValue = "{Binding OutputTextCase, Mode=TwoWay}" />
+        </GroupBox>
+
+        <Grid Grid.Row = "4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "*" />
+                <ColumnDefinition Width = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+                <ColumnDefinition Width = "*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row = "0"
+                    Content = "Process" />
+
+            <Button Grid.Column = "2"
+                    Content = "To SQL" />
         </Grid>
 
-        <RichTextBox Grid.Row = "2" />
+        <RichTextBox Grid.Row = "6" />
+
+        <Grid Grid.Row = "8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "*" />
+                <ColumnDefinition Width = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+                <ColumnDefinition Width = "*" />
+                <ColumnDefinition Width = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+                <ColumnDefinition Width = "*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column = "0"
+                    Content = "To Clipboard" />
+
+            <Button Grid.Column = "2"
+                    Content = "To File" />
+
+            <ToggleButton Grid.Column = "4">
+                <ToggleButton.Style>
+                    <Style TargetType = "ToggleButton">
+                        <Setter Property = "Content"
+                                Value = "Edit" />
+                        <Style.Triggers>
+                            <Trigger Property = "IsChecked"
+                                     Value = "True">
+                                <Setter Property = "Content"
+                                        Value = "Lock" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+            </ToggleButton>
+        </Grid>
     </Grid>
 
 </UserControl>

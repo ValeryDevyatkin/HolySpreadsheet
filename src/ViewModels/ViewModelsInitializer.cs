@@ -1,4 +1,5 @@
 ﻿using Unity;
+using ViewModels.ViewModels;
 
 namespace ViewModels
 {
@@ -6,6 +7,9 @@ namespace ViewModels
     {
         public static void Init(IUnityContainer container)
         {
+            container
+               .RegisterType<ParserConfigurationViewModel>()
+                ;
         }
     }
 }

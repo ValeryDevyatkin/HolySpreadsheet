@@ -13,24 +13,24 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height = "Auto" />
-            <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
             <RowDefinition Height = "*" />
+            <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+            <RowDefinition Height = "Auto" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row = "0">
+        <RichTextBox Grid.Row = "0" />
+
+        <Grid Grid.Row = "2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width = "*" />
                 <ColumnDefinition Width = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
-                <ColumnDefinition Width = "Auto" />
+                <ColumnDefinition Width = "*" />
             </Grid.ColumnDefinitions>
             <Button Grid.Column = "0"
-                    Content = "Copy From Clipboard" />
+                    Content = "From Clipboard" />
             <Button Grid.Column = "2"
-                    Content = "Download From File" />
+                    Content = "From File" />
         </Grid>
-
-        <RichTextBox Grid.Row = "2" />
     </Grid>
 
 </UserControl>

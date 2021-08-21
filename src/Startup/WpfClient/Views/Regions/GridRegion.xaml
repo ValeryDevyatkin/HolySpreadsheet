@@ -16,14 +16,18 @@
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto" />
             <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
             <RowDefinition Height = "*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row = "0">
-            <controls:EnumRadioGroup GroupValue = "{Binding InputDelimiter, Mode=OneWay}" />
-        </Grid>
+        <controls:ParserConfigurationControl Grid.Row = "0"
+                                             DataContext = "{Binding InputParserConfiguration, Mode=OneTime}" />
 
-        <DataGrid Grid.Row = "2" />
+        <Button Grid.Row = "2"
+                Content = "Process" />
+
+        <DataGrid Grid.Row = "4" />
     </Grid>
 
 </UserControl>

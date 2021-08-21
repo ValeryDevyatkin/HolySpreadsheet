@@ -4,21 +4,28 @@
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls = "clr-namespace:WpfClient.Views.Controls"
+             xmlns:theme = "clr-namespace:WpfClient.Theme"
              mc:Ignorable = "d"
              x:Name = "Root">
 
-    <ItemsControl x:Name = "ItemsControl">
+    <ItemsControl x:Name = "ItemsControl"
+                  Margin = "{x:Static theme:UiConstants.InnerSpacingLeftThickness}">
+
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
                 <WrapPanel Orientation = "Horizontal" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
+
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <controls:EnumRadioButton GroupValue = "{Binding ElementName=Root, Path=GroupValue, Mode=OneWay}"
-                                          CurrentValue = "{Binding Mode=OneTime}" />
+                <controls:EnumRadioButton GroupValue = "{Binding ElementName=Root, Path=GroupValue, Mode=TwoWay}"
+                                          CurrentValue = "{Binding Mode=OneTime}"
+                                          Margin = "{x:Static theme:UiConstants.InnerSpacingRightThickness}"
+                                          GroupName = "{Binding ElementName=Root, Path=GroupName, Mode=OneTime}" />
             </DataTemplate>
         </ItemsControl.ItemTemplate>
+
     </ItemsControl>
 
 </UserControl>

@@ -18,6 +18,9 @@ namespace WpfClient.Theme
         public static readonly Thickness InnerSpacingThickness = new Thickness(InnerSpacing);
         public static readonly Thickness OuterSpacingThickness = new Thickness(OuterSpacing);
 
+        public static readonly Thickness InnerSpacingRightThickness = new Thickness(0d, 0d, InnerSpacing, 0d);
+        public static readonly Thickness InnerSpacingLeftThickness = new Thickness(InnerSpacing, 0d, 0d, 0d);
+
         #endregion
     }
 }

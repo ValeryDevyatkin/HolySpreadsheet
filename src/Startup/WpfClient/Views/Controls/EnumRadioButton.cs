@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using Common.Helpers;
 
 namespace WpfClient.Views.Controls
 {
@@ -11,45 +12,53 @@ namespace WpfClient.Views.Controls
             Loaded += OnLoaded;
         }
 
+        private void OnChecked(object sender, RoutedEventArgs e)
+        {
+            GroupValue = CurrentValue;
+        }
+
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (CurrentValue != null && GroupValue != null)
+            if (CurrentValue is Enum currentEnumValue && GroupValue is Enum)
             {
-                GroupName = CurrentValue.GetType().Name;
-                Content = CurrentValue.ToString();
+                var enumDisplayInfo = currentEnumValue.GetDisplayInfo();
+                Content = enumDisplayInfo.Name;
+                ToolTip = enumDisplayInfo.Description;
 
                 if (Equals(CurrentValue, GroupValue))
                 {
                     IsChecked = true;
                 }
+
+                Checked += OnChecked;
             }
         }
 
-        #region CurrentValue dependency: Enum
+        #region CurrentValue dependency: object
 
         public static readonly DependencyProperty CurrentValueProperty =
             DependencyProperty.Register(
                 nameof(CurrentValue),
-                typeof(Enum),
+                typeof(object),
                 typeof(EnumRadioButton),
-                new PropertyMetadata(default(Enum)));
+                new PropertyMetadata(default(object)));
 
-        public Enum CurrentValue
+        public object CurrentValue
         {
-            get => (Enum) GetValue(CurrentValueProperty);
+            get => GetValue(CurrentValueProperty);
             set => SetValue(CurrentValueProperty, value);
         }
 
         #endregion
 
-        #region GroupValue dependency: Enum
+        #region GroupValue dependency: object
 
         public static readonly DependencyProperty GroupValueProperty =
             DependencyProperty.Register(
                 nameof(GroupValue),
-                typeof(Enum),
+                typeof(object),
                 typeof(EnumRadioButton),
-                new PropertyMetadata(default(Enum), GroupValuePropertyChangedCallback));
+                new PropertyMetadata(default, GroupValuePropertyChangedCallback));
 
         private static void GroupValuePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -62,9 +71,9 @@ namespace WpfClient.Views.Controls
             }
         }
 
-        public Enum GroupValue
+        public object GroupValue
         {
-            get => (Enum) GetValue(GroupValueProperty);
+            get => GetValue(GroupValueProperty);
             set => SetValue(GroupValueProperty, value);
         }
 

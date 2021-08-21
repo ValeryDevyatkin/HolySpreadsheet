@@ -10,7 +10,7 @@
         Title = "Spreadsheet Tool"
         WindowStartupLocation = "CenterScreen"
         WindowState = "Maximized"
-        ResizeMode = "CanMinimize">
+        ResizeMode = "CanResize">
 
     <d:Control.DataContext>
         <viewModels:MainViewModel />

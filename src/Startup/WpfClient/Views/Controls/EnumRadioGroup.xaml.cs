@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
 namespace WpfClient.Views.Controls
 {
@@ -8,9 +7,12 @@ namespace WpfClient.Views.Controls
         public EnumRadioGroup()
         {
             InitializeComponent();
+            GroupName = GetHashCode().ToString();
 
             Loaded += OnLoaded;
         }
+
+        public string GroupName { get; }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -20,18 +22,18 @@ namespace WpfClient.Views.Controls
             }
         }
 
-        #region GroupValue dependency: Enum
+        #region GroupValue dependency: object
 
         public static readonly DependencyProperty GroupValueProperty =
             DependencyProperty.Register(
                 nameof(GroupValue),
-                typeof(Enum),
+                typeof(object),
                 typeof(EnumRadioGroup),
-                new PropertyMetadata(default(Enum)));
+                new PropertyMetadata(default(object)));
 
-        public Enum GroupValue
+        public object GroupValue
         {
-            get => (Enum) GetValue(GroupValueProperty);
+            get => GetValue(GroupValueProperty);
             set => SetValue(GroupValueProperty, value);
         }
 

@@ -5,7 +5,8 @@
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels = "clr-namespace:ViewModels.ViewModels;assembly=ViewModels"
              xmlns:theme = "clr-namespace:WpfClient.Theme"
-             mc:Ignorable = "d">
+             mc:Ignorable = "d"
+             x:ClassModifier = "internal">
 
     <d:Control.DataContext>
         <viewModels:MainViewModel />
@@ -13,23 +14,66 @@
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
             <RowDefinition Height = "*" />
-            <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
             <RowDefinition Height = "Auto" />
         </Grid.RowDefinitions>
 
-        <RichTextBox Grid.Row = "0" />
+        <TextBlock Grid.Row = "0"
+                   Style = "{StaticResource HeaderTextBlockStyle}"
+                   Text = "Input Data" />
 
-        <Grid Grid.Row = "2">
+        <TextBox Grid.Row = "2"
+                 Text = "{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.Style>
+                <Style TargetType = "TextBox"
+                       BasedOn = "{StaticResource {x:Type TextBox}}">
+                    <Setter Property = "IsEnabled"
+                            Value = "False" />
+                    <Style.Triggers>
+                        <DataTrigger Binding = "{Binding ElementName=LockButton, Path=IsChecked, Mode=OneWay}"
+                                     Value = "True">
+                            <Setter Property = "IsEnabled"
+                                    Value = "True" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <Grid Grid.Row = "4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width = "*" />
-                <ColumnDefinition Width = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+                <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
+                <ColumnDefinition Width = "*" />
+                <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
                 <ColumnDefinition Width = "*" />
             </Grid.ColumnDefinitions>
+
             <Button Grid.Column = "0"
                     Content = "From Clipboard" />
+
             <Button Grid.Column = "2"
                     Content = "From File" />
+
+            <ToggleButton Grid.Column = "4"
+                          x:Name = "LockButton">
+                <ToggleButton.Style>
+                    <Style TargetType = "ToggleButton">
+                        <Setter Property = "Content"
+                                Value = "Edit" />
+                        <Style.Triggers>
+                            <Trigger Property = "IsChecked"
+                                     Value = "True">
+                                <Setter Property = "Content"
+                                        Value = "Lock" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+            </ToggleButton>
         </Grid>
     </Grid>
 

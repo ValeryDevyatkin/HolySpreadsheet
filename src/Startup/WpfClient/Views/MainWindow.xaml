@@ -10,13 +10,14 @@
         Title = "Spreadsheet Tool"
         WindowStartupLocation = "CenterScreen"
         WindowState = "Maximized"
-        ResizeMode = "CanResize">
+        ResizeMode = "CanResize"
+        x:ClassModifier = "internal">
 
     <d:Control.DataContext>
         <viewModels:MainViewModel />
     </d:Control.DataContext>
 
-    <Grid Margin = "{x:Static theme:UiConstants.OuterSpacingThickness}">
+    <Grid Margin = "{x:Static theme:UiSizes.OuterSpacingThickness}">
         <views:MainRegion />
     </Grid>
 

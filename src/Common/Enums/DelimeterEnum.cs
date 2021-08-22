@@ -4,7 +4,7 @@ namespace Common.Enums
 {
     public enum DelimiterEnum : byte
     {
-        [Display(Name = "Whitespace", Description = "xxx xxx xxx          xxx")]
+        [Display(Name = "Whitespace", Description = "xxx xxx xxx  ...  xxx")]
         Whitespace,
 
         [Display(Name = "Tab", Description = "xxx   xxx   xxx   xxx")]
@@ -16,7 +16,7 @@ namespace Common.Enums
         [Display(Name = "Semicolon", Description = "xxx; xxx; xxx; xxx")]
         Semicolon,
 
-        [Display(Name = "Custom", Description = "Specify delimiter via text box")]
+        [Display(Name = "Custom", Description = "Specify delimiter via text box.")]
         Custom
     }
 }

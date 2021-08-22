@@ -1,6 +1,6 @@
 ﻿namespace WpfClient.Views
 {
-    public partial class MainRegion
+    internal partial class MainRegion
     {
         public MainRegion()
         {

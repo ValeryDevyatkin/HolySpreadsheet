@@ -1,12 +1,38 @@
 ﻿<ResourceDictionary xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system = "clr-namespace:System;assembly=System.Runtime">
+                    xmlns:system = "clr-namespace:System;assembly=System.Runtime"
+                    xmlns:theme = "clr-namespace:WpfClient.Theme">
 
-    <system:Double x:Key = "BigFontSize">20</system:Double>
+    <system:Double x:Key = "HeaderFontSize">14</system:Double>
+    <system:Double x:Key = "TooltipFontSize">20</system:Double>
 
     <Style TargetType = "ToolTip">
         <Setter Property = "FontSize"
-                Value = "{StaticResource BigFontSize}" />
+                Value = "{StaticResource TooltipFontSize}" />
+    </Style>
+
+    <Style TargetType = "GroupBox">
+        <Setter Property = "Padding">
+            <Setter.Value>
+                <Thickness Left = "0"
+                           Right = "0"
+                           Bottom = "0"
+                           Top = "{x:Static theme:UiSizes.TextSpacing}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType = "TextBlock"
+           x:Key = "HeaderTextBlockStyle">
+        <Setter Property = "FontWeight"
+                Value = "Bold" />
+        <Setter Property = "FontSize"
+                Value = "{StaticResource HeaderFontSize}" />
+    </Style>
+
+    <Style TargetType = "TextBox">
+        <Setter Property = "Padding"
+                Value = "{x:Static theme:UiSizes.TextSpacingThickness}" />
     </Style>
 
 </ResourceDictionary>

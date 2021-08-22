@@ -8,7 +8,6 @@ namespace WpfClient.Views.Controls
         {
             InitializeComponent();
             GroupName = GetHashCode().ToString();
-
             Loaded += OnLoaded;
         }
 

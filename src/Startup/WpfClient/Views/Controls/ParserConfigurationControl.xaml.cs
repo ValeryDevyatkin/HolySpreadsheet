@@ -1,6 +1,6 @@
 ﻿namespace WpfClient.Views.Controls
 {
-    public partial class ParserConfigurationControl
+    internal partial class ParserConfigurationControl
     {
         public ParserConfigurationControl()
         {

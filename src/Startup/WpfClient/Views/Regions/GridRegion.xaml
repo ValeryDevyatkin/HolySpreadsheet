@@ -6,28 +6,60 @@
              xmlns:viewModels = "clr-namespace:ViewModels.ViewModels;assembly=ViewModels"
              xmlns:theme = "clr-namespace:WpfClient.Theme"
              xmlns:controls = "clr-namespace:WpfClient.Views.Controls"
-             mc:Ignorable = "d">
+             xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
+             mc:Ignorable = "d"
+             x:ClassModifier = "internal">
 
     <d:Control.DataContext>
         <viewModels:MainViewModel />
     </d:Control.DataContext>
 
+    <Control.Resources>
+        <CollectionViewSource x:Key = "GridDataView"
+                              Source = "{Binding GridData, Mode=OneTime}" />
+    </Control.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto" />
-            <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
             <RowDefinition Height = "Auto" />
-            <RowDefinition Height = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
             <RowDefinition Height = "*" />
         </Grid.RowDefinitions>
 
-        <controls:ParserConfigurationControl Grid.Row = "0"
+        <TextBlock Grid.Row = "0"
+                   Style = "{StaticResource HeaderTextBlockStyle}"
+                   Text = "Transitional Data" />
+
+        <controls:ParserConfigurationControl Grid.Row = "2"
                                              DataContext = "{Binding InputParserConfiguration, Mode=OneTime}" />
 
-        <Button Grid.Row = "2"
-                Content = "Process" />
+        <Button Grid.Row = "4"
+                Content = "Process">
 
-        <DataGrid Grid.Row = "4" />
+            <Button.Style>
+                <Style TargetType = "Button">
+                    <Style.Triggers>
+                        <DataTrigger
+                            Binding = "{Binding InputText, Mode=OneWay, Converter={converters:EmptyOrWhitespaceStringToBool}}"
+                            Value = "False">
+                            <Setter Property = "IsEnabled"
+                                    Value = "False" />
+                            <Setter Property = "ToolTip"
+                                    Value = "Input data should not be empty." />
+                            <Setter Property = "ToolTipService.ShowOnDisabled"
+                                    Value = "True" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <DataGrid Grid.Row = "6"
+                  ItemsSource = "{Binding Source={StaticResource GridDataView}}" />
     </Grid>
 
 </UserControl>

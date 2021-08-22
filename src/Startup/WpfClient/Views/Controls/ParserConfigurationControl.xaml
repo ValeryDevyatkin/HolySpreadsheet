@@ -7,7 +7,8 @@
              xmlns:viewModels = "clr-namespace:ViewModels.ViewModels;assembly=ViewModels"
              xmlns:theme = "clr-namespace:WpfClient.Theme"
              xmlns:enums = "clr-namespace:Common.Enums;assembly=Common"
-             mc:Ignorable = "d">
+             mc:Ignorable = "d"
+             x:ClassModifier = "internal">
 
     <d:Control.DataContext>
         <viewModels:ParserConfigurationViewModel />
@@ -21,7 +22,8 @@
 
         <GroupBox Header = "Custom Delimiter:">
             <GroupBox.Style>
-                <Style TargetType = "GroupBox">
+                <Style TargetType = "GroupBox"
+                       BasedOn = "{StaticResource {x:Type GroupBox}}">
                     <Setter Property = "Visibility"
                             Value = "Collapsed" />
                     <Style.Triggers>
@@ -40,7 +42,7 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width = "*" />
-                    <ColumnDefinition Width = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+                    <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
                     <ColumnDefinition Width = "*" />
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Column = "0"
@@ -54,7 +56,7 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width = "*" />
-                    <ColumnDefinition Width = "{x:Static theme:UiConstants.InnerSpacingGridLength}" />
+                    <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
                     <ColumnDefinition Width = "*" />
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Column = "0"

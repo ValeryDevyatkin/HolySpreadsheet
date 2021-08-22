@@ -1,6 +1,6 @@
 ﻿namespace WpfClient.Views.Regions
 {
-    public partial class InputRegion
+    internal partial class InputRegion
     {
         public InputRegion()
         {

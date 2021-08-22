@@ -9,7 +9,7 @@
              x:Name = "Root">
 
     <ItemsControl x:Name = "ItemsControl"
-                  Margin = "{x:Static theme:UiConstants.InnerSpacingLeftThickness}">
+                  Margin = "{x:Static theme:UiSizes.InnerSpacingLeftThickness}">
 
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
@@ -21,7 +21,7 @@
             <DataTemplate>
                 <controls:EnumRadioButton GroupValue = "{Binding ElementName=Root, Path=GroupValue, Mode=TwoWay}"
                                           CurrentValue = "{Binding Mode=OneTime}"
-                                          Margin = "{x:Static theme:UiConstants.InnerSpacingRightThickness}"
+                                          Margin = "{x:Static theme:UiSizes.InnerSpacingRightThickness}"
                                           GroupName = "{Binding ElementName=Root, Path=GroupName, Mode=OneTime}" />
             </DataTemplate>
         </ItemsControl.ItemTemplate>

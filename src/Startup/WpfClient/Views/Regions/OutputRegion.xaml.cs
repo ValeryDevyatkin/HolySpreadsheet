@@ -1,6 +1,6 @@
 ﻿namespace WpfClient.Views.Regions
 {
-    public partial class OutputRegion
+    internal partial class OutputRegion
     {
         public OutputRegion()
         {

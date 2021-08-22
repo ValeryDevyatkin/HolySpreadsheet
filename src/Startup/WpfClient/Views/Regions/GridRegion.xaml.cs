@@ -1,6 +1,6 @@
 ﻿namespace WpfClient.Views.Regions
 {
-    public partial class GridRegion
+    internal partial class GridRegion
     {
         public GridRegion()
         {

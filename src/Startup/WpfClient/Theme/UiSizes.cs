@@ -2,7 +2,7 @@
 
 namespace WpfClient.Theme
 {
-    internal static class UiConstants
+    internal static class UiSizes
     {
         #region Spacing
 
@@ -10,7 +10,6 @@ namespace WpfClient.Theme
         public const double InnerSpacing = 5d;
         public const double OuterSpacing = 10d;
 
-        public static readonly GridLength TextSpacingGridLength = new GridLength(TextSpacing);
         public static readonly GridLength InnerSpacingGridLength = new GridLength(InnerSpacing);
         public static readonly GridLength OuterSpacingGridLength = new GridLength(OuterSpacing);
 

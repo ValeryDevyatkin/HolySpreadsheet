@@ -3,10 +3,10 @@
              xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:viewModels = "clr-namespace:ViewModels.ViewModels;assembly=ViewModels"
              xmlns:theme = "clr-namespace:WpfClient.Theme"
              xmlns:controls = "clr-namespace:WpfClient.Views.Controls"
              xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
+             xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
              mc:Ignorable = "d"
              x:ClassModifier = "internal">
 
@@ -76,13 +76,13 @@
             <TextBox.Style>
                 <Style TargetType = "TextBox"
                        BasedOn = "{StaticResource {x:Type TextBox}}">
-                    <Setter Property = "IsEnabled"
-                            Value = "False" />
+                    <Setter Property = "IsReadOnly"
+                            Value = "True" />
                     <Style.Triggers>
                         <DataTrigger Binding = "{Binding ElementName=LockButton, Path=IsChecked, Mode=OneWay}"
                                      Value = "True">
-                            <Setter Property = "IsEnabled"
-                                    Value = "True" />
+                            <Setter Property = "IsReadOnly"
+                                    Value = "False" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -114,6 +114,8 @@
                 <ColumnDefinition Width = "*" />
                 <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
                 <ColumnDefinition Width = "*" />
+                <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
+                <ColumnDefinition Width = "*" />
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column = "0"
@@ -138,6 +140,10 @@
                     </Style>
                 </ToggleButton.Style>
             </ToggleButton>
+
+            <Button Grid.Column = "6"
+                    Content = "Clear"
+                    Command = "{Binding ClearOutputCommand, Mode=OneTime}" />
         </Grid>
     </Grid>
 

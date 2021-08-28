@@ -1,4 +1,6 @@
-﻿using Unity;
+﻿using Common.Interfaces;
+using Services.Services;
+using Unity;
 
 namespace Services
 {
@@ -6,6 +8,9 @@ namespace Services
     {
         public static void Init(IUnityContainer container)
         {
+            container
+               .RegisterType<ISpreadsheetParser, SpreadsheetParser>()
+                ;
         }
     }
 }

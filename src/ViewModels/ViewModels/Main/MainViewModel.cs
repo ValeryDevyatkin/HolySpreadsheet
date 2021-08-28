@@ -1,7 +1,7 @@
 ﻿using BAJIEPA.Senticode.Wpf.Base;
 using Unity;
 
-namespace ViewModels.ViewModels
+namespace ViewModels
 {
     public partial class MainViewModel : ViewModelBase
     {

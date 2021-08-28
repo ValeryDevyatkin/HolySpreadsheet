@@ -1,15 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using Common.Items;
 
 namespace Common.Helpers
 {
-    public class EnumDisplayInfo
-    {
-        public string Name { get; internal set; }
-        public string Description { get; internal set; }
-    }
-
     public static class EnumHelper
     {
         public static EnumDisplayInfo GetDisplayInfo<TEnum>(this TEnum item)

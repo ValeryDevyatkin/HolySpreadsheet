@@ -13,9 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{5913D9D5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BAJIEPA.Senticode.Wpf", "..\..\tools\src\BAJIEPA.Senticode.Wpf\BAJIEPA.Senticode.Wpf.csproj", "{8378D77A-0820-4FFE-8B2C-863C5422C8A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModels", "..\..\src\ViewModels\ViewModels.csproj", "{806D3D7F-F346-4A83-BDFD-00FEEE10CD93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModels", "..\..\src\ViewModels\ViewModels.csproj", "{806D3D7F-F346-4A83-BDFD-00FEEE10CD93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\..\src\Common\Common.csproj", "{A6E2AAE7-3729-4F7D-A142-56F9A3511F52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\..\src\Common\Common.csproj", "{A6E2AAE7-3729-4F7D-A142-56F9A3511F52}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BAJIEPA.Tools.Common", "..\..\tools\src\BAJIEPA.Tools.Common\BAJIEPA.Tools.Common.csproj", "{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{A6E2AAE7-3729-4F7D-A142-56F9A3511F52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6E2AAE7-3729-4F7D-A142-56F9A3511F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6E2AAE7-3729-4F7D-A142-56F9A3511F52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E6F2C13B-E5D6-4D2B-99B4-F03769E820EA} = {1FA9BAA9-DB01-4B08-81EE-A55A35708126}
 		{8378D77A-0820-4FFE-8B2C-863C5422C8A5} = {5913D9D5-C6F2-412D-96D0-10D0240F7181}
+		{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C} = {5913D9D5-C6F2-412D-96D0-10D0240F7181}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0FA01F2F-68E0-4C49-BD90-923BB72BC1EF}

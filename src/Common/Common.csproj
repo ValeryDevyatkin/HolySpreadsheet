@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\tools\src\BAJIEPA.Tools.Common\BAJIEPA.Tools.Common.csproj" />
+  </ItemGroup>
+
 </Project>

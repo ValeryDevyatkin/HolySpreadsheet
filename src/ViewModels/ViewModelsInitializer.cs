@@ -1,5 +1,4 @@
 ﻿using Unity;
-using ViewModels.ViewModels;
 
 namespace ViewModels
 {

@@ -2,8 +2,11 @@
 using System.Windows;
 using BAJIEPA.Senticode.Wpf;
 using BAJIEPA.Senticode.Wpf.Helpers;
+using Common.Interfaces;
 using Services;
+using Unity;
 using ViewModels;
+using WpfClient.Services;
 
 namespace WpfClient
 {
@@ -38,16 +41,10 @@ namespace WpfClient
             ServicesInitializer.Init(Container);
             ViewModelsInitializer.Init(Container);
 
-            //Container 
-
-            // Regions.
-
-            // Backgrounds.
-
-            // Dialogs.
-
-            //
-            //;
+            // Services.
+            Container
+               .RegisterType<IFileDialogService, FileDialogService>()
+                ;
         }
 
         protected override void OnExit(ExitEventArgs args)

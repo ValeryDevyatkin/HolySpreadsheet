@@ -1,7 +1,9 @@
-﻿using Common.Enums;
+﻿using System.Windows.Input;
+using BAJIEPA.Senticode.Wpf.Base;
+using Common.Enums;
 using Unity;
 
-namespace ViewModels.ViewModels
+namespace ViewModels
 {
     public partial class MainViewModel
     {
@@ -29,6 +31,20 @@ namespace ViewModels.ViewModels
         }
 
         private string _outputText;
+
+        #endregion
+
+        #region ClearOutput command
+
+        public ICommand ClearOutputCommand => _clearOutputCommand ??=
+                                                  new Command(ExecuteClearOutput);
+
+        private Command _clearOutputCommand;
+
+        private void ExecuteClearOutput(object parameter)
+        {
+            OutputText = null;
+        }
 
         #endregion
     }

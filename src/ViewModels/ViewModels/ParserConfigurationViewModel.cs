@@ -2,7 +2,7 @@
 using Common.Enums;
 using Unity;
 
-namespace ViewModels.ViewModels
+namespace ViewModels
 {
     public class ParserConfigurationViewModel : ViewModelBase
     {

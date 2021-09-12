@@ -3,6 +3,8 @@
                     xmlns:system = "clr-namespace:System;assembly=System.Runtime"
                     xmlns:theme = "clr-namespace:WpfClient.Theme">
 
+    <Brush x:Key = "GridSplitterBrush">Gray</Brush>
+
     <system:Double x:Key = "HeaderFontSize">14</system:Double>
     <system:Double x:Key = "TooltipFontSize">20</system:Double>
 
@@ -33,6 +35,23 @@
     <Style TargetType = "TextBox">
         <Setter Property = "Padding"
                 Value = "{x:Static theme:UiSizes.TextSpacingThickness}" />
+    </Style>
+
+    <Style TargetType = "GridSplitter">
+        <Setter Property = "Width"
+                Value = "2" />
+        <Setter Property = "Background"
+                Value = "{StaticResource GridSplitterBrush}" />
+        <Setter Property = "HorizontalAlignment"
+                Value = "Center" />
+        <Setter Property = "Margin">
+            <Setter.Value>
+                <Thickness Left = "0"
+                           Right = "0"
+                           Top = "{x:Static theme:UiSizes.InnerSpacing}"
+                           Bottom = "{x:Static theme:UiSizes.InnerSpacing}" />
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

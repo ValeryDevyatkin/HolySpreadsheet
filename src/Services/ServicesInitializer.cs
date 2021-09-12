@@ -9,7 +9,7 @@ namespace Services
         public static void Init(IUnityContainer container)
         {
             container
-               .RegisterType<ISpreadsheetParser, SpreadsheetParser>()
+               .RegisterType<ISpreadsheetProcessor, SpreadsheetProcessor>()
                 ;
         }
     }

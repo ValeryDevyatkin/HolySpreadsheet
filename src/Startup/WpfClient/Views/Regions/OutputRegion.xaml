@@ -65,10 +65,12 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Row = "0"
-                    Content = "Process" />
+                    Content = "Process"
+                    Command = "{Binding ProcessOutputCommand, Mode=OneTime}" />
 
             <Button Grid.Column = "2"
-                    Content = "To SQL" />
+                    Content = "To SQL"
+                    Command = "{Binding ProcessOutputToSqlCommand, Mode=OneTime}" />
         </Grid>
 
         <TextBox Grid.Row = "8"
@@ -119,10 +121,12 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column = "0"
-                    Content = "To Clipboard" />
+                    Content = "To Clipboard"
+                    Command = "{Binding CopyToClipboardCommand, Mode=OneTime}" />
 
             <Button Grid.Column = "2"
-                    Content = "To File" />
+                    Content = "To File"
+                    Command = "{Binding CopyToFileCommand, Mode=OneTime}" />
 
             <ToggleButton Grid.Column = "4"
                           x:Name = "LockButton">

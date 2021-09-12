@@ -38,7 +38,8 @@
                                              DataContext = "{Binding InputParserConfiguration, Mode=OneTime}" />
 
         <Button Grid.Row = "4"
-                Content = "Process">
+                Content = "Process"
+                Command = "{Binding ProcessInputCommand, Mode=OneTime}">
 
             <Button.Style>
                 <Style TargetType = "Button">

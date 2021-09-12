@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.Generic;
+using System.Windows.Input;
 using BAJIEPA.Senticode.Wpf.Base;
 using BAJIEPA.Senticode.Wpf.Collections;
 using BAJIEPA.Senticode.Wpf.Interfaces;
@@ -10,7 +11,8 @@ namespace ViewModels
 {
     public partial class MainViewModel
     {
-        public IObservableRangeCollection<object> GridData { get; } = new ObservableRangeCollection<object>();
+        public IObservableRangeCollection<IEnumerable<string>> GridData { get; } =
+            new ObservableRangeCollection<IEnumerable<string>>();
 
         #region ProcessInput command
 
@@ -31,7 +33,8 @@ namespace ViewModels
                 WordRight = InputParserConfiguration.WordRight
             };
 
-            Container.Resolve<ISpreadsheetProcessor>().ProcessInput(parameters);
+            GridData.ReplaceAll(
+                Container.Resolve<ISpreadsheetProcessor>().ProcessInput(InputText, parameters));
         }
 
         #endregion

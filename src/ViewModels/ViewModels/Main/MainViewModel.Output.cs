@@ -72,7 +72,7 @@ namespace ViewModels
                 TextCase = OutputTextCase
             };
 
-            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(parameters);
+            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(GridData, parameters);
         }
 
         #endregion
@@ -96,7 +96,7 @@ namespace ViewModels
                 TextCase = OutputTextCase
             };
 
-            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(parameters);
+            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(GridData, parameters);
         }
 
         #endregion

@@ -60,7 +60,15 @@
         </Button>
 
         <DataGrid Grid.Row = "6"
-                  ItemsSource = "{Binding Source={StaticResource GridDataView}}" />
+                  HeadersVisibility = "None"
+                  AutoGenerateColumns = "True"
+                  CanUserAddRows = "False"
+                  CanUserDeleteRows = "False"
+                  CanUserSortColumns = "False"
+                  CanUserReorderColumns = "False"
+                  CanUserResizeRows = "False"
+                  CanUserResizeColumns = "True"
+                  ItemsSource = "{Binding Source={StaticResource GridDataView}, Mode=OneTime}" />
     </Grid>
 
 </UserControl>

@@ -5,7 +5,10 @@ namespace Common.Interfaces
 {
     public interface ISpreadsheetProcessor
     {
-        IReadOnlyList<string[]> ProcessInput(SpreadsheetInputParseParameters parameters);
-        string ProcessOutput(SpreadsheetOutputProcessParameters parameters);
+        IEnumerable<IEnumerable<string>> ProcessInput(string text,
+                                                      SpreadsheetInputParseParameters parameters);
+
+        string ProcessOutput(IEnumerable<IEnumerable<string>> spreadsheetRows,
+                             SpreadsheetOutputProcessParameters parameters);
     }
 }

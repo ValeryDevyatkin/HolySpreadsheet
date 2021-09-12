@@ -14,11 +14,6 @@
         <viewModels:MainViewModel />
     </d:Control.DataContext>
 
-    <Control.Resources>
-        <CollectionViewSource x:Key = "GridDataView"
-                              Source = "{Binding GridData, Mode=OneTime}" />
-    </Control.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "Auto" />
@@ -60,6 +55,7 @@
         </Button>
 
         <DataGrid Grid.Row = "6"
+                  x:Name = "DataGrid"
                   HeadersVisibility = "None"
                   AutoGenerateColumns = "True"
                   CanUserAddRows = "False"
@@ -67,8 +63,7 @@
                   CanUserSortColumns = "False"
                   CanUserReorderColumns = "False"
                   CanUserResizeRows = "False"
-                  CanUserResizeColumns = "True"
-                  ItemsSource = "{Binding Source={StaticResource GridDataView}, Mode=OneTime}" />
+                  CanUserResizeColumns = "True" />
     </Grid>
 
 </UserControl>

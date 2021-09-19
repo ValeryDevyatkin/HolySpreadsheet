@@ -8,6 +8,9 @@ namespace ViewModels
 {
     public partial class MainViewModel
     {
+        public ParserConfigurationViewModel InputParserConfiguration =>
+            Container.Resolve<ParserConfigurationViewModel>();
+
         #region GridRowCount: int
 
         public int GridRowCount

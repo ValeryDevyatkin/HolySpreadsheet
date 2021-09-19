@@ -45,12 +45,12 @@
             <Grid.Style>
                 <Style TargetType = "Grid">
                     <Style.Triggers>
-                        <DataTrigger Binding = "{Binding GridData.Count, Mode=OneWay}"
+                        <DataTrigger Binding = "{Binding GridRowCount, Mode=OneWay}"
                                      Value = "0">
                             <Setter Property = "IsEnabled"
                                     Value = "False" />
                             <Setter Property = "ToolTip"
-                                    Value = "Transitional data should not be empty." />
+                                    Value = "Grid data should not be empty." />
                             <Setter Property = "ToolTipService.ShowOnDisabled"
                                     Value = "True" />
                         </DataTrigger>
@@ -69,8 +69,9 @@
                     Command = "{Binding ProcessOutputCommand, Mode=OneTime}" />
 
             <Button Grid.Column = "2"
-                    Content = "To SQL"
-                    Command = "{Binding ProcessOutputToSqlCommand, Mode=OneTime}" />
+                    Content = "SQL String Insert"
+                    Command = "{Binding ProcessOutputToSqlStringInsertCommand, Mode=OneTime}"
+                    ToolTip = "('xxx', 'xxx', 'xxx')," />
         </Grid>
 
         <TextBox Grid.Row = "8"

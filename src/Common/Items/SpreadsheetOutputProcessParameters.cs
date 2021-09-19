@@ -2,7 +2,7 @@
 
 namespace Common.Items
 {
-    public class SpreadsheetOutputProcessParameters
+    public partial class SpreadsheetOutputProcessParameters
     {
         public TextCaseEnum TextCase { get; set; }
         public DelimiterEnum Delimiter { get; set; }
@@ -11,5 +11,18 @@ namespace Common.Items
         public string RowRight { get; set; }
         public string WordLeft { get; set; }
         public string WordRight { get; set; }
+    }
+
+    public partial class SpreadsheetOutputProcessParameters
+    {
+        public static SpreadsheetOutputProcessParameters QuickSqlStringInsertPreset =>
+            new SpreadsheetOutputProcessParameters
+            {
+                Delimiter = DelimiterEnum.Comma,
+                RowLeft = "(",
+                RowRight = "),",
+                WordLeft = "'",
+                WordRight = "'"
+            };
     }
 }

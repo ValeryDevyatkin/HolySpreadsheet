@@ -7,6 +7,7 @@ using Services;
 using Unity;
 using ViewModels;
 using WpfClient.Services;
+using WpfClient.Views.Regions;
 
 namespace WpfClient
 {
@@ -44,6 +45,12 @@ namespace WpfClient
             // Services.
             Container
                .RegisterType<IFileDialogService, FileDialogService>()
+               .RegisterType<IDataGridService, DataGridService>()
+                ;
+
+            // Views.
+            Container
+               .RegisterSingleton<GridRegion>()
                 ;
         }
 

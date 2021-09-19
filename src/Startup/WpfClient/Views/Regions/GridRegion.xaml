@@ -7,6 +7,8 @@
              xmlns:controls = "clr-namespace:WpfClient.Views.Controls"
              xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
              xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:b = "http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviors = "clr-namespace:WpfClient.Wpf.Behaviors"
              mc:Ignorable = "d"
              x:ClassModifier = "internal">
 
@@ -27,7 +29,7 @@
 
         <TextBlock Grid.Row = "0"
                    Style = "{StaticResource HeaderTextBlockStyle}"
-                   Text = "Transitional Data" />
+                   Text = "Grid Data" />
 
         <controls:ParserConfigurationControl Grid.Row = "2"
                                              DataContext = "{Binding InputParserConfiguration, Mode=OneTime}" />
@@ -63,7 +65,11 @@
                   CanUserSortColumns = "False"
                   CanUserReorderColumns = "False"
                   CanUserResizeRows = "False"
-                  CanUserResizeColumns = "True" />
+                  CanUserResizeColumns = "True">
+            <b:Interaction.Behaviors>
+                <behaviors:ItemsControlCountBindingBehavior ItemCount = "{Binding GridRowCount, Mode=OneWayToSource}" />
+            </b:Interaction.Behaviors>
+        </DataGrid>
     </Grid>
 
 </UserControl>

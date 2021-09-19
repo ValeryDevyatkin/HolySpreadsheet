@@ -72,31 +72,25 @@ namespace ViewModels
                 TextCase = OutputTextCase
             };
 
-            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(GridData, parameters);
+            var rows = Container.Resolve<IDataGridService>().GetRows();
+            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
         }
 
         #endregion
 
-        #region ProcessOutputToSql command
+        #region ProcessOutputToSqlStringInsert command
 
-        public ICommand ProcessOutputToSqlCommand => _processOutputToSqlCommand ??=
-                                                         new Command(ExecuteProcessOutputToSql);
+        public ICommand ProcessOutputToSqlStringInsertCommand => _processOutputToSqlStringInsertCommand ??=
+                                                                     new Command(ExecuteProcessOutputToSqlStringInsert);
 
-        private Command _processOutputToSqlCommand;
+        private Command _processOutputToSqlStringInsertCommand;
 
-        private void ExecuteProcessOutputToSql(object parameter)
+        private void ExecuteProcessOutputToSqlStringInsert(object parameter)
         {
-            var parameters = new SpreadsheetOutputProcessParameters
-            {
-                Delimiter = DelimiterEnum.Comma,
-                RowLeft = "(",
-                RowRight = "),",
-                WordLeft = "\"",
-                WordRight = "\"",
-                TextCase = OutputTextCase
-            };
-
-            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(GridData, parameters);
+            var parameters = SpreadsheetOutputProcessParameters.QuickSqlStringInsertPreset;
+            parameters.TextCase = OutputTextCase;
+            var rows = Container.Resolve<IDataGridService>().GetRows();
+            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
         }
 
         #endregion

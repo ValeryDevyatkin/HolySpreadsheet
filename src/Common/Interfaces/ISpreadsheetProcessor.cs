@@ -8,7 +8,7 @@ namespace Common.Interfaces
         IEnumerable<IEnumerable<string>> ProcessInput(string text,
                                                       SpreadsheetInputParseParameters parameters);
 
-        string ProcessOutput(IEnumerable<IEnumerable<string>> spreadsheetRows,
+        string ProcessOutput(IEnumerable<IEnumerable<string>> rows,
                              SpreadsheetOutputProcessParameters parameters);
     }
 }

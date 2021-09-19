@@ -49,7 +49,7 @@ namespace Services.Services
             }
         }
 
-        public string ProcessOutput(IEnumerable<IEnumerable<string>> spreadsheetRows,
+        public string ProcessOutput(IEnumerable<IEnumerable<string>> rows,
                                     SpreadsheetOutputProcessParameters parameters) =>
             throw new NotImplementedException();
 

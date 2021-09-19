@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using BAJIEPA.Senticode.Wpf.Base;
-using BAJIEPA.Senticode.Wpf.Collections;
-using BAJIEPA.Senticode.Wpf.Interfaces;
 using Common.Interfaces;
 using Common.Items;
 using Unity;
@@ -11,8 +8,17 @@ namespace ViewModels
 {
     public partial class MainViewModel
     {
-        public IObservableRangeCollection<IEnumerable<string>> GridData { get; } =
-            new ObservableRangeCollection<IEnumerable<string>>();
+        #region GridRowCount: int
+
+        public int GridRowCount
+        {
+            get => _gridRowCount;
+            set => SetProperty(ref _gridRowCount, value);
+        }
+
+        private int _gridRowCount;
+
+        #endregion
 
         #region ProcessInput command
 
@@ -33,8 +39,8 @@ namespace ViewModels
                 WordRight = InputParserConfiguration.WordRight
             };
 
-            GridData.ReplaceAll(
-                Container.Resolve<ISpreadsheetProcessor>().ProcessInput(InputText, parameters));
+            var rows = Container.Resolve<ISpreadsheetProcessor>().ProcessInput(InputText, parameters);
+            Container.Resolve<IDataGridService>().FillGrid(rows);
         }
 
         #endregion

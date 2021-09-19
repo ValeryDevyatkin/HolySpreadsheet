@@ -58,14 +58,16 @@
 
         <DataGrid Grid.Row = "6"
                   x:Name = "DataGrid"
-                  HeadersVisibility = "None"
+                  HeadersVisibility = "Column"
                   AutoGenerateColumns = "True"
                   CanUserAddRows = "False"
                   CanUserDeleteRows = "False"
                   CanUserSortColumns = "False"
                   CanUserReorderColumns = "False"
                   CanUserResizeRows = "False"
-                  CanUserResizeColumns = "True">
+                  CanUserResizeColumns = "True"
+                  SelectionMode = "Single"
+                  ColumnWidth = "*">
             <b:Interaction.Behaviors>
                 <behaviors:ItemsControlCountBindingBehavior ItemCount = "{Binding GridRowCount, Mode=OneWayToSource}" />
             </b:Interaction.Behaviors>

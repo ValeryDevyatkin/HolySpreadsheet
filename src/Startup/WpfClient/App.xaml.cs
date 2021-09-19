@@ -50,7 +50,7 @@ namespace WpfClient
 
             // Views.
             Container
-               .RegisterSingleton<GridRegion>()
+               .RegisterType<GridRegion>()
                 ;
         }
 

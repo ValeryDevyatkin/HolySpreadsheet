@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Common.Enums;
 using Common.Interfaces;
 using Common.Items;
@@ -22,8 +23,11 @@ namespace Services.Services
             container.RegisterInstance(this);
         }
 
-        public IEnumerable<IEnumerable<string>> ProcessInput(string text, SpreadsheetInputParseParameters parameters)
+        public SpreadsheetProcessResult ProcessInput(string text, SpreadsheetInputProcessParameters parameters)
         {
+            var result = new List<List<string>>();
+            var maxRowLength = -1;
+            var hasEmptyCells = false;
             var delimiter = parameters.Delimiter == DelimiterEnum.Custom ?
                                 parameters.CustomDelimiter :
                                 DelimiterMap[parameters.Delimiter];
@@ -45,13 +49,61 @@ namespace Services.Services
                     editedWords.Add(editedWord);
                 }
 
-                yield return editedWords;
+                var rowLength = editedWords.Count;
+
+                if (maxRowLength == -1)
+                {
+                    maxRowLength = rowLength;
+                }
+                else
+                {
+                    if (rowLength != maxRowLength)
+                    {
+                        hasEmptyCells = true;
+
+                        if (rowLength > maxRowLength)
+                        {
+                            maxRowLength = rowLength;
+                        }
+                    }
+                }
+
+                result.Add(editedWords);
             }
+
+            return new SpreadsheetProcessResult(result, rows.Length, maxRowLength, hasEmptyCells);
         }
 
         public string ProcessOutput(IEnumerable<IEnumerable<string>> rows,
-                                    SpreadsheetOutputProcessParameters parameters) =>
-            throw new NotImplementedException();
+                                    SpreadsheetOutputProcessParameters parameters)
+        {
+            var rowsBuilder = new StringBuilder();
+
+            var delimiter = parameters.Delimiter == DelimiterEnum.Custom ?
+                                parameters.CustomDelimiter :
+                                DelimiterMap[parameters.Delimiter];
+
+            foreach (var row in rows)
+            {
+                var wordsBuilder = new StringBuilder();
+                var wordsEnumerator = row.GetEnumerator();
+
+                if (wordsEnumerator.MoveNext())
+                {
+                    wordsBuilder.Append($"{parameters.WordLeft}{wordsEnumerator.Current}{parameters.WordRight}");
+
+                    while (wordsEnumerator.MoveNext())
+                    {
+                        wordsBuilder.Append(delimiter);
+                        wordsBuilder.Append($"{parameters.WordLeft}{wordsEnumerator.Current}{parameters.WordRight}");
+                    }
+                }
+
+                rowsBuilder.AppendLine($"{parameters.RowLeft}{wordsBuilder}{parameters.RowRight}");
+            }
+
+            return rowsBuilder.ToString();
+        }
 
         private static string CutString(string str, string left, string right)
         {

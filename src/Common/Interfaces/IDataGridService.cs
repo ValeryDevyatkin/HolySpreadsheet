@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using Common.Items;
 
 namespace Common.Interfaces
 {
     public interface IDataGridService
     {
-        void FillGrid(IEnumerable<IEnumerable<string>> rows);
+        void PopulateRows(SpreadsheetProcessResult spreadsheet);
         IEnumerable<IEnumerable<string>> GetRows();
     }
 }

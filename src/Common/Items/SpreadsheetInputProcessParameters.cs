@@ -2,7 +2,7 @@
 
 namespace Common.Items
 {
-    public class SpreadsheetInputParseParameters
+    public class SpreadsheetInputProcessParameters
     {
         public DelimiterEnum Delimiter { get; set; }
         public string CustomDelimiter { get; set; }

@@ -5,8 +5,8 @@ namespace Common.Interfaces
 {
     public interface ISpreadsheetProcessor
     {
-        IEnumerable<IEnumerable<string>> ProcessInput(string text,
-                                                      SpreadsheetInputParseParameters parameters);
+        SpreadsheetProcessResult ProcessInput(string text,
+                                              SpreadsheetInputProcessParameters parameters);
 
         string ProcessOutput(IEnumerable<IEnumerable<string>> rows,
                              SpreadsheetOutputProcessParameters parameters);

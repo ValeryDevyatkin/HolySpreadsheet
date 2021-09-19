@@ -29,7 +29,7 @@ namespace ViewModels
 
         private void ExecuteProcessInput(object parameter)
         {
-            var parameters = new SpreadsheetInputParseParameters
+            var parameters = new SpreadsheetInputProcessParameters
             {
                 CustomDelimiter = InputParserConfiguration.CustomDelimiter,
                 Delimiter = InputParserConfiguration.Delimiter,
@@ -40,7 +40,7 @@ namespace ViewModels
             };
 
             var rows = Container.Resolve<ISpreadsheetProcessor>().ProcessInput(InputText, parameters);
-            Container.Resolve<IDataGridService>().FillGrid(rows);
+            Container.Resolve<IDataGridService>().PopulateRows(rows);
         }
 
         #endregion

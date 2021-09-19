@@ -90,12 +90,12 @@ namespace Services.Services
 
                 if (wordsEnumerator.MoveNext())
                 {
-                    wordsBuilder.Append($"{parameters.WordLeft}{wordsEnumerator.Current}{parameters.WordRight}");
+                    wordsBuilder.Append(ApplyWordFormatting(wordsEnumerator.Current, parameters));
 
                     while (wordsEnumerator.MoveNext())
                     {
                         wordsBuilder.Append(delimiter);
-                        wordsBuilder.Append($"{parameters.WordLeft}{wordsEnumerator.Current}{parameters.WordRight}");
+                        wordsBuilder.Append(ApplyWordFormatting(wordsEnumerator.Current, parameters));
                     }
                 }
 
@@ -103,6 +103,28 @@ namespace Services.Services
             }
 
             return rowsBuilder.ToString();
+        }
+
+        private static string ApplyWordFormatting(string str, SpreadsheetOutputProcessParameters parameters) =>
+            $"{parameters.WordLeft}{ApplyTextCaseFormatting(str, parameters.TextCase)}{parameters.WordRight}";
+
+        private static string ApplyTextCaseFormatting(string str, TextCaseEnum formatting)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return null;
+            }
+
+            switch (formatting)
+            {
+                case TextCaseEnum.AllLower: return str.ToLower();
+                case TextCaseEnum.AllUpper: return str.ToUpper();
+
+                case TextCaseEnum.FirstUpper:
+                    return str.Substring(0, 1).ToUpper() + str.Substring(1, str.Length - 1).ToLower();
+
+                default: return str;
+            }
         }
 
         private static string CutString(string str, string left, string right)

@@ -68,9 +68,35 @@
                   CanUserResizeColumns = "True"
                   SelectionMode = "Single"
                   ColumnWidth = "*">
+            <DataGrid.Resources>
+                <Style TargetType = "DataGridCell">
+                    <Style.Triggers>
+                        <DataTrigger
+                            Binding = "{Binding RelativeSource={RelativeSource Self}, 
+                                       Path=Content.Text}"
+                            Value = "">
+                            <Setter Property = "Background"
+                                    Value = "{StaticResource AlertBrush}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
             <b:Interaction.Behaviors>
                 <behaviors:ItemsControlCountBindingBehavior ItemCount = "{Binding GridRowCount, Mode=OneWayToSource}" />
             </b:Interaction.Behaviors>
+            <DataGrid.Style>
+                <Style TargetType = "DataGrid">
+                    <Style.Triggers>
+                        <DataTrigger Binding = "{Binding HasEmptyCells}"
+                                     Value = "True">
+                            <Setter Property = "ToolTip"
+                                    Value = "There are empty cells!" />
+                            <Setter Property = "BorderBrush"
+                                    Value = "{StaticResource AlertBrush}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Style>
         </DataGrid>
     </Grid>
 

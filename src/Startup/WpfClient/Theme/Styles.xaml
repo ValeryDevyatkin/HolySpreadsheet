@@ -4,6 +4,7 @@
                     xmlns:theme = "clr-namespace:WpfClient.Theme">
 
     <Brush x:Key = "GridSplitterBrush">Gray</Brush>
+    <Brush x:Key = "AlertBrush">Red</Brush>
 
     <system:Double x:Key = "HeaderFontSize">14</system:Double>
     <system:Double x:Key = "TooltipFontSize">20</system:Double>

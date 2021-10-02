@@ -31,12 +31,12 @@ namespace WpfClient.Services
 
             for (var i = 0; i < spreadsheet.ColumnCount; i++)
             {
-                var columnName = i.ToString();
+                var columnNumber = i.ToString();
 
                 dataGrid.Columns.Add(new DataGridTextColumn
                 {
-                    Header = columnName,
-                    Binding = new Binding($"[{columnName}]") {Mode = BindingMode.OneTime},
+                    Header = columnNumber,
+                    Binding = new Binding($"[{columnNumber}]") {Mode = BindingMode.OneTime},
                     IsReadOnly = true
                 });
             }

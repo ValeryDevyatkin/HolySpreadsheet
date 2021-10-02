@@ -16,6 +16,18 @@ namespace ViewModels
 
         public ParserConfigurationViewModel InputParserConfiguration => _inputParserConfiguration.Value;
 
+        #region HasEmptyCells: bool
+
+        public bool HasEmptyCells
+        {
+            get => _hasEmptyCells;
+            set => SetProperty(ref _hasEmptyCells, value);
+        }
+
+        private bool _hasEmptyCells;
+
+        #endregion
+
         #region GridRowCount: int
 
         public int GridRowCount
@@ -47,8 +59,9 @@ namespace ViewModels
                 WordRight = InputParserConfiguration.WordRight
             };
 
-            var rows = Container.Resolve<ISpreadsheetProcessor>().ProcessInput(InputText, parameters);
-            Container.Resolve<IDataGridService>().PopulateRows(rows);
+            var spreadsheet = Container.Resolve<ISpreadsheetProcessor>().ProcessInput(InputText, parameters);
+            HasEmptyCells = spreadsheet.HasEmptyCells;
+            Container.Resolve<IDataGridService>().PopulateRows(spreadsheet);
         }
 
         #endregion

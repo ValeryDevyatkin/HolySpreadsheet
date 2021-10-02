@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
+using BAJIEPA.Senticode.Wpf;
 using BAJIEPA.Senticode.Wpf.Base;
 using Common.Interfaces;
 using Common.Items;
@@ -8,8 +10,11 @@ namespace ViewModels
 {
     public partial class MainViewModel
     {
-        public ParserConfigurationViewModel InputParserConfiguration =>
-            Container.Resolve<ParserConfigurationViewModel>();
+        private readonly Lazy<ParserConfigurationViewModel> _inputParserConfiguration =
+            new Lazy<ParserConfigurationViewModel>(
+                () => ServiceLocator.Container.Resolve<ParserConfigurationViewModel>());
+
+        public ParserConfigurationViewModel InputParserConfiguration => _inputParserConfiguration.Value;
 
         #region GridRowCount: int
 

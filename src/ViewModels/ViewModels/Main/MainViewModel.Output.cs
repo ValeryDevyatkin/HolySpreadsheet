@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using BAJIEPA.Senticode.Wpf;
 using BAJIEPA.Senticode.Wpf.Base;
 using Common.Enums;
 using Common.Interfaces;
@@ -11,8 +13,11 @@ namespace ViewModels
 {
     public partial class MainViewModel
     {
-        public ParserConfigurationViewModel OutputParserConfiguration =>
-            Container.Resolve<ParserConfigurationViewModel>();
+        private readonly Lazy<ParserConfigurationViewModel> _outputParserConfigurationLazy =
+            new Lazy<ParserConfigurationViewModel>(
+                () => ServiceLocator.Container.Resolve<ParserConfigurationViewModel>());
+
+        public ParserConfigurationViewModel OutputParserConfiguration => _outputParserConfigurationLazy.Value;
 
         #region OutputTextCase: TextCaseEnum
 

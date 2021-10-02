@@ -12,8 +12,8 @@ namespace Services.Services
     {
         private static readonly Dictionary<DelimiterEnum, string> DelimiterMap = new Dictionary<DelimiterEnum, string>
         {
-            {DelimiterEnum.Comma, ","},
-            {DelimiterEnum.Semicolon, ";"},
+            {DelimiterEnum.Comma, ", "},
+            {DelimiterEnum.Semicolon, "; "},
             {DelimiterEnum.Tab, "\t"},
             {DelimiterEnum.Whitespace, " "}
         };
@@ -135,23 +135,25 @@ namespace Services.Services
 
             if (!string.IsNullOrEmpty(str) &&
                 !string.IsNullOrEmpty(left) &&
+                left.Length <= str.Length &&
                 str.IndexOf(left) == 0)
             {
                 str = str.Substring(left.Length);
             }
 
             if (!string.IsNullOrEmpty(str) &&
-                !string.IsNullOrEmpty(right))
+                !string.IsNullOrEmpty(right) &&
+                right.Length <= str.Length)
             {
-                var leftRowSideLength = str.Length - right.Length;
+                var leftSideLength = str.Length - right.Length;
 
-                if (str.IndexOf(right) == leftRowSideLength)
+                if (str.IndexOf(right) == leftSideLength)
                 {
-                    str = str.Substring(leftRowSideLength);
+                    str = str.Substring(0, leftSideLength);
                 }
             }
 
-            return str;
+            return str?.Trim();
         }
     }
 }

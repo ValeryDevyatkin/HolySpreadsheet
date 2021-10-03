@@ -11,7 +11,9 @@
         WindowStartupLocation = "CenterScreen"
         WindowState = "Maximized"
         ResizeMode = "CanResize"
-        x:ClassModifier = "internal">
+        x:ClassModifier = "internal"
+        MinHeight = "550"
+        MinWidth = "900">
 
     <d:Control.DataContext>
         <viewModels:MainViewModel />

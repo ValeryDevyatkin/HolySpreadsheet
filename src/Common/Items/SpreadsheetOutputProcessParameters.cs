@@ -24,5 +24,15 @@ namespace Common.Items
                 WordLeft = "'",
                 WordRight = "'"
             };
+
+        public static SpreadsheetOutputProcessParameters QuickSqlNumericInsertPreset =>
+            new SpreadsheetOutputProcessParameters
+            {
+                Delimiter = DelimiterEnum.Comma,
+                RowLeft = "(",
+                RowRight = "),",
+                WordLeft = "",
+                WordRight = ""
+            };
     }
 }

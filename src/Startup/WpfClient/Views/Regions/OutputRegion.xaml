@@ -62,6 +62,8 @@
                 <ColumnDefinition Width = "*" />
                 <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
                 <ColumnDefinition Width = "*" />
+                <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
+                <ColumnDefinition Width = "*" />
             </Grid.ColumnDefinitions>
 
             <Button Grid.Row = "0"
@@ -72,6 +74,11 @@
                     Content = "SQL String Insert"
                     Command = "{Binding ProcessOutputToSqlStringInsertCommand, Mode=OneTime}"
                     ToolTip = "('xxx', 'xxx', 'xxx')," />
+
+            <Button Grid.Column = "4"
+                    Content = "SQL Numeric Insert"
+                    Command = "{Binding ProcessOutputToNumericInsertCommand, Mode=OneTime}"
+                    ToolTip = "(xxx, xxx, xxx)," />
         </Grid>
 
         <TextBox Grid.Row = "8"
@@ -132,7 +139,8 @@
             <ToggleButton Grid.Column = "4"
                           x:Name = "LockButton">
                 <ToggleButton.Style>
-                    <Style TargetType = "ToggleButton">
+                    <Style TargetType = "ToggleButton"
+                           BasedOn = "{StaticResource {x:Type ButtonBase}}">
                         <Setter Property = "Content"
                                 Value = "Edit" />
                         <Style.Triggers>

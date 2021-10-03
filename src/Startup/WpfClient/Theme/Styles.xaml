@@ -55,4 +55,15 @@
         </Setter>
     </Style>
 
+    <Style TargetType = "ButtonBase">
+        <Setter Property = "Padding">
+            <Setter.Value>
+                <Thickness Top = "0"
+                           Bottom = "0"
+                           Left = "{x:Static theme:UiSizes.InnerSpacing}"
+                           Right = "{x:Static theme:UiSizes.InnerSpacing}" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

@@ -65,7 +65,8 @@
             <ToggleButton Grid.Column = "4"
                           x:Name = "LockButton">
                 <ToggleButton.Style>
-                    <Style TargetType = "ToggleButton">
+                    <Style TargetType = "ToggleButton"
+                           BasedOn = "{StaticResource {x:Type ButtonBase}}">
                         <Setter Property = "Content"
                                 Value = "Edit" />
                         <Style.Triggers>

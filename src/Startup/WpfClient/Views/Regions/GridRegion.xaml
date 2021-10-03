@@ -39,7 +39,8 @@
                 Command = "{Binding ProcessInputCommand, Mode=OneTime}">
 
             <Button.Style>
-                <Style TargetType = "Button">
+                <Style TargetType = "Button"
+                       BasedOn = "{StaticResource {x:Type ButtonBase}}">
                     <Style.Triggers>
                         <DataTrigger
                             Binding = "{Binding InputText, Mode=OneWay, Converter={converters:EmptyOrWhitespaceStringToBool}}"

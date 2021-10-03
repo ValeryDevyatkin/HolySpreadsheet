@@ -66,17 +66,7 @@ namespace ViewModels
 
         private void ExecuteProcessOutput(object parameter)
         {
-            var parameters = new SpreadsheetOutputProcessParameters
-            {
-                CustomDelimiter = OutputParserConfiguration.CustomDelimiter,
-                Delimiter = OutputParserConfiguration.Delimiter,
-                RowLeft = OutputParserConfiguration.RowLeft,
-                RowRight = OutputParserConfiguration.RowRight,
-                WordLeft = OutputParserConfiguration.WordLeft,
-                WordRight = OutputParserConfiguration.WordRight,
-                TextCase = OutputTextCase
-            };
-
+            var parameters = GetOutputProcessParameters();
             var rows = Container.Resolve<IDataGridService>().GetRows();
             OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
         }
@@ -93,6 +83,23 @@ namespace ViewModels
         private void ExecuteProcessOutputToSqlStringInsert(object parameter)
         {
             var parameters = SpreadsheetOutputProcessParameters.QuickSqlStringInsertPreset;
+            parameters.TextCase = OutputTextCase;
+            var rows = Container.Resolve<IDataGridService>().GetRows();
+            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
+        }
+
+        #endregion
+
+        #region ProcessOutputToNumericInsert command
+
+        public ICommand ProcessOutputToNumericInsertCommand => _processOutputToNumericInsertCommand ??=
+                                                                   new Command(ExecuteProcessOutputToNumericInsert);
+
+        private Command _processOutputToNumericInsertCommand;
+
+        private void ExecuteProcessOutputToNumericInsert(object parameter)
+        {
+            var parameters = SpreadsheetOutputProcessParameters.QuickSqlNumericInsertPreset;
             parameters.TextCase = OutputTextCase;
             var rows = Container.Resolve<IDataGridService>().GetRows();
             OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
@@ -117,11 +124,11 @@ namespace ViewModels
         #region CopyToFile command
 
         public ICommand CopyToFileCommand => _copyToFileCommand ??=
-                                                 new AsyncCommand(ExecuteCopyToFile);
+                                                 new AsyncCommand(ExecuteCopyToFileAsync);
 
         private AsyncCommand _copyToFileCommand;
 
-        private async Task ExecuteCopyToFile(object parameter)
+        private async Task ExecuteCopyToFileAsync(object parameter)
         {
             await Container.Resolve<IFileDialogService>().SaveToFileAsync(OutputText);
         }

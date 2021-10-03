@@ -31,7 +31,6 @@ namespace WpfClient.Services
             {
                 InitialDirectory = _initialDirectory,
                 CheckPathExists = true,
-                CheckFileExists = true,
                 Filter = Filter
             };
 

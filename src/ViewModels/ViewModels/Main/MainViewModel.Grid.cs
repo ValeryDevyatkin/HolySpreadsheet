@@ -3,7 +3,6 @@ using System.Windows.Input;
 using BAJIEPA.Senticode.Wpf;
 using BAJIEPA.Senticode.Wpf.Base;
 using Common.Interfaces;
-using Common.Items;
 using Unity;
 
 namespace ViewModels
@@ -49,16 +48,7 @@ namespace ViewModels
 
         private void ExecuteProcessInput(object parameter)
         {
-            var parameters = new SpreadsheetInputProcessParameters
-            {
-                CustomDelimiter = InputParserConfiguration.CustomDelimiter,
-                Delimiter = InputParserConfiguration.Delimiter,
-                RowLeft = InputParserConfiguration.RowLeft,
-                RowRight = InputParserConfiguration.RowRight,
-                WordLeft = InputParserConfiguration.WordLeft,
-                WordRight = InputParserConfiguration.WordRight
-            };
-
+            var parameters = GetInputProcessParameters();
             var spreadsheet = Container.Resolve<ISpreadsheetProcessor>().ProcessInput(InputText, parameters);
             HasEmptyCells = spreadsheet.HasEmptyCells;
             Container.Resolve<IDataGridService>().PopulateRows(spreadsheet);

@@ -23,6 +23,8 @@
             <RowDefinition Height = "Auto" />
             <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
             <RowDefinition Height = "*" />
+            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
+            <RowDefinition Height = "Auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row = "0"
@@ -66,6 +68,8 @@
                   CanUserResizeRows = "False"
                   CanUserResizeColumns = "True"
                   SelectionMode = "Single"
+                  HorizontalScrollBarVisibility = "Auto"
+                  VerticalScrollBarVisibility = "Auto"
                   ColumnWidth = "*">
             <DataGrid.Resources>
                 <Style TargetType = "DataGridCell"
@@ -96,6 +100,26 @@
                 </Style>
             </DataGrid.Style>
         </DataGrid>
+
+        <Grid Grid.Row = "8">
+            <Grid.Style>
+                <Style TargetType = "Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding = "{Binding GridRowCount, Mode=OneWay}"
+                                     Value = "0">
+                            <Setter Property = "IsEnabled"
+                                    Value = "False" />
+                            <Setter Property = "ToolTip"
+                                    Value = "Grid data should not be empty." />
+                            <Setter Property = "ToolTipService.ShowOnDisabled"
+                                    Value = "True" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Button Content = "Clear"
+                    Command = "{Binding ClearGridCommand, Mode=OneTime}" />
+        </Grid>
     </Grid>
 
 </UserControl>

@@ -83,6 +83,8 @@
 
         <TextBox Grid.Row = "8"
                  IsReadOnly = "True"
+                 VerticalScrollBarVisibility = "Auto"
+                 HorizontalScrollBarVisibility = "Auto"
                  Text = "{Binding OutputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <Grid Grid.Row = "10">

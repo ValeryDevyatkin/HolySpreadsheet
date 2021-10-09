@@ -30,12 +30,7 @@ namespace ViewModels
 
         private void ExecuteCopyFromClipboard(object parameter)
         {
-            var content = Clipboard.GetText();
-
-            if (!string.IsNullOrWhiteSpace(content))
-            {
-                InputText = content;
-            }
+            InputText = Clipboard.GetText();
         }
 
         #endregion
@@ -49,11 +44,11 @@ namespace ViewModels
 
         private async Task ExecuteCopyFromFileAsync(object parameter)
         {
-            var content = await Container.Resolve<IFileDialogService>().ReadFromFileAsync();
+            var readFromFileResult = await Container.Resolve<IFileDialogService>().ReadFromFileAsync();
 
-            if (!string.IsNullOrWhiteSpace(content))
+            if (!readFromFileResult.IsCancelled)
             {
-                InputText = content;
+                InputText = readFromFileResult.Content;
             }
         }
 

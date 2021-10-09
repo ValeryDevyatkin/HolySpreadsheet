@@ -5,6 +5,7 @@
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:theme = "clr-namespace:WpfClient.Theme"
              xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
              mc:Ignorable = "d"
              x:ClassModifier = "internal">
 
@@ -27,6 +28,8 @@
 
         <TextBox Grid.Row = "2"
                  IsReadOnly = "True"
+                 VerticalScrollBarVisibility = "Auto"
+                 HorizontalScrollBarVisibility = "Auto"
                  Text = "{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <Grid Grid.Row = "4">
@@ -46,9 +49,26 @@
                     Content = "From File"
                     Command = "{Binding CopyFromFileCommand, Mode=OneTime}" />
 
-            <Button Grid.Column = "4"
-                    Content = "Clear"
-                    Command = "{Binding ClearInputCommand, Mode=OneTime}" />
+            <Grid Grid.Column = "4">
+                <Grid.Style>
+                    <Style TargetType = "Grid">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding = "{Binding InputText, Mode=OneWay, Converter={converters:EmptyOrWhitespaceStringToBool}}"
+                                Value = "False">
+                                <Setter Property = "IsEnabled"
+                                        Value = "False" />
+                                <Setter Property = "ToolTip"
+                                        Value = "Input data should not be empty." />
+                                <Setter Property = "ToolTipService.ShowOnDisabled"
+                                        Value = "True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Button Content = "Clear"
+                        Command = "{Binding ClearInputCommand, Mode=OneTime}" />
+            </Grid>
         </Grid>
     </Grid>
 

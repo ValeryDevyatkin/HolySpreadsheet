@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using Common.Interfaces;
+using Common.Items;
 using Microsoft.Win32;
 using Unity;
 
@@ -40,7 +41,7 @@ namespace WpfClient.Services
             }
         }
 
-        public async Task<string> ReadFromFileAsync()
+        public async Task<OpenFileDialogResult> ReadFromFileAsync()
         {
             var dialog = new OpenFileDialog
             {
@@ -50,9 +51,14 @@ namespace WpfClient.Services
                 Filter = Filter
             };
 
-            return dialog.ShowDialog(Application.Current.MainWindow) == true ?
-                       await File.ReadAllTextAsync(dialog.FileName) :
-                       null;
+            if (dialog.ShowDialog(Application.Current.MainWindow) == true)
+            {
+                var content = await File.ReadAllTextAsync(dialog.FileName);
+
+                return new OpenFileDialogResult {Content = content};
+            }
+
+            return new OpenFileDialogResult {IsCancelled = true};
         }
     }
 }

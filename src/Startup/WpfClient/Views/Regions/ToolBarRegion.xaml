@@ -44,7 +44,6 @@
         </WrapPanel>
 
         <Button Content = "Clear All"
-                ToolTip = "Clear All"
                 HorizontalAlignment = "Left"
                 Command = "{Binding ClearAllCommand, Mode=OneTime}" />
     </Grid>

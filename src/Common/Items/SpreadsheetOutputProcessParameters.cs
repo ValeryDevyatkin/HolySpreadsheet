@@ -34,5 +34,21 @@ namespace Common.Items
                 WordLeft = "",
                 WordRight = ""
             };
+
+        public static SpreadsheetOutputProcessParameters QuickSqlStringInPreset =>
+            new SpreadsheetOutputProcessParameters
+            {
+                Delimiter = DelimiterEnum.Comma,
+                RowRight = ",",
+                WordLeft = "'",
+                WordRight = "'"
+            };
+
+        public static SpreadsheetOutputProcessParameters QuickSqlNumericInPreset =>
+            new SpreadsheetOutputProcessParameters
+            {
+                Delimiter = DelimiterEnum.Comma,
+                RowRight = ","
+            };
     }
 }

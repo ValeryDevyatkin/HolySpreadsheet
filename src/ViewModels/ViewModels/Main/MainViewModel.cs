@@ -61,6 +61,40 @@ namespace ViewModels
 
         #endregion
 
+        #region QuickProcessSqlStringIn command
+
+        public ICommand QuickProcessSqlStringInCommand => _quickProcessSqlStringInCommand ??=
+                                                              new Command(ExecuteQuickProcessSqlStringIn);
+
+        private Command _quickProcessSqlStringInCommand;
+
+        private void ExecuteQuickProcessSqlStringIn(object parameter)
+        {
+            ClearAllCommand.Execute(null);
+            CopyFromClipboardCommand.Execute(null);
+            ProcessInputCommand.Execute(null);
+            ProcessOutputToStringInCommand.Execute(null);
+        }
+
+        #endregion
+
+        #region QuickProcessSqlNumericIn command
+
+        public ICommand QuickProcessSqlNumericInCommand => _quickProcessSqlNumericInCommand ??=
+                                                               new Command(ExecuteQuickProcessSqlNumericIn);
+
+        private Command _quickProcessSqlNumericInCommand;
+
+        private void ExecuteQuickProcessSqlNumericIn(object parameter)
+        {
+            ClearAllCommand.Execute(null);
+            CopyFromClipboardCommand.Execute(null);
+            ProcessInputCommand.Execute(null);
+            ProcessOutputToNumericInCommand.Execute(null);
+        }
+
+        #endregion
+
         #region ClearAll command
 
         public ICommand ClearAllCommand => _clearAllCommand ??=

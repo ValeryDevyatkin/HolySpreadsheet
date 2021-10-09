@@ -122,6 +122,50 @@ namespace ViewModels
 
         #endregion
 
+        #region ProcessOutputToStringIn command
+
+        public ICommand ProcessOutputToStringInCommand => _processOutputToStringInCommand ??=
+                                                              new Command(ExecuteProcessOutputToStringIn);
+
+        private Command _processOutputToStringInCommand;
+
+        private void ExecuteProcessOutputToStringIn(object parameter)
+        {
+            if (GridRowCount < 1)
+            {
+                return;
+            }
+
+            var parameters = SpreadsheetOutputProcessParameters.QuickSqlStringInPreset;
+            parameters.TextCase = OutputTextCase;
+            var rows = Container.Resolve<IDataGridService>().GetRows();
+            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
+        }
+
+        #endregion
+
+        #region ProcessOutputToNumericIn command
+
+        public ICommand ProcessOutputToNumericInCommand => _processOutputToNumericInCommand ??=
+                                                               new Command(ExecuteProcessOutputToNumericIn);
+
+        private Command _processOutputToNumericInCommand;
+
+        private void ExecuteProcessOutputToNumericIn(object parameter)
+        {
+            if (GridRowCount < 1)
+            {
+                return;
+            }
+
+            var parameters = SpreadsheetOutputProcessParameters.QuickSqlNumericInPreset;
+            parameters.TextCase = OutputTextCase;
+            var rows = Container.Resolve<IDataGridService>().GetRows();
+            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
+        }
+
+        #endregion
+
         #region CopyToClipboard command
 
         public ICommand CopyToClipboardCommand => _copyToClipboardCommand ??=

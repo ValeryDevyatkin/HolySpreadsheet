@@ -36,9 +36,11 @@
                     ToolTip = "(xxx, xxx, xxx),"
                     Command = "{Binding QuickProcessSqlNumericInsertCommand, Mode=OneTime}" />
             <Button Content = "'xxx', 'xxx',"
-                    ToolTip = "'xxx', 'xxx', 'xxx'," />
+                    ToolTip = "'xxx', 'xxx', 'xxx',"
+                    Command = "{Binding QuickProcessSqlStringInCommand, Mode=OneTime}" />
             <Button Content = "xxx, xxx,"
-                    ToolTip = "xxx, xxx, xxx," />
+                    ToolTip = "xxx, xxx, xxx,"
+                    Command = "{Binding QuickProcessSqlNumericInCommand, Mode=OneTime}" />
         </WrapPanel>
 
         <Button Content = "Clear All"

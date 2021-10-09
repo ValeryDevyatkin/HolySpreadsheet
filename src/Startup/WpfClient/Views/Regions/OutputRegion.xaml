@@ -140,7 +140,7 @@
                           x:Name = "LockButton">
                 <ToggleButton.Style>
                     <Style TargetType = "ToggleButton"
-                           BasedOn = "{StaticResource {x:Type ButtonBase}}">
+                           BasedOn = "{StaticResource {x:Type ToggleButton}}">
                         <Setter Property = "Content"
                                 Value = "Edit" />
                         <Style.Triggers>

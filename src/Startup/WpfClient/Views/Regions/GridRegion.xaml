@@ -40,7 +40,7 @@
 
             <Button.Style>
                 <Style TargetType = "Button"
-                       BasedOn = "{StaticResource {x:Type ButtonBase}}">
+                       BasedOn = "{StaticResource {x:Type Button}}">
                     <Style.Triggers>
                         <DataTrigger
                             Binding = "{Binding InputText, Mode=OneWay, Converter={converters:EmptyOrWhitespaceStringToBool}}"
@@ -70,7 +70,8 @@
                   SelectionMode = "Single"
                   ColumnWidth = "*">
             <DataGrid.Resources>
-                <Style TargetType = "DataGridCell">
+                <Style TargetType = "DataGridCell"
+                       BasedOn = "{StaticResource {x:Type FrameworkElement}}">
                     <Style.Triggers>
                         <DataTrigger
                             Binding = "{Binding RelativeSource={RelativeSource Self}, 
@@ -86,7 +87,8 @@
                 <behaviors:ItemsControlCountBindingBehavior ItemCount = "{Binding GridRowCount, Mode=OneWayToSource}" />
             </b:Interaction.Behaviors>
             <DataGrid.Style>
-                <Style TargetType = "DataGrid">
+                <Style TargetType = "DataGrid"
+                       BasedOn = "{StaticResource {x:Type DataGrid}}">
                     <Style.Triggers>
                         <DataTrigger Binding = "{Binding HasEmptyCells}"
                                      Value = "True">

@@ -15,25 +15,36 @@
         <RotateTransform Angle = "-90" />
     </UserControl.LayoutTransform>
 
-    <UserControl.Resources>
-        <Style TargetType = "Button"
-               BasedOn = "{StaticResource {x:Type Button}}">
-            <Setter Property = "Margin"
-                    Value = "{x:Static theme:UiSizes.OuterSpacingLeftThickness}" />
-        </Style>
-    </UserControl.Resources>
+    <Grid>
+        <WrapPanel Orientation = "Horizontal"
+                   HorizontalAlignment = "Right">
+            <WrapPanel.Resources>
+                <Style TargetType = "Button"
+                       BasedOn = "{StaticResource {x:Type Button}}">
+                    <Setter Property = "Margin"
+                            Value = "{x:Static theme:UiSizes.OuterSpacingLeftThickness}" />
+                </Style>
+            </WrapPanel.Resources>
+            <TextBlock Text = "Clipboard:"
+                       Style = "{StaticResource HeaderTextBlockStyle}" />
+            <Button Content = "Process"
+                    Command = "{Binding QuickProcessCommand, Mode=OneTime}" />
+            <Button Content = "('xxx', 'xxx'),"
+                    ToolTip = "('xxx', 'xxx', 'xxx'),"
+                    Command = "{Binding QuickProcessSqlStringInsertCommand, Mode=OneTime}" />
+            <Button Content = "(xxx, xxx),"
+                    ToolTip = "(xxx, xxx, xxx),"
+                    Command = "{Binding QuickProcessSqlNumericInsertCommand, Mode=OneTime}" />
+            <Button Content = "'xxx', 'xxx',"
+                    ToolTip = "'xxx', 'xxx', 'xxx'," />
+            <Button Content = "xxx, xxx,"
+                    ToolTip = "xxx, xxx, xxx," />
+        </WrapPanel>
 
-    <WrapPanel Orientation = "Horizontal"
-               HorizontalAlignment = "Right">
-        <TextBlock Text = "Quick From Clipboard"
-                   Style = "{StaticResource HeaderTextBlockStyle}" />
-        <Button Content = "Process"
-                Command = "{Binding QuickProcessCommand, Mode=OneTime}" />
-        <Button Content = "SQL String Insert"
-                ToolTip = "('xxx', 'xxx', 'xxx'),"
-                Command = "{Binding QuickProcessSqlStringInsertCommand, Mode=OneTime}" />
-        <Button Content = "SQL Numeric Insert"
-                ToolTip = "(xxx, xxx, xxx),"
-                Command = "{Binding QuickProcessSqlNumericInsertCommand, Mode=OneTime}" />
-    </WrapPanel>
+        <Button Content = "Clear All"
+                ToolTip = "Clear All"
+                HorizontalAlignment = "Left"
+                Command = "{Binding ClearAllCommand, Mode=OneTime}" />
+    </Grid>
+
 </UserControl>

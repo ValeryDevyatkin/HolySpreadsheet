@@ -66,7 +66,12 @@ namespace ViewModels
 
         private void ExecuteProcessOutput(object parameter)
         {
-            var parameters = GetOutputProcessParameters();
+            if (GridRowCount < 1)
+            {
+                return;
+            }
+
+            var parameters = this.GetOutputProcessParameters();
             var rows = Container.Resolve<IDataGridService>().GetRows();
             OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
         }
@@ -82,6 +87,11 @@ namespace ViewModels
 
         private void ExecuteProcessOutputToSqlStringInsert(object parameter)
         {
+            if (GridRowCount < 1)
+            {
+                return;
+            }
+
             var parameters = SpreadsheetOutputProcessParameters.QuickSqlStringInsertPreset;
             parameters.TextCase = OutputTextCase;
             var rows = Container.Resolve<IDataGridService>().GetRows();
@@ -99,6 +109,11 @@ namespace ViewModels
 
         private void ExecuteProcessOutputToNumericInsert(object parameter)
         {
+            if (GridRowCount < 1)
+            {
+                return;
+            }
+
             var parameters = SpreadsheetOutputProcessParameters.QuickSqlNumericInsertPreset;
             parameters.TextCase = OutputTextCase;
             var rows = Container.Resolve<IDataGridService>().GetRows();

@@ -20,7 +20,7 @@ namespace ViewModels
         public bool HasEmptyCells
         {
             get => _hasEmptyCells;
-            set => SetProperty(ref _hasEmptyCells, value);
+            private set => SetProperty(ref _hasEmptyCells, value);
         }
 
         private bool _hasEmptyCells;
@@ -32,7 +32,7 @@ namespace ViewModels
         public int GridRowCount
         {
             get => _gridRowCount;
-            set => SetProperty(ref _gridRowCount, value);
+            private set => SetProperty(ref _gridRowCount, value);
         }
 
         private int _gridRowCount;
@@ -48,10 +48,32 @@ namespace ViewModels
 
         private void ExecuteProcessInput(object parameter)
         {
-            var parameters = GetInputProcessParameters();
+            if (string.IsNullOrWhiteSpace(InputText))
+            {
+                return;
+            }
+
+            var parameters = this.GetInputProcessParameters();
             var spreadsheet = Container.Resolve<ISpreadsheetProcessor>().ProcessInput(InputText, parameters);
             HasEmptyCells = spreadsheet.HasEmptyCells;
+            GridRowCount = spreadsheet.RowCount;
             Container.Resolve<IDataGridService>().PopulateRows(spreadsheet);
+        }
+
+        #endregion
+
+        #region ClearGrid command
+
+        public ICommand ClearGridCommand => _clearGridCommand ??=
+                                                new Command(ExecuteClearGrid);
+
+        private Command _clearGridCommand;
+
+        private void ExecuteClearGrid(object parameter)
+        {
+            HasEmptyCells = false;
+            GridRowCount = 0;
+            Container.Resolve<IDataGridService>().Clear();
         }
 
         #endregion

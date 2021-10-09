@@ -7,8 +7,6 @@
              xmlns:controls = "clr-namespace:WpfClient.Views.Controls"
              xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
              xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
-             xmlns:b = "http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:behaviors = "clr-namespace:WpfClient.Wpf.Behaviors"
              mc:Ignorable = "d"
              x:ClassModifier = "internal">
 
@@ -83,9 +81,6 @@
                     </Style.Triggers>
                 </Style>
             </DataGrid.Resources>
-            <b:Interaction.Behaviors>
-                <behaviors:ItemsControlCountBindingBehavior ItemCount = "{Binding GridRowCount, Mode=OneWayToSource}" />
-            </b:Interaction.Behaviors>
             <DataGrid.Style>
                 <Style TargetType = "DataGrid"
                        BasedOn = "{StaticResource {x:Type DataGrid}}">

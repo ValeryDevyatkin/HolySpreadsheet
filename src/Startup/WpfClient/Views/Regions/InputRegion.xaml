@@ -26,27 +26,11 @@
                    Text = "Input Data" />
 
         <TextBox Grid.Row = "2"
-                 Text = "{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            <TextBox.Style>
-                <Style TargetType = "TextBox"
-                       BasedOn = "{StaticResource {x:Type TextBox}}">
-                    <Setter Property = "IsReadOnly"
-                            Value = "True" />
-                    <Style.Triggers>
-                        <DataTrigger Binding = "{Binding ElementName=LockButton, Path=IsChecked, Mode=OneWay}"
-                                     Value = "True">
-                            <Setter Property = "IsReadOnly"
-                                    Value = "False" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBox.Style>
-        </TextBox>
+                 IsReadOnly = "True"
+                 Text = "{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <Grid Grid.Row = "4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width = "*" />
-                <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
                 <ColumnDefinition Width = "*" />
                 <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
                 <ColumnDefinition Width = "*" />
@@ -62,25 +46,7 @@
                     Content = "From File"
                     Command = "{Binding CopyFromFileCommand, Mode=OneTime}" />
 
-            <ToggleButton Grid.Column = "4"
-                          x:Name = "LockButton">
-                <ToggleButton.Style>
-                    <Style TargetType = "ToggleButton"
-                           BasedOn = "{StaticResource {x:Type ToggleButton}}">
-                        <Setter Property = "Content"
-                                Value = "Edit" />
-                        <Style.Triggers>
-                            <Trigger Property = "IsChecked"
-                                     Value = "True">
-                                <Setter Property = "Content"
-                                        Value = "Lock" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </ToggleButton.Style>
-            </ToggleButton>
-
-            <Button Grid.Column = "6"
+            <Button Grid.Column = "4"
                     Content = "Clear"
                     Command = "{Binding ClearInputCommand, Mode=OneTime}" />
         </Grid>

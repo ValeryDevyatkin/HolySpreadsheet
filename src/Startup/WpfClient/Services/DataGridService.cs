@@ -25,9 +25,8 @@ namespace WpfClient.Services
                 throw new ArgumentNullException(nameof(spreadsheet));
             }
 
+            Clear();
             var dataGrid = _container.Resolve<GridRegion>().DataGrid;
-            dataGrid.Items.Clear();
-            dataGrid.Columns.Clear();
 
             for (var i = 0; i < spreadsheet.ColumnCount; i++)
             {
@@ -63,6 +62,13 @@ namespace WpfClient.Services
             {
                 yield return (IEnumerable<string>) item;
             }
+        }
+
+        public void Clear()
+        {
+            var dataGrid = _container.Resolve<GridRegion>().DataGrid;
+            dataGrid.Items.Clear();
+            dataGrid.Columns.Clear();
         }
     }
 }

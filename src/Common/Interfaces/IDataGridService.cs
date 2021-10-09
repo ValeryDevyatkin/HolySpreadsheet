@@ -7,5 +7,6 @@ namespace Common.Interfaces
     {
         void PopulateRows(SpreadsheetProcessResult spreadsheet);
         IEnumerable<IEnumerable<string>> GetRows();
+        void Clear();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Windows.Input;
 using BAJIEPA.Senticode.Wpf.Base;
-using Common.Items;
 using Unity;
 
 namespace ViewModels
@@ -11,29 +10,6 @@ namespace ViewModels
         {
         }
 
-        private SpreadsheetOutputProcessParameters GetOutputProcessParameters() =>
-            new SpreadsheetOutputProcessParameters
-            {
-                CustomDelimiter = OutputParserConfiguration.CustomDelimiter,
-                Delimiter = OutputParserConfiguration.Delimiter,
-                RowLeft = OutputParserConfiguration.RowLeft,
-                RowRight = OutputParserConfiguration.RowRight,
-                WordLeft = OutputParserConfiguration.WordLeft,
-                WordRight = OutputParserConfiguration.WordRight,
-                TextCase = OutputTextCase
-            };
-
-        private SpreadsheetInputProcessParameters GetInputProcessParameters() =>
-            new SpreadsheetInputProcessParameters
-            {
-                CustomDelimiter = InputParserConfiguration.CustomDelimiter,
-                Delimiter = InputParserConfiguration.Delimiter,
-                RowLeft = InputParserConfiguration.RowLeft,
-                RowRight = InputParserConfiguration.RowRight,
-                WordLeft = InputParserConfiguration.WordLeft,
-                WordRight = InputParserConfiguration.WordRight
-            };
-
         #region QuickProcess command
 
         public ICommand QuickProcessCommand => _quickProcessCommand ??=
@@ -43,6 +19,7 @@ namespace ViewModels
 
         private void ExecuteQuickProcess(object parameter)
         {
+            ClearAllCommand.Execute(null);
             CopyFromClipboardCommand.Execute(null);
             ProcessInputCommand.Execute(null);
             ProcessOutputCommand.Execute(null);
@@ -59,6 +36,7 @@ namespace ViewModels
 
         private void ExecuteQuickProcessSqlStringInsert(object parameter)
         {
+            ClearAllCommand.Execute(null);
             CopyFromClipboardCommand.Execute(null);
             ProcessInputCommand.Execute(null);
             ProcessOutputToSqlStringInsertCommand.Execute(null);
@@ -75,9 +53,26 @@ namespace ViewModels
 
         private void ExecuteQuickProcessSqlNumericInsert(object parameter)
         {
+            ClearAllCommand.Execute(null);
             CopyFromClipboardCommand.Execute(null);
             ProcessInputCommand.Execute(null);
             ProcessOutputToNumericInsertCommand.Execute(null);
+        }
+
+        #endregion
+
+        #region ClearAll command
+
+        public ICommand ClearAllCommand => _clearAllCommand ??=
+                                               new Command(ExecuteClearAll);
+
+        private Command _clearAllCommand;
+
+        private void ExecuteClearAll(object parameter)
+        {
+            ClearOutputCommand.Execute(null);
+            ClearGridCommand.Execute(null);
+            ClearInputCommand.Execute(null);
         }
 
         #endregion

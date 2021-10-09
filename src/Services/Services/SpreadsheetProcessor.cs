@@ -10,13 +10,23 @@ namespace Services.Services
 {
     internal class SpreadsheetProcessor : ISpreadsheetProcessor
     {
-        private static readonly Dictionary<DelimiterEnum, string> DelimiterMap = new Dictionary<DelimiterEnum, string>
-        {
-            {DelimiterEnum.Comma, ", "},
-            {DelimiterEnum.Semicolon, "; "},
-            {DelimiterEnum.Tab, "\t"},
-            {DelimiterEnum.Whitespace, " "}
-        };
+        private static readonly Dictionary<DelimiterEnum, string> InputDelimiterMap =
+            new Dictionary<DelimiterEnum, string>
+            {
+                {DelimiterEnum.Comma, ","},
+                {DelimiterEnum.Semicolon, ";"},
+                {DelimiterEnum.Tab, "\t"},
+                {DelimiterEnum.Whitespace, " "}
+            };
+
+        private static readonly Dictionary<DelimiterEnum, string> OutputDelimiterMap =
+            new Dictionary<DelimiterEnum, string>
+            {
+                {DelimiterEnum.Comma, ", "},
+                {DelimiterEnum.Semicolon, "; "},
+                {DelimiterEnum.Tab, "\t"},
+                {DelimiterEnum.Whitespace, " "}
+            };
 
         public SpreadsheetProcessor(IUnityContainer container)
         {
@@ -30,7 +40,7 @@ namespace Services.Services
             var hasEmptyCells = false;
             var delimiter = parameters.Delimiter == DelimiterEnum.Custom ?
                                 parameters.CustomDelimiter :
-                                DelimiterMap[parameters.Delimiter];
+                                InputDelimiterMap[parameters.Delimiter];
 
             var rows = text.Split("\r\n", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
@@ -68,10 +78,13 @@ namespace Services.Services
                     }
                 }
 
-                result.Add(editedWords);
+                if (editedWords.Count > 0)
+                {
+                    result.Add(editedWords);
+                }
             }
 
-            return new SpreadsheetProcessResult(result, rows.Length, maxRowLength, hasEmptyCells);
+            return new SpreadsheetProcessResult(result, result.Count, maxRowLength, hasEmptyCells);
         }
 
         public string ProcessOutput(IEnumerable<IEnumerable<string>> rows,
@@ -81,7 +94,7 @@ namespace Services.Services
 
             var delimiter = parameters.Delimiter == DelimiterEnum.Custom ?
                                 parameters.CustomDelimiter :
-                                DelimiterMap[parameters.Delimiter];
+                                OutputDelimiterMap[parameters.Delimiter];
 
             foreach (var row in rows)
             {

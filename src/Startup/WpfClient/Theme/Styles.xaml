@@ -12,6 +12,8 @@
     <Style TargetType = "FrameworkElement">
         <Setter Property = "SnapsToDevicePixels"
                 Value = "True" />
+        <Setter Property = "ToolTipService.ShowOnDisabled"
+                Value = "True" />
     </Style>
 
     <Style TargetType = "ToolTip"
@@ -91,6 +93,8 @@
     <Style TargetType = "Window"
            BasedOn = "{StaticResource {x:Type FrameworkElement}}" />
     <Style TargetType = "DataGridCell"
+           BasedOn = "{StaticResource {x:Type FrameworkElement}}" />
+    <Style TargetType = "Grid"
            BasedOn = "{StaticResource {x:Type FrameworkElement}}" />
 
 </ResourceDictionary>

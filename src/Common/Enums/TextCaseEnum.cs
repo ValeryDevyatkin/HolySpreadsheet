@@ -6,13 +6,13 @@ namespace Common.Enums
     {
         [Display(Name = "No Formatting")] Default,
 
-        [Display(Name = "All Lower", Description = "xxx xxx xxx xxx")]
+        [Display(Name = "All Lower", Description = "xxx xxx xxx")]
         AllLower,
 
-        [Display(Name = "All Upper", Description = "XXX XXX XXX XXX")]
+        [Display(Name = "All Upper", Description = "XXX XXX XXX")]
         AllUpper,
 
-        [Display(Name = "First Upper", Description = "Xxx Xxx Xxx Xxx")]
+        [Display(Name = "First Upper", Description = "Xxx Xxx Xxx")]
         FirstUpper
     }
 }

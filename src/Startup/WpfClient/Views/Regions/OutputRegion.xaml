@@ -43,7 +43,8 @@
 
         <Grid Grid.Row = "6">
             <Grid.Style>
-                <Style TargetType = "Grid">
+                <Style TargetType = "Grid"
+                       BasedOn = "{StaticResource {x:Type Grid}}">
                     <Style.Triggers>
                         <DataTrigger Binding = "{Binding GridRowCount, Mode=OneWay}"
                                      Value = "0">
@@ -51,8 +52,6 @@
                                     Value = "False" />
                             <Setter Property = "ToolTip"
                                     Value = "Grid data should not be empty." />
-                            <Setter Property = "ToolTipService.ShowOnDisabled"
-                                    Value = "True" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -90,17 +89,16 @@
         <Grid Grid.Row = "10">
 
             <Grid.Style>
-                <Style TargetType = "Grid">
+                <Style TargetType = "Grid"
+                       BasedOn = "{StaticResource {x:Type Grid}}">
                     <Style.Triggers>
                         <DataTrigger
-                            Binding = "{Binding OutputText, Mode=OneWay, Converter={converters:EmptyOrWhitespaceStringToBool}}"
+                            Binding = "{Binding OutputText, Mode=OneWay, Converter={converters:EmptyOrWhitespaceStringToBoolConverter}}"
                             Value = "False">
                             <Setter Property = "IsEnabled"
                                     Value = "False" />
                             <Setter Property = "ToolTip"
                                     Value = "Output data should not be empty." />
-                            <Setter Property = "ToolTipService.ShowOnDisabled"
-                                    Value = "True" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

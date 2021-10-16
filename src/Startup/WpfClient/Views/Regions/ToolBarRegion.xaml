@@ -5,6 +5,7 @@
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:theme = "clr-namespace:WpfClient.Theme"
              xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
              mc:Ignorable = "d">
 
     <d:UserControl.DataContext>
@@ -45,7 +46,33 @@
 
         <Button Content = "Clear All"
                 HorizontalAlignment = "Left"
-                Command = "{Binding ClearAllCommand, Mode=OneTime}" />
+                Command = "{Binding ClearAllCommand, Mode=OneTime}">
+            <Button.Style>
+                <Style TargetType = "Button"
+                       BasedOn = "{StaticResource {x:Type Button}}">
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding = "{Binding GridRowCount, Mode=OneWay}"
+                                           Value = "0" />
+                                <Condition
+                                    Binding = "{Binding InputText, Mode=OneWay, Converter={converters:EmptyOrWhitespaceStringToBoolConverter}}"
+                                    Value = "False" />
+                                <Condition
+                                    Binding = "{Binding OutputText, Mode=OneWay, Converter={converters:EmptyOrWhitespaceStringToBoolConverter}}"
+                                    Value = "False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property = "IsEnabled"
+                                        Value = "False" />
+                                <Setter Property = "ToolTip"
+                                        Value = "Input, Grid or Output data should not be empty." />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 
 </UserControl>

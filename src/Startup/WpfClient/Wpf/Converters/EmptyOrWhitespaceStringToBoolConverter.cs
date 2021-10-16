@@ -5,25 +5,26 @@ using System.Windows.Markup;
 
 namespace WpfClient.Wpf.Converters
 {
-    public class EmptyOrWhitespaceStringToBool : MarkupExtension, IValueConverter
+    public class EmptyOrWhitespaceStringToBoolConverter : MarkupExtension, IValueConverter
     {
-        public bool IsFalseIfEmpty { get; set; }
+        /// <summary>
+        ///     Value that returns if the entry is an empty or whitespace string, or null.
+        /// </summary>
+        public bool ReturnValueForEmpty { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
             {
-                return IsFalseIfEmpty;
+                return ReturnValueForEmpty;
             }
 
             if (value is string str)
             {
-                var isEmpty = string.IsNullOrWhiteSpace(str);
-
-                return IsFalseIfEmpty ? isEmpty : !isEmpty;
+                return string.IsNullOrWhiteSpace(str) ? ReturnValueForEmpty : !ReturnValueForEmpty;
             }
 
-            return !IsFalseIfEmpty;
+            throw new ArgumentException(nameof(value));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>

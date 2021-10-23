@@ -12,7 +12,8 @@ namespace Common.Enums
         [Display(Name = "All Upper", Description = "XXX XXX XXX")]
         AllUpper,
 
-        [Display(Name = "First Upper", Description = "Xxx Xxx Xxx")]
+        [Display(Name = "First Upper",
+                 Description = "[Xxx Xxx] [Xxx Xxx] [Xxx Xxx]\nRemoves extra spaces between words in a cell!")]
         FirstUpper
     }
 }

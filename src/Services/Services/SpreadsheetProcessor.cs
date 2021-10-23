@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Common.Enums;
 using Common.Interfaces;
@@ -134,7 +135,17 @@ namespace Services.Services
                 case TextCaseEnum.AllUpper: return str.ToUpper();
 
                 case TextCaseEnum.FirstUpper:
-                    return str.Substring(0, 1).ToUpper() + str.Substring(1, str.Length - 1).ToLower();
+                {
+                    var tokens = str.Split(InputDelimiterMap[DelimiterEnum.Whitespace],
+                                           StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+
+                    var formattedTokens = tokens
+                                         .Select(x => x.Substring(0, 1).ToUpper() +
+                                                      x.Substring(1, x.Length - 1).ToLower())
+                                         .ToArray();
+
+                    return string.Join(' ', formattedTokens);
+                }
 
                 default: return str;
             }

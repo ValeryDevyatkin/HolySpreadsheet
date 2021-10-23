@@ -52,7 +52,7 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox Header = "Word Wrapper:">
+        <GroupBox Header = "Cell Wrapper:">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width = "*" />

@@ -37,7 +37,7 @@
                                              DataContext = "{Binding OutputParserConfiguration, Mode=OneTime}" />
 
         <GroupBox Grid.Row = "4"
-                  Header = "Text Case Style:">
+                  Header = "Cell Text Style:">
             <controls:EnumRadioGroup GroupValue = "{Binding OutputTextCase, Mode=TwoWay}" />
         </GroupBox>
 

@@ -26,7 +26,7 @@
                             Value = "{x:Static theme:UiSizes.OuterSpacingLeftThickness}" />
                 </Style>
             </WrapPanel.Resources>
-            <TextBlock Text = "Clipboard:"
+            <TextBlock Text = "Clipboard"
                        Style = "{StaticResource HeaderTextBlockStyle}" />
             <Button Content = "Process"
                     Command = "{Binding QuickProcessCommand, Mode=OneTime}" />

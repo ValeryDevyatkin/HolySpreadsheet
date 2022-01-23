@@ -1,7 +1,6 @@
-﻿using System;
-using System.Windows.Input;
-using BAJIEPA.Senticode.Wpf;
+﻿using System.Windows.Input;
 using BAJIEPA.Senticode.Wpf.Base;
+using Common.Enums;
 using Common.Interfaces;
 using Unity;
 
@@ -9,11 +8,29 @@ namespace ViewModels
 {
     public partial class MainViewModel
     {
-        private readonly Lazy<ParserConfigurationViewModel> _inputParserConfiguration =
-            new Lazy<ParserConfigurationViewModel>(
-                () => ServiceLocator.Container.Resolve<ParserConfigurationViewModel>());
+        #region Delimiter: DelimiterEnum
 
-        public ParserConfigurationViewModel InputParserConfiguration => _inputParserConfiguration.Value;
+        public DelimiterEnum Delimiter
+        {
+            get => _delimiter;
+            set => SetProperty(ref _delimiter, value);
+        }
+
+        private DelimiterEnum _delimiter;
+
+        #endregion
+
+        #region CustomDelimiter: string
+
+        public string CustomDelimiter
+        {
+            get => _customDelimiter;
+            set => SetProperty(ref _customDelimiter, value);
+        }
+
+        private string _customDelimiter;
+
+        #endregion
 
         #region HasEmptyCells: bool
 

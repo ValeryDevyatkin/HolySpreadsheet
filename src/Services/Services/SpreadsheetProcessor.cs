@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Common.Enums;
 using Common.Interfaces;
 using Common.Items;
@@ -11,22 +10,24 @@ namespace Services.Services
 {
     internal class SpreadsheetProcessor : ISpreadsheetProcessor
     {
+        private const string RowSeparator = "\r\n";
+
         private static readonly Dictionary<DelimiterEnum, string> InputDelimiterMap =
-            new Dictionary<DelimiterEnum, string>
+            new()
             {
-                {DelimiterEnum.Comma, ","},
-                {DelimiterEnum.Semicolon, ";"},
-                {DelimiterEnum.Tab, "\t"},
-                {DelimiterEnum.Whitespace, " "}
+                { DelimiterEnum.Comma, "," },
+                { DelimiterEnum.Semicolon, ";" },
+                { DelimiterEnum.Tab, "\t" },
+                { DelimiterEnum.Whitespace, " " }
             };
 
         private static readonly Dictionary<DelimiterEnum, string> OutputDelimiterMap =
-            new Dictionary<DelimiterEnum, string>
+            new()
             {
-                {DelimiterEnum.Comma, ", "},
-                {DelimiterEnum.Semicolon, "; "},
-                {DelimiterEnum.Tab, "\t"},
-                {DelimiterEnum.Whitespace, " "}
+                { DelimiterEnum.Comma, ", " },
+                { DelimiterEnum.Semicolon, "; " },
+                { DelimiterEnum.Tab, "\t" },
+                { DelimiterEnum.Whitespace, " " }
             };
 
         public SpreadsheetProcessor(IUnityContainer container)
@@ -34,33 +35,23 @@ namespace Services.Services
             container.RegisterInstance(this);
         }
 
-        public SpreadsheetProcessResult ProcessInput(string text, SpreadsheetInputProcessParameters parameters)
+        public SpreadsheetInputProcessResult ProcessInput(string text, SpreadsheetInputProcessParameters parameters)
         {
-            var result = new List<List<string>>();
+            var result = new List<string[]>();
             var maxRowLength = -1;
             var hasEmptyCells = false;
             var delimiter = parameters.Delimiter == DelimiterEnum.Custom ?
                                 parameters.CustomDelimiter :
                                 InputDelimiterMap[parameters.Delimiter];
 
-            var rows = text.Split("\r\n", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            var rows = text.Split(RowSeparator, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var row in rows)
             {
-                var editedRow = CutString(row, parameters.RowLeft, parameters.RowRight);
-
-                var words = editedRow.Split(
+                var words = row.Split(
                     delimiter, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-                var editedWords = new List<string>();
-
-                foreach (var word in words)
-                {
-                    var editedWord = CutString(word, parameters.WordLeft, parameters.WordRight);
-                    editedWords.Add(editedWord);
-                }
-
-                var rowLength = editedWords.Count;
+                var rowLength = words.Length;
 
                 if (maxRowLength == -1)
                 {
@@ -79,19 +70,19 @@ namespace Services.Services
                     }
                 }
 
-                if (editedWords.Count > 0)
+                if (words.Length > 0)
                 {
-                    result.Add(editedWords);
+                    result.Add(words);
                 }
             }
 
-            return new SpreadsheetProcessResult(result, result.Count, maxRowLength, hasEmptyCells);
+            return new SpreadsheetInputProcessResult(result, result.Count, maxRowLength, hasEmptyCells);
         }
 
-        public string ProcessOutput(IEnumerable<IEnumerable<string>> rows,
-                                    SpreadsheetOutputProcessParameters parameters)
+        public SpreadsheetOutputProcessResult ProcessOutput(IReadOnlyList<IEnumerable<string>> rows,
+                                                            SpreadsheetOutputProcessParameters parameters)
         {
-            var rowsBuilder = new StringBuilder();
+            var resultRows = new List<string>();
 
             var delimiter = parameters.Delimiter == DelimiterEnum.Custom ?
                                 parameters.CustomDelimiter :
@@ -99,85 +90,46 @@ namespace Services.Services
 
             foreach (var row in rows)
             {
-                var wordsBuilder = new StringBuilder();
-                var wordsEnumerator = row.GetEnumerator();
+                var words = new List<string>();
 
-                if (wordsEnumerator.MoveNext())
+                foreach (var word in row)
                 {
-                    wordsBuilder.Append(ApplyWordFormatting(wordsEnumerator.Current, parameters));
-
-                    while (wordsEnumerator.MoveNext())
-                    {
-                        wordsBuilder.Append(delimiter);
-                        wordsBuilder.Append(ApplyWordFormatting(wordsEnumerator.Current, parameters));
-                    }
+                    words.Add($"{parameters.WordLeft}{word}{parameters.WordRight}");
                 }
 
-                rowsBuilder.AppendLine($"{parameters.RowLeft}{wordsBuilder}{parameters.RowRight}");
+                resultRows.Add($"{parameters.RowLeft}{string.Join(delimiter, words)}{parameters.RowRight}");
             }
 
-            return rowsBuilder.ToString();
+            return new SpreadsheetOutputProcessResult
+            {
+                RowCount = rows.Count,
+                Text = string.Join(RowSeparator, resultRows)
+            };
         }
 
-        private static string ApplyWordFormatting(string str, SpreadsheetOutputProcessParameters parameters) =>
-            $"{parameters.WordLeft}{ApplyTextCaseFormatting(str, parameters.TextCase)}{parameters.WordRight}";
-
-        private static string ApplyTextCaseFormatting(string str, TextCaseEnum formatting)
+        public SpreadsheetOutputProcessResult RemoveRowDuplicates(string text)
         {
-            if (string.IsNullOrWhiteSpace(str))
+            if (string.IsNullOrWhiteSpace(text))
             {
-                return null;
+                throw new ArgumentException(nameof(text));
             }
 
-            switch (formatting)
+            var rows = text.Split(RowSeparator);
+            var distinctRows = rows.Distinct();
+            var rowCount = 0;
+            var resultRows = new List<string>();
+
+            foreach (var row in distinctRows)
             {
-                case TextCaseEnum.AllLower: return str.ToLower();
-                case TextCaseEnum.AllUpper: return str.ToUpper();
-
-                case TextCaseEnum.FirstUpper:
-                {
-                    var tokens = str.Split(InputDelimiterMap[DelimiterEnum.Whitespace],
-                                           StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-
-                    var formattedTokens = tokens
-                                         .Select(x => x.Substring(0, 1).ToUpper() +
-                                                      x.Substring(1, x.Length - 1).ToLower())
-                                         .ToArray();
-
-                    return string.Join(' ', formattedTokens);
-                }
-
-                default: return str;
-            }
-        }
-
-        private static string CutString(string str, string left, string right)
-        {
-            str = str?.Trim();
-            left = left?.Trim();
-            right = right?.Trim();
-
-            if (!string.IsNullOrEmpty(str) &&
-                !string.IsNullOrEmpty(left) &&
-                left.Length <= str.Length &&
-                str.IndexOf(left) == 0)
-            {
-                str = str.Substring(left.Length);
+                resultRows.Add(row);
+                rowCount++;
             }
 
-            if (!string.IsNullOrEmpty(str) &&
-                !string.IsNullOrEmpty(right) &&
-                right.Length <= str.Length)
+            return new SpreadsheetOutputProcessResult
             {
-                var leftSideLength = str.Length - right.Length;
-
-                if (str.IndexOf(right) == leftSideLength)
-                {
-                    str = str.Substring(0, leftSideLength);
-                }
-            }
-
-            return str?.Trim();
+                RowCount = rowCount,
+                Text = string.Join(RowSeparator, resultRows)
+            };
         }
     }
 }

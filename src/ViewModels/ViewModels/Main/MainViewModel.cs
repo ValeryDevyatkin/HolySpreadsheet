@@ -39,7 +39,7 @@ namespace ViewModels
             ClearAllCommand.Execute(null);
             CopyFromClipboardCommand.Execute(null);
             ProcessInputCommand.Execute(null);
-            ProcessOutputToSqlStringInsertCommand.Execute(null);
+            ProcessOutputToStringInsertCommand.Execute(null);
         }
 
         #endregion

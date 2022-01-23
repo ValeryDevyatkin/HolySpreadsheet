@@ -5,10 +5,12 @@ namespace Common.Interfaces
 {
     public interface ISpreadsheetProcessor
     {
-        SpreadsheetProcessResult ProcessInput(string text,
-                                              SpreadsheetInputProcessParameters parameters);
+        SpreadsheetInputProcessResult ProcessInput(string text,
+                                                   SpreadsheetInputProcessParameters parameters);
 
-        string ProcessOutput(IEnumerable<IEnumerable<string>> rows,
-                             SpreadsheetOutputProcessParameters parameters);
+        SpreadsheetOutputProcessResult ProcessOutput(IReadOnlyList<IEnumerable<string>> rows,
+                                                     SpreadsheetOutputProcessParameters parameters);
+
+        SpreadsheetOutputProcessResult RemoveRowDuplicates(string text);
     }
 }

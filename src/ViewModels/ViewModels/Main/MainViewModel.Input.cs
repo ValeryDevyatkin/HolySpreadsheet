@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using BAJIEPA.Senticode.Wpf.Base;
-using Common.Interfaces;
-using Unity;
 
 namespace ViewModels
 {
@@ -30,25 +27,11 @@ namespace ViewModels
 
         private void ExecuteCopyFromClipboard(object parameter)
         {
-            InputText = Clipboard.GetText();
-        }
+            var clipboardText = Clipboard.GetText();
 
-        #endregion
-
-        #region CopyFromFile command
-
-        public ICommand CopyFromFileCommand => _copyFromFileCommand ??=
-                                                   new AsyncCommand(ExecuteCopyFromFileAsync);
-
-        private AsyncCommand _copyFromFileCommand;
-
-        private async Task ExecuteCopyFromFileAsync(object parameter)
-        {
-            var readFromFileResult = await Container.Resolve<IFileDialogService>().ReadFromFileAsync();
-
-            if (!readFromFileResult.IsCancelled)
+            if (!string.IsNullOrWhiteSpace(clipboardText))
             {
-                InputText = readFromFileResult.Content;
+                InputText = clipboardText;
             }
         }
 

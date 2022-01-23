@@ -4,7 +4,6 @@ namespace Common.Items
 {
     public partial class SpreadsheetOutputProcessParameters
     {
-        public TextCaseEnum TextCase { get; set; }
         public DelimiterEnum Delimiter { get; set; }
         public string CustomDelimiter { get; set; }
         public string RowLeft { get; set; }
@@ -16,7 +15,7 @@ namespace Common.Items
     public partial class SpreadsheetOutputProcessParameters
     {
         public static SpreadsheetOutputProcessParameters QuickSqlStringInsertPreset =>
-            new SpreadsheetOutputProcessParameters
+            new()
             {
                 Delimiter = DelimiterEnum.Comma,
                 RowLeft = "(",
@@ -26,7 +25,7 @@ namespace Common.Items
             };
 
         public static SpreadsheetOutputProcessParameters QuickSqlNumericInsertPreset =>
-            new SpreadsheetOutputProcessParameters
+            new()
             {
                 Delimiter = DelimiterEnum.Comma,
                 RowLeft = "(",
@@ -36,7 +35,7 @@ namespace Common.Items
             };
 
         public static SpreadsheetOutputProcessParameters QuickSqlStringInPreset =>
-            new SpreadsheetOutputProcessParameters
+            new()
             {
                 Delimiter = DelimiterEnum.Comma,
                 RowRight = ",",
@@ -45,7 +44,7 @@ namespace Common.Items
             };
 
         public static SpreadsheetOutputProcessParameters QuickSqlNumericInPreset =>
-            new SpreadsheetOutputProcessParameters
+            new()
             {
                 Delimiter = DelimiterEnum.Comma,
                 RowRight = ","

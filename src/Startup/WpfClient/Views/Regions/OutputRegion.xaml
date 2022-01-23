@@ -7,12 +7,44 @@
              xmlns:controls = "clr-namespace:WpfClient.Views.Controls"
              xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
              xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:b = "http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviors = "clr-namespace:WpfClient.Wpf.Behaviors"
              mc:Ignorable = "d"
-             x:ClassModifier = "internal">
+             x:ClassModifier = "internal"
+             x:Name = "Root">
 
     <d:Control.DataContext>
         <viewModels:MainViewModel />
     </d:Control.DataContext>
+
+    <Control.Resources>
+        <ContextMenu x:Key = "OutputContextMenu">
+            <MenuItem Header = "Remove duplicates"
+                      Command = "{Binding Source={x:Reference Name=Root}, Path=DataContext.RemoveDuplicatesCommand, Mode=OneWay}">
+                <MenuItem.Style>
+                    <Style TargetType = "MenuItem">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding = "{Binding Source={x:Reference Name=Root}, Path=DataContext.OutputText, Converter={converters:EmptyOrWhitespaceStringToBoolConverter}}"
+                                Value = "False">
+                                <Setter Property = "IsEnabled"
+                                        Value = "False" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </MenuItem.Style>
+            </MenuItem>
+            <Separator />
+            <MenuItem Header = "('cell', 'cell'),"
+                      Command = "{Binding Source={x:Reference Name=Root}, Path=DataContext.ProcessOutputToStringInsertCommand, Mode=OneWay}" />
+            <MenuItem Header = "(cell, cell),"
+                      Command = "{Binding Source={x:Reference Name=Root}, Path=DataContext.ProcessOutputToNumericInsertCommand, Mode=OneWay}" />
+            <MenuItem Header = "'cell', 'cell',"
+                      Command = "{Binding Source={x:Reference Name=Root}, Path=DataContext.ProcessOutputToStringInCommand, Mode=OneWay}" />
+            <MenuItem Header = "cell, cell,"
+                      Command = "{Binding Source={x:Reference Name=Root}, Path=DataContext.ProcessOutputToNumericInCommand, Mode=OneWay}" />
+        </ContextMenu>
+    </Control.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -22,26 +54,17 @@
             <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
             <RowDefinition Height = "Auto" />
             <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
-            <RowDefinition Height = "Auto" />
-            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
             <RowDefinition Height = "*" />
-            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
-            <RowDefinition Height = "Auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row = "0"
                    Style = "{StaticResource HeaderTextBlockStyle}"
-                   Text = "Output Data" />
+                   Text = "Output" />
 
         <controls:ParserConfigurationControl Grid.Row = "2"
                                              DataContext = "{Binding OutputParserConfiguration, Mode=OneTime}" />
 
-        <GroupBox Grid.Row = "4"
-                  Header = "Cell Text Style:">
-            <controls:EnumRadioGroup GroupValue = "{Binding OutputTextCase, Mode=TwoWay}" />
-        </GroupBox>
-
-        <Grid Grid.Row = "6">
+        <Grid Grid.Row = "4">
             <Grid.Style>
                 <Style TargetType = "Grid"
                        BasedOn = "{StaticResource {x:Type Grid}}">
@@ -51,79 +74,65 @@
                             <Setter Property = "IsEnabled"
                                     Value = "False" />
                             <Setter Property = "ToolTip"
-                                    Value = "Grid data should not be empty." />
+                                    Value = "Grid should not be empty." />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width = "*" />
-                <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
-                <ColumnDefinition Width = "*" />
-                <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
-                <ColumnDefinition Width = "*" />
-            </Grid.ColumnDefinitions>
-
-            <Button Grid.Row = "0"
-                    Content = "Process"
+            <Button Content = "Process"
+                    Background = "{StaticResource ProcessButtonBackgroundBrush}"
                     Command = "{Binding ProcessOutputCommand, Mode=OneTime}" />
-
-            <Button Grid.Column = "2"
-                    Content = "('xxx', 'xxx'),"
-                    ToolTip = "('xxx', 'xxx', 'xxx'),"
-                    Command = "{Binding ProcessOutputToSqlStringInsertCommand, Mode=OneTime}" />
-
-            <Button Grid.Column = "4"
-                    Content = "(xxx, xxx),"
-                    ToolTip = "(xxx, xxx, xxx),"
-                    Command = "{Binding ProcessOutputToNumericInsertCommand, Mode=OneTime}" />
         </Grid>
 
-        <TextBox Grid.Row = "8"
-                 IsReadOnly = "True"
-                 VerticalScrollBarVisibility = "Auto"
-                 HorizontalScrollBarVisibility = "Auto"
-                 Text = "{Binding OutputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Grid.Row = "6"
+                 Text = "{Binding OutputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 ContextMenu = "{StaticResource OutputContextMenu}">
+            <b:Interaction.Behaviors>
+                <behaviors:UiElementClickBehavior Command = "{Binding CopyToClipboardCommand, Mode=OneTime}" />
+            </b:Interaction.Behaviors>
+            <TextBox.Style>
+                <Style TargetType = "TextBox"
+                       BasedOn = "{StaticResource DisplayBoxStyle}">
+                    <Style.Triggers>
+                        <DataTrigger Binding = "{Binding GridRowCount, Mode=OneWay}"
+                                     Value = "0">
+                            <Setter Property = "IsEnabled"
+                                    Value = "False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
 
-        <Grid Grid.Row = "10">
-
-            <Grid.Style>
-                <Style TargetType = "Grid"
-                       BasedOn = "{StaticResource {x:Type Grid}}">
+        <StackPanel Grid.Row = "6"
+                    Orientation = "Horizontal"
+                    VerticalAlignment = "Bottom"
+                    HorizontalAlignment = "Right">
+            <StackPanel.Style>
+                <Style TargetType = "StackPanel">
                     <Style.Triggers>
                         <DataTrigger
                             Binding = "{Binding OutputText, Mode=OneWay, Converter={converters:EmptyOrWhitespaceStringToBoolConverter}}"
                             Value = "False">
-                            <Setter Property = "IsEnabled"
-                                    Value = "False" />
-                            <Setter Property = "ToolTip"
-                                    Value = "Output data should not be empty." />
+                            <Setter Property = "Visibility"
+                                    Value = "Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Grid.Style>
+            </StackPanel.Style>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width = "*" />
-                <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
-                <ColumnDefinition Width = "*" />
-                <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
-                <ColumnDefinition Width = "*" />
-            </Grid.ColumnDefinitions>
+            <TextBlock FontWeight = "Bold"
+                       VerticalAlignment = "Bottom"
+                       Background = "{StaticResource ButtonBackgroundBrush}"
+                       Padding = "{x:Static theme:UiSizes.InnerSpacingThickness}"
+                       Text = "{Binding OutputRowCount, Mode=OneWay, StringFormat='{}Rows: {0}'}" />
 
-            <Button Grid.Column = "0"
-                    Content = "To Clipboard"
-                    Command = "{Binding CopyToClipboardCommand, Mode=OneTime}" />
-
-            <Button Grid.Column = "2"
-                    Content = "To File"
-                    Command = "{Binding CopyToFileCommand, Mode=OneTime}" />
-
-            <Button Grid.Column = "4"
-                    Content = "Clear"
-                    Command = "{Binding ClearOutputCommand, Mode=OneTime}" />
-        </Grid>
+            <Button Command = "{Binding ClearOutputCommand, Mode=OneTime}"
+                    Style = "{StaticResource ClearButtonStyle}">
+                <Image Source = "{StaticResource ClearIcon}" />
+            </Button>
+        </StackPanel>
     </Grid>
 
 </UserControl>

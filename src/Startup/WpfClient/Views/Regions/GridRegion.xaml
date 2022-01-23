@@ -7,6 +7,7 @@
              xmlns:controls = "clr-namespace:WpfClient.Views.Controls"
              xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
              xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:enums = "clr-namespace:Common.Enums;assembly=Common"
              mc:Ignorable = "d"
              x:ClassModifier = "internal">
 
@@ -23,19 +24,39 @@
             <RowDefinition Height = "Auto" />
             <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
             <RowDefinition Height = "*" />
-            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
-            <RowDefinition Height = "Auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row = "0"
                    Style = "{StaticResource HeaderTextBlockStyle}"
-                   Text = "Grid Data" />
+                   Text = "Grid" />
 
-        <controls:ParserConfigurationControl Grid.Row = "2"
-                                             DataContext = "{Binding InputParserConfiguration, Mode=OneTime}" />
+        <StackPanel Grid.Row = "2">
+            <GroupBox Header = "Delimiter:">
+                <controls:EnumRadioGroup GroupValue = "{Binding Delimiter, Mode=TwoWay}" />
+            </GroupBox>
+
+            <GroupBox Header = "Custom Delimiter:">
+                <GroupBox.Style>
+                    <Style TargetType = "GroupBox"
+                           BasedOn = "{StaticResource {x:Type GroupBox}}">
+                        <Setter Property = "Visibility"
+                                Value = "Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding = "{Binding Delimiter, Mode=OneWay}"
+                                         Value = "{x:Static enums:DelimiterEnum.Custom}">
+                                <Setter Property = "Visibility"
+                                        Value = "Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </GroupBox.Style>
+                <TextBox Text = "{Binding CustomDelimiter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </GroupBox>
+        </StackPanel>
 
         <Button Grid.Row = "4"
                 Content = "Process"
+                Background = "{StaticResource ProcessButtonBackgroundBrush}"
                 Command = "{Binding ProcessInputCommand, Mode=OneTime}">
 
             <Button.Style>
@@ -48,7 +69,7 @@
                             <Setter Property = "IsEnabled"
                                     Value = "False" />
                             <Setter Property = "ToolTip"
-                                    Value = "Input data should not be empty." />
+                                    Value = "Input should not be empty." />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -90,7 +111,7 @@
                         <DataTrigger Binding = "{Binding HasEmptyCells}"
                                      Value = "True">
                             <Setter Property = "ToolTip"
-                                    Value = "There are empty cells!" />
+                                    Value = "There are empty cells." />
                             <Setter Property = "BorderBrush"
                                     Value = "{StaticResource AlertBrush}" />
                         </DataTrigger>
@@ -99,24 +120,33 @@
             </DataGrid.Style>
         </DataGrid>
 
-        <Grid Grid.Row = "8">
-            <Grid.Style>
-                <Style TargetType = "Grid"
-                       BasedOn = "{StaticResource {x:Type Grid}}">
+        <StackPanel Grid.Row = "6"
+                    Orientation = "Horizontal"
+                    VerticalAlignment = "Bottom"
+                    HorizontalAlignment = "Right">
+            <StackPanel.Style>
+                <Style TargetType = "StackPanel">
                     <Style.Triggers>
                         <DataTrigger Binding = "{Binding GridRowCount, Mode=OneWay}"
                                      Value = "0">
-                            <Setter Property = "IsEnabled"
-                                    Value = "False" />
-                            <Setter Property = "ToolTip"
-                                    Value = "Grid data should not be empty." />
+                            <Setter Property = "Visibility"
+                                    Value = "Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Grid.Style>
-            <Button Content = "Clear"
-                    Command = "{Binding ClearGridCommand, Mode=OneTime}" />
-        </Grid>
+            </StackPanel.Style>
+
+            <TextBlock FontWeight = "Bold"
+                       VerticalAlignment = "Bottom"
+                       Background = "{StaticResource ButtonBackgroundBrush}"
+                       Padding = "{x:Static theme:UiSizes.InnerSpacingThickness}"
+                       Text = "{Binding GridRowCount, Mode=OneWay, StringFormat='{}Rows: {0}'}" />
+
+            <Button Command = "{Binding ClearGridCommand, Mode=OneTime}"
+                    Style = "{StaticResource ClearButtonStyle}">
+                <Image Source = "{StaticResource ClearIcon}" />
+            </Button>
+        </StackPanel>
     </Grid>
 
 </UserControl>

@@ -12,44 +12,50 @@
         <viewModels:MainViewModel />
     </d:UserControl.DataContext>
 
-    <UserControl.LayoutTransform>
-        <RotateTransform Angle = "-90" />
-    </UserControl.LayoutTransform>
-
     <Grid>
         <WrapPanel Orientation = "Horizontal"
-                   HorizontalAlignment = "Right">
+                   HorizontalAlignment = "Center"
+                   VerticalAlignment = "Top">
+            <WrapPanel.LayoutTransform>
+                <RotateTransform Angle = "-90" />
+            </WrapPanel.LayoutTransform>
             <WrapPanel.Resources>
                 <Style TargetType = "Button"
                        BasedOn = "{StaticResource {x:Type Button}}">
                     <Setter Property = "Margin"
                             Value = "{x:Static theme:UiSizes.OuterSpacingLeftThickness}" />
+                    <Setter Property = "Background"
+                            Value = "{StaticResource ProcessButtonBackgroundBrush}" />
                 </Style>
             </WrapPanel.Resources>
-            <TextBlock Text = "Clipboard"
+            <TextBlock Text = "Quick:"
+                       ToolTip = "Processes data from clipboard to Output using Grid settings."
                        Style = "{StaticResource HeaderTextBlockStyle}" />
             <Button Content = "Process"
+                    ToolTip = "Uses Grid and Output settings."
                     Command = "{Binding QuickProcessCommand, Mode=OneTime}" />
-            <Button Content = "('xxx', 'xxx'),"
-                    ToolTip = "('xxx', 'xxx', 'xxx'),"
+            <Button Content = "('cell', 'cell'),"
+                    ToolTip = "('cell', 'cell', 'cell'),"
                     Command = "{Binding QuickProcessSqlStringInsertCommand, Mode=OneTime}" />
-            <Button Content = "(xxx, xxx),"
-                    ToolTip = "(xxx, xxx, xxx),"
+            <Button Content = "(cell, cell),"
+                    ToolTip = "(cell, cell, cell),"
                     Command = "{Binding QuickProcessSqlNumericInsertCommand, Mode=OneTime}" />
-            <Button Content = "'xxx', 'xxx',"
-                    ToolTip = "'xxx', 'xxx', 'xxx',"
+            <Button Content = "'cell', 'cell',"
+                    ToolTip = "'cell', 'cell', 'cell',"
                     Command = "{Binding QuickProcessSqlStringInCommand, Mode=OneTime}" />
-            <Button Content = "xxx, xxx,"
-                    ToolTip = "xxx, xxx, xxx,"
+            <Button Content = "cell, cell,"
+                    ToolTip = "cell, cell, cell,"
                     Command = "{Binding QuickProcessSqlNumericInCommand, Mode=OneTime}" />
         </WrapPanel>
 
-        <Button Content = "Clear All"
-                HorizontalAlignment = "Left"
+        <Button ToolTip = "Clear all"
                 Command = "{Binding ClearAllCommand, Mode=OneTime}">
+            <Image Source = "{StaticResource ClearIcon}" />
             <Button.Style>
                 <Style TargetType = "Button"
-                       BasedOn = "{StaticResource {x:Type Button}}">
+                       BasedOn = "{StaticResource ClearButtonStyle}">
+                    <Setter Property = "Effect"
+                            Value = "{x:Null}" />
                     <Style.Triggers>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -63,10 +69,8 @@
                                     Value = "False" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
-                                <Setter Property = "IsEnabled"
-                                        Value = "False" />
-                                <Setter Property = "ToolTip"
-                                        Value = "Input, Grid or Output data should not be empty." />
+                                <Setter Property = "Visibility"
+                                        Value = "Hidden" />
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
                     </Style.Triggers>

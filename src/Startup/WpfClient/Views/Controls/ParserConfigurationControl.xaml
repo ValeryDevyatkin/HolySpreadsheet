@@ -11,61 +11,111 @@
              x:ClassModifier = "internal">
 
     <d:Control.DataContext>
-        <viewModels:ParserConfigurationViewModel />
+        <viewModels:ParserOutputConfigurationViewModel />
     </d:Control.DataContext>
 
-    <StackPanel Orientation = "Vertical">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
+            <RowDefinition Height = "Auto" />
+        </Grid.RowDefinitions>
 
-        <GroupBox Header = "Delimiter:">
-            <controls:EnumRadioGroup GroupValue = "{Binding Delimiter, Mode=TwoWay}" />
-        </GroupBox>
 
-        <GroupBox Header = "Custom Delimiter:">
-            <GroupBox.Style>
-                <Style TargetType = "GroupBox"
-                       BasedOn = "{StaticResource {x:Type GroupBox}}">
-                    <Setter Property = "Visibility"
-                            Value = "Collapsed" />
-                    <Style.Triggers>
-                        <DataTrigger Binding = "{Binding Delimiter, Mode=OneWay}"
-                                     Value = "{x:Static enums:DelimiterEnum.Custom}">
-                            <Setter Property = "Visibility"
-                                    Value = "Visible" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </GroupBox.Style>
-            <TextBox Text = "{Binding CustomDelimiter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        </GroupBox>
+        <StackPanel Grid.Row = "0">
+            <GroupBox Header = "Delimiter:">
+                <controls:EnumRadioGroup GroupValue = "{Binding Delimiter, Mode=TwoWay}" />
+            </GroupBox>
 
-        <GroupBox Header = "Row Wrapper:">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width = "*" />
-                    <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
-                    <ColumnDefinition Width = "*" />
-                </Grid.ColumnDefinitions>
-                <TextBox Grid.Column = "0"
-                         Text = "{Binding RowLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Grid.Column = "2"
-                         Text = "{Binding RowRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            </Grid>
-        </GroupBox>
+            <GroupBox Header = "Custom Delimiter:">
+                <GroupBox.Style>
+                    <Style TargetType = "GroupBox"
+                           BasedOn = "{StaticResource {x:Type GroupBox}}">
+                        <Setter Property = "Visibility"
+                                Value = "Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding = "{Binding Delimiter, Mode=OneWay}"
+                                         Value = "{x:Static enums:DelimiterEnum.Custom}">
+                                <Setter Property = "Visibility"
+                                        Value = "Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </GroupBox.Style>
+                <TextBox Text = "{Binding CustomDelimiter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </GroupBox>
+        </StackPanel>
 
-        <GroupBox Header = "Cell Wrapper:">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width = "*" />
-                    <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
-                    <ColumnDefinition Width = "*" />
-                </Grid.ColumnDefinitions>
-                <TextBox Grid.Column = "0"
-                         Text = "{Binding WordLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Grid.Column = "2"
-                         Text = "{Binding WordRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            </Grid>
-        </GroupBox>
+        <StackPanel Grid.Row = "2">
+            <GroupBox Header = "Row wrapper:">
+                <controls:EnumRadioGroup GroupValue = "{Binding RowWrapper, Mode=TwoWay}" />
+            </GroupBox>
 
-    </StackPanel>
+            <GroupBox Header = "Custom row wrapper:">
+                <GroupBox.Style>
+                    <Style TargetType = "GroupBox"
+                           BasedOn = "{StaticResource {x:Type GroupBox}}">
+                        <Setter Property = "Visibility"
+                                Value = "Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding = "{Binding RowWrapper, Mode=OneWay}"
+                                         Value = "{x:Static enums:RowWrapperEnum.Custom}">
+                                <Setter Property = "Visibility"
+                                        Value = "Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </GroupBox.Style>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "*" />
+                        <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
+                        <ColumnDefinition Width = "*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column = "0"
+                             Text = "{Binding RowLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Grid.Column = "2"
+                             Text = "{Binding RowRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+
+        <StackPanel Grid.Row = "4">
+            <GroupBox Header = "Cell wrapper:">
+                <controls:EnumRadioGroup GroupValue = "{Binding CellWrapper, Mode=TwoWay}" />
+            </GroupBox>
+
+            <GroupBox Header = "Custom cell wrapper:">
+                <GroupBox.Style>
+                    <Style TargetType = "GroupBox"
+                           BasedOn = "{StaticResource {x:Type GroupBox}}">
+                        <Setter Property = "Visibility"
+                                Value = "Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding = "{Binding CellWrapper, Mode=OneWay}"
+                                         Value = "{x:Static enums:CellWrapperEnum.Custom}">
+                                <Setter Property = "Visibility"
+                                        Value = "Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </GroupBox.Style>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "*" />
+                        <ColumnDefinition Width = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
+                        <ColumnDefinition Width = "*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column = "0"
+                             Text = "{Binding WordLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Grid.Column = "2"
+                             Text = "{Binding WordRight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+            </GroupBox>
+        </StackPanel>
+
+    </Grid>
 
 </UserControl>

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using BAJIEPA.Senticode.Wpf;
 using BAJIEPA.Senticode.Wpf.Base;
-using Common.Enums;
 using Common.Interfaces;
 using Common.Items;
 using Unity;
@@ -13,23 +11,10 @@ namespace ViewModels
 {
     public partial class MainViewModel
     {
-        private readonly Lazy<ParserConfigurationViewModel> _outputParserConfigurationLazy =
-            new Lazy<ParserConfigurationViewModel>(
-                () => ServiceLocator.Container.Resolve<ParserConfigurationViewModel>());
+        private readonly Lazy<ParserOutputConfigurationViewModel> _outputParserConfigurationLazy =
+            new(() => ServiceLocator.Container.Resolve<ParserOutputConfigurationViewModel>());
 
-        public ParserConfigurationViewModel OutputParserConfiguration => _outputParserConfigurationLazy.Value;
-
-        #region OutputTextCase: TextCaseEnum
-
-        public TextCaseEnum OutputTextCase
-        {
-            get => _outputTextCase;
-            set => SetProperty(ref _outputTextCase, value);
-        }
-
-        private TextCaseEnum _outputTextCase;
-
-        #endregion
+        public ParserOutputConfigurationViewModel OutputParserConfiguration => _outputParserConfigurationLazy.Value;
 
         #region OutputText: string
 
@@ -40,6 +25,18 @@ namespace ViewModels
         }
 
         private string _outputText;
+
+        #endregion
+
+        #region OutputRowCount: int
+
+        public int OutputRowCount
+        {
+            get => _outputRowCount;
+            set => SetProperty(ref _outputRowCount, value);
+        }
+
+        private int _outputRowCount;
 
         #endregion
 
@@ -73,17 +70,17 @@ namespace ViewModels
 
             var parameters = this.GetOutputProcessParameters();
             var rows = Container.Resolve<IDataGridService>().GetRows();
-            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
+            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters));
         }
 
         #endregion
 
-        #region ProcessOutputToSqlStringInsert command
+        #region ProcessOutputToStringInsert command
 
-        public ICommand ProcessOutputToSqlStringInsertCommand => _processOutputToSqlStringInsertCommand ??=
-                                                                     new Command(ExecuteProcessOutputToSqlStringInsert);
+        public ICommand ProcessOutputToStringInsertCommand => _processOutputToStringInsertCommand ??=
+                                                                  new Command(ExecuteProcessOutputToSqlStringInsert);
 
-        private Command _processOutputToSqlStringInsertCommand;
+        private Command _processOutputToStringInsertCommand;
 
         private void ExecuteProcessOutputToSqlStringInsert(object parameter)
         {
@@ -93,9 +90,8 @@ namespace ViewModels
             }
 
             var parameters = SpreadsheetOutputProcessParameters.QuickSqlStringInsertPreset;
-            parameters.TextCase = OutputTextCase;
             var rows = Container.Resolve<IDataGridService>().GetRows();
-            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
+            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters));
         }
 
         #endregion
@@ -115,9 +111,8 @@ namespace ViewModels
             }
 
             var parameters = SpreadsheetOutputProcessParameters.QuickSqlNumericInsertPreset;
-            parameters.TextCase = OutputTextCase;
             var rows = Container.Resolve<IDataGridService>().GetRows();
-            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
+            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters));
         }
 
         #endregion
@@ -137,9 +132,8 @@ namespace ViewModels
             }
 
             var parameters = SpreadsheetOutputProcessParameters.QuickSqlStringInPreset;
-            parameters.TextCase = OutputTextCase;
             var rows = Container.Resolve<IDataGridService>().GetRows();
-            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
+            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters));
         }
 
         #endregion
@@ -159,9 +153,8 @@ namespace ViewModels
             }
 
             var parameters = SpreadsheetOutputProcessParameters.QuickSqlNumericInPreset;
-            parameters.TextCase = OutputTextCase;
             var rows = Container.Resolve<IDataGridService>().GetRows();
-            OutputText = Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters);
+            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters));
         }
 
         #endregion
@@ -175,21 +168,24 @@ namespace ViewModels
 
         private void ExecuteCopyToClipboard(object parameter)
         {
-            Clipboard.SetText(OutputText);
+            if (!string.IsNullOrWhiteSpace(OutputText))
+            {
+                Clipboard.SetText(OutputText);
+            }
         }
 
         #endregion
 
-        #region CopyToFile command
+        #region RemoveDuplicates command
 
-        public ICommand CopyToFileCommand => _copyToFileCommand ??=
-                                                 new AsyncCommand(ExecuteCopyToFileAsync);
+        public ICommand RemoveDuplicatesCommand => _removeDuplicatesCommand ??=
+                                                       new Command(ExecuteRemoveDuplicates);
 
-        private AsyncCommand _copyToFileCommand;
+        private Command _removeDuplicatesCommand;
 
-        private async Task ExecuteCopyToFileAsync(object parameter)
+        private void ExecuteRemoveDuplicates(object parameter)
         {
-            await Container.Resolve<IFileDialogService>().SaveToFileAsync(OutputText);
+            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().RemoveRowDuplicates(OutputText));
         }
 
         #endregion

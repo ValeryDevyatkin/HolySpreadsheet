@@ -4,9 +4,9 @@ using Unity;
 
 namespace ViewModels
 {
-    public class ParserConfigurationViewModel : ViewModelBase
+    public class ParserOutputConfigurationViewModel : ViewModelBase
     {
-        public ParserConfigurationViewModel(IUnityContainer container) : base(container)
+        public ParserOutputConfigurationViewModel(IUnityContainer container) : base(container)
         {
         }
 
@@ -31,6 +31,30 @@ namespace ViewModels
         }
 
         private string _customDelimiter;
+
+        #endregion
+
+        #region RowWrapper: RowWrapperEnum
+
+        public RowWrapperEnum RowWrapper
+        {
+            get => _rowWrapper;
+            set => SetProperty(ref _rowWrapper, value);
+        }
+
+        private RowWrapperEnum _rowWrapper;
+
+        #endregion
+
+        #region CellWrapper: CellWrapperEnum
+
+        public CellWrapperEnum CellWrapper
+        {
+            get => _cellWrapper;
+            set => SetProperty(ref _cellWrapper, value);
+        }
+
+        private CellWrapperEnum _cellWrapper;
 
         #endregion
 

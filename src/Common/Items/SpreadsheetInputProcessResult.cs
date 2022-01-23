@@ -2,9 +2,9 @@
 
 namespace Common.Items
 {
-    public class SpreadsheetProcessResult
+    public class SpreadsheetInputProcessResult
     {
-        public SpreadsheetProcessResult(IEnumerable<IEnumerable<string>> rows,
+        public SpreadsheetInputProcessResult(IEnumerable<IEnumerable<string>> rows,
                                         int rowCount,
                                         int columnCount,
                                         bool hasEmptyCells)

@@ -7,7 +7,7 @@ namespace ViewModels
         public static void Init(IUnityContainer container)
         {
             container
-               .RegisterType<ParserConfigurationViewModel>()
+               .RegisterType<ParserOutputConfigurationViewModel>()
                 ;
         }
     }

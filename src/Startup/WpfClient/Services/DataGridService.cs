@@ -18,7 +18,7 @@ namespace WpfClient.Services
             _container = container.RegisterInstance(this);
         }
 
-        public void PopulateRows(SpreadsheetProcessResult spreadsheet)
+        public void PopulateRows(SpreadsheetInputProcessResult spreadsheet)
         {
             if (spreadsheet == null)
             {
@@ -30,12 +30,12 @@ namespace WpfClient.Services
 
             for (var i = 0; i < spreadsheet.ColumnCount; i++)
             {
-                var columnNumber = i.ToString();
+                var columnNumber = (i + 1).ToString();
 
                 dataGrid.Columns.Add(new DataGridTextColumn
                 {
                     Header = columnNumber,
-                    Binding = new Binding($"[{columnNumber}]") {Mode = BindingMode.OneTime},
+                    Binding = new Binding($"[{i}]") { Mode = BindingMode.OneTime },
                     IsReadOnly = true
                 });
             }
@@ -43,7 +43,7 @@ namespace WpfClient.Services
             foreach (var cells in spreadsheet.Rows)
             {
                 var words = new string[spreadsheet.ColumnCount];
-                var enumerator = cells.GetEnumerator();
+                using var enumerator = cells.GetEnumerator();
 
                 for (var i = 0; i < spreadsheet.ColumnCount; i++)
                 {
@@ -54,21 +54,24 @@ namespace WpfClient.Services
             }
         }
 
-        public IEnumerable<IEnumerable<string>> GetRows()
-        {
-            var dataGrid = _container.Resolve<GridRegion>().DataGrid;
-
-            foreach (var item in dataGrid.Items)
-            {
-                yield return (IEnumerable<string>) item;
-            }
-        }
-
         public void Clear()
         {
             var dataGrid = _container.Resolve<GridRegion>().DataGrid;
             dataGrid.Items.Clear();
             dataGrid.Columns.Clear();
+        }
+
+        public IReadOnlyList<IEnumerable<string>> GetRows()
+        {
+            var dataGrid = _container.Resolve<GridRegion>().DataGrid;
+            var result = new List<IEnumerable<string>>();
+
+            foreach (var item in dataGrid.Items)
+            {
+                result.Add((IEnumerable<string>)item);
+            }
+
+            return result;
         }
     }
 }

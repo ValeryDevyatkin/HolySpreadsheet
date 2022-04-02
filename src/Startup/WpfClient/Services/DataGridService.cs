@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
+using System.Linq;
 using System.Windows.Data;
 using Common.Interfaces;
 using Common.Items;
 using Unity;
+using WpfClient.Views.Controls;
 using WpfClient.Views.Regions;
 
 namespace WpfClient.Services
@@ -32,7 +33,7 @@ namespace WpfClient.Services
             {
                 var columnNumber = (i + 1).ToString();
 
-                dataGrid.Columns.Add(new DataGridTextColumn
+                dataGrid.Columns.Add(new CustomDataGridTextColumn
                 {
                     Header = columnNumber,
                     Binding = new Binding($"[{i}]") { Mode = BindingMode.OneTime },
@@ -61,17 +62,40 @@ namespace WpfClient.Services
             dataGrid.Columns.Clear();
         }
 
-        public IReadOnlyList<IEnumerable<string>> GetRows()
+        public GridParsingResult GetRows()
         {
             var dataGrid = _container.Resolve<GridRegion>().DataGrid;
-            var result = new List<IEnumerable<string>>();
+            var rows = new List<List<string>>();
+
+            var activeOrderedColumns = dataGrid.Columns
+                                               .OfType<CustomDataGridTextColumn>()
+                                               .OrderBy(x => x.DisplayIndex)
+                                               .Where(x => !x.IsDeactivated)
+                                               .Select(x => new ColumnInfo
+                                                {
+                                                    Index = int.Parse((string)x.Header) - 1,
+                                                    IsFormattingDisabled = x.IsFormattingDeactivated
+                                                })
+                                               .ToArray();
 
             foreach (var item in dataGrid.Items)
             {
-                result.Add((IEnumerable<string>)item);
+                var sourceItems = (string[])item;
+                var orderedItems = new List<string>();
+
+                for (var i = 0; i < activeOrderedColumns.Length; i++)
+                {
+                    orderedItems.Add(sourceItems[activeOrderedColumns[i].Index]);
+                }
+
+                rows.Add(orderedItems);
             }
 
-            return result;
+            return new GridParsingResult
+            {
+                Rows = rows,
+                ColumnInfo = activeOrderedColumns
+            };
         }
     }
 }

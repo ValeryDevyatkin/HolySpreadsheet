@@ -3,7 +3,7 @@ using Common.Items;
 
 namespace ViewModels
 {
-    internal static class MainViewModelEx
+    internal static partial class MainViewModelEx
     {
         public static SpreadsheetOutputProcessParameters GetOutputProcessParameters(this MainViewModel item)
         {

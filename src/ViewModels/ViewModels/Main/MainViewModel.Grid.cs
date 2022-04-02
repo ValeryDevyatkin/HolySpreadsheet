@@ -1,8 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using BAJIEPA.Senticode.Wpf.Base;
+using Common.Constants;
 using Common.Enums;
-using Common.Interfaces;
-using Unity;
 
 namespace ViewModels
 {
@@ -37,7 +37,7 @@ namespace ViewModels
         public bool HasEmptyCells
         {
             get => _hasEmptyCells;
-            private set => SetProperty(ref _hasEmptyCells, value);
+            internal set => SetProperty(ref _hasEmptyCells, value);
         }
 
         private bool _hasEmptyCells;
@@ -49,7 +49,7 @@ namespace ViewModels
         public int GridRowCount
         {
             get => _gridRowCount;
-            private set => SetProperty(ref _gridRowCount, value);
+            internal set => SetProperty(ref _gridRowCount, value);
         }
 
         private int _gridRowCount;
@@ -59,22 +59,14 @@ namespace ViewModels
         #region ProcessInput command
 
         public ICommand ProcessInputCommand => _processInputCommand ??=
-                                                   new Command(ExecuteProcessInput);
+            new AsyncCommand(ExecuteProcessInputAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.ProcessInput);
 
-        private Command _processInputCommand;
+        private AsyncCommand _processInputCommand;
 
-        private void ExecuteProcessInput(object parameter)
+        private async Task ExecuteProcessInputAsync(object parameter)
         {
-            if (string.IsNullOrWhiteSpace(InputText))
-            {
-                return;
-            }
-
-            var parameters = this.GetInputProcessParameters();
-            var spreadsheet = Container.Resolve<ISpreadsheetProcessor>().ProcessInput(InputText, parameters);
-            HasEmptyCells = spreadsheet.HasEmptyCells;
-            GridRowCount = spreadsheet.RowCount;
-            Container.Resolve<IDataGridService>().PopulateRows(spreadsheet);
+            await this.ProcessInputAsync();
         }
 
         #endregion
@@ -82,15 +74,13 @@ namespace ViewModels
         #region ClearGrid command
 
         public ICommand ClearGridCommand => _clearGridCommand ??=
-                                                new Command(ExecuteClearGrid);
+            new Command(ExecuteClearGrid);
 
         private Command _clearGridCommand;
 
         private void ExecuteClearGrid(object parameter)
         {
-            HasEmptyCells = false;
-            GridRowCount = 0;
-            Container.Resolve<IDataGridService>().Clear();
+            this.ClearGrid();
         }
 
         #endregion

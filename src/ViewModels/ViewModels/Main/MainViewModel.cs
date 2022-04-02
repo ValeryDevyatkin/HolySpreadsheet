@@ -1,5 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using BAJIEPA.Senticode.Wpf.Base;
+using Common.Constants;
 using Unity;
 
 namespace ViewModels
@@ -10,19 +12,44 @@ namespace ViewModels
         {
         }
 
+        #region IsPreLoaderVisible: bool
+
+        public bool IsPreLoaderVisible
+        {
+            get => _isPreLoaderVisible;
+            set => SetProperty(ref _isPreLoaderVisible, value);
+        }
+
+        private bool _isPreLoaderVisible;
+
+        #endregion
+
+        #region ProgressText: string
+
+        public string ProgressText
+        {
+            get => _progressText;
+            set => SetProperty(ref _progressText, value);
+        }
+
+        private string _progressText;
+
+        #endregion
+
         #region QuickProcess command
 
         public ICommand QuickProcessCommand => _quickProcessCommand ??=
-                                                   new Command(ExecuteQuickProcess);
+            new AsyncCommand(ExecuteQuickProcessAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.QuickProcess);
 
-        private Command _quickProcessCommand;
+        private AsyncCommand _quickProcessCommand;
 
-        private void ExecuteQuickProcess(object parameter)
+        private async Task ExecuteQuickProcessAsync(object parameter)
         {
-            ClearAllCommand.Execute(null);
-            CopyFromClipboardCommand.Execute(null);
-            ProcessInputCommand.Execute(null);
-            ProcessOutputCommand.Execute(null);
+            this.ClearAll();
+            this.CopyFromClipboard();
+            await this.ProcessInputAsync();
+            await this.ProcessOutputAsync();
         }
 
         #endregion
@@ -30,16 +57,17 @@ namespace ViewModels
         #region QuickProcessSqlStringInsert command
 
         public ICommand QuickProcessSqlStringInsertCommand => _quickProcessSqlStringInsertCommand ??=
-                                                                  new Command(ExecuteQuickProcessSqlStringInsert);
+            new AsyncCommand(ExecuteQuickProcessSqlStringInsertAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.QuickProcess);
 
-        private Command _quickProcessSqlStringInsertCommand;
+        private AsyncCommand _quickProcessSqlStringInsertCommand;
 
-        private void ExecuteQuickProcessSqlStringInsert(object parameter)
+        private async Task ExecuteQuickProcessSqlStringInsertAsync(object parameter)
         {
-            ClearAllCommand.Execute(null);
-            CopyFromClipboardCommand.Execute(null);
-            ProcessInputCommand.Execute(null);
-            ProcessOutputToStringInsertCommand.Execute(null);
+            this.ClearAll();
+            this.CopyFromClipboard();
+            await this.ProcessInputAsync();
+            await this.ProcessOutputToStringInsertAsync();
         }
 
         #endregion
@@ -47,16 +75,17 @@ namespace ViewModels
         #region QuickProcessSqlNumericInsert command
 
         public ICommand QuickProcessSqlNumericInsertCommand => _quickProcessSqlNumericInsertCommand ??=
-                                                                   new Command(ExecuteQuickProcessSqlNumericInsert);
+            new AsyncCommand(ExecuteQuickProcessSqlNumericInsertAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.QuickProcess);
 
-        private Command _quickProcessSqlNumericInsertCommand;
+        private AsyncCommand _quickProcessSqlNumericInsertCommand;
 
-        private void ExecuteQuickProcessSqlNumericInsert(object parameter)
+        private async Task ExecuteQuickProcessSqlNumericInsertAsync(object parameter)
         {
-            ClearAllCommand.Execute(null);
-            CopyFromClipboardCommand.Execute(null);
-            ProcessInputCommand.Execute(null);
-            ProcessOutputToNumericInsertCommand.Execute(null);
+            this.ClearAll();
+            this.CopyFromClipboard();
+            await this.ProcessInputAsync();
+            await this.ProcessOutputToNumericInsertAsync();
         }
 
         #endregion
@@ -64,16 +93,17 @@ namespace ViewModels
         #region QuickProcessSqlStringIn command
 
         public ICommand QuickProcessSqlStringInCommand => _quickProcessSqlStringInCommand ??=
-                                                              new Command(ExecuteQuickProcessSqlStringIn);
+            new AsyncCommand(ExecuteQuickProcessSqlStringInAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.QuickProcess);
 
-        private Command _quickProcessSqlStringInCommand;
+        private AsyncCommand _quickProcessSqlStringInCommand;
 
-        private void ExecuteQuickProcessSqlStringIn(object parameter)
+        private async Task ExecuteQuickProcessSqlStringInAsync(object parameter)
         {
-            ClearAllCommand.Execute(null);
-            CopyFromClipboardCommand.Execute(null);
-            ProcessInputCommand.Execute(null);
-            ProcessOutputToStringInCommand.Execute(null);
+            this.ClearAll();
+            this.CopyFromClipboard();
+            await this.ProcessInputAsync();
+            await this.ProcessOutputToStringInAsync();
         }
 
         #endregion
@@ -81,16 +111,17 @@ namespace ViewModels
         #region QuickProcessSqlNumericIn command
 
         public ICommand QuickProcessSqlNumericInCommand => _quickProcessSqlNumericInCommand ??=
-                                                               new Command(ExecuteQuickProcessSqlNumericIn);
+            new AsyncCommand(ExecuteQuickProcessSqlNumericInAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.QuickProcess);
 
-        private Command _quickProcessSqlNumericInCommand;
+        private AsyncCommand _quickProcessSqlNumericInCommand;
 
-        private void ExecuteQuickProcessSqlNumericIn(object parameter)
+        private async Task ExecuteQuickProcessSqlNumericInAsync(object parameter)
         {
-            ClearAllCommand.Execute(null);
-            CopyFromClipboardCommand.Execute(null);
-            ProcessInputCommand.Execute(null);
-            ProcessOutputToNumericInCommand.Execute(null);
+            this.ClearAll();
+            this.CopyFromClipboard();
+            await this.ProcessInputAsync();
+            await this.ProcessOutputToNumericInAsync();
         }
 
         #endregion
@@ -98,15 +129,13 @@ namespace ViewModels
         #region ClearAll command
 
         public ICommand ClearAllCommand => _clearAllCommand ??=
-                                               new Command(ExecuteClearAll);
+            new Command(ExecuteClearAll);
 
         private Command _clearAllCommand;
 
         private void ExecuteClearAll(object parameter)
         {
-            ClearOutputCommand.Execute(null);
-            ClearGridCommand.Execute(null);
-            ClearInputCommand.Execute(null);
+            this.ClearAll();
         }
 
         #endregion

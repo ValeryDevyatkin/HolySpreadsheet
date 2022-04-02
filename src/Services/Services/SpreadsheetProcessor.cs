@@ -24,8 +24,8 @@ namespace Services.Services
         private static readonly Dictionary<DelimiterEnum, string> OutputDelimiterMap =
             new()
             {
-                { DelimiterEnum.Comma, ", " },
-                { DelimiterEnum.Semicolon, "; " },
+                { DelimiterEnum.Comma, "," },
+                { DelimiterEnum.Semicolon, ";" },
                 { DelimiterEnum.Tab, "\t" },
                 { DelimiterEnum.Whitespace, " " }
             };
@@ -40,17 +40,20 @@ namespace Services.Services
             var result = new List<string[]>();
             var maxRowLength = -1;
             var hasEmptyCells = false;
+
             var delimiter = parameters.Delimiter == DelimiterEnum.Custom ?
-                                parameters.CustomDelimiter :
-                                InputDelimiterMap[parameters.Delimiter];
+                parameters.CustomDelimiter :
+                InputDelimiterMap[parameters.Delimiter];
+
+            var splitOptions = parameters.Delimiter == DelimiterEnum.Whitespace ?
+                StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries :
+                StringSplitOptions.TrimEntries;
 
             var rows = text.Split(RowSeparator, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var row in rows)
             {
-                var words = row.Split(
-                    delimiter, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-
+                var words = row.Split(delimiter, splitOptions);
                 var rowLength = words.Length;
 
                 if (maxRowLength == -1)
@@ -79,22 +82,36 @@ namespace Services.Services
             return new SpreadsheetInputProcessResult(result, result.Count, maxRowLength, hasEmptyCells);
         }
 
-        public SpreadsheetOutputProcessResult ProcessOutput(IReadOnlyList<IEnumerable<string>> rows,
-                                                            SpreadsheetOutputProcessParameters parameters)
+        public SpreadsheetOutputProcessResult ProcessOutput(GridParsingResult gridParsingResult,
+            SpreadsheetOutputProcessParameters parameters)
         {
             var resultRows = new List<string>();
+            var rows = gridParsingResult.Rows;
+            var columnInfo = gridParsingResult.ColumnInfo;
 
             var delimiter = parameters.Delimiter == DelimiterEnum.Custom ?
-                                parameters.CustomDelimiter :
-                                OutputDelimiterMap[parameters.Delimiter];
+                parameters.CustomDelimiter :
+                OutputDelimiterMap[parameters.Delimiter];
 
             foreach (var row in rows)
             {
                 var words = new List<string>();
 
-                foreach (var word in row)
+                for (var i = 0; i < columnInfo.Count; i++)
                 {
-                    words.Add($"{parameters.WordLeft}{word}{parameters.WordRight}");
+                    var word = row[i];
+                    string formattedWord;
+
+                    if (columnInfo[i].IsFormattingDisabled)
+                    {
+                        formattedWord = word;
+                    }
+                    else
+                    {
+                        formattedWord = $"{parameters.WordLeft}{word}{parameters.WordRight}";
+                    }
+
+                    words.Add(formattedWord);
                 }
 
                 resultRows.Add($"{parameters.RowLeft}{string.Join(delimiter, words)}{parameters.RowRight}");

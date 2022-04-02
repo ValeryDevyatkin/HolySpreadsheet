@@ -16,12 +16,52 @@
         Height = "520"
         Width = "1000">
 
+    <Control.Resources>
+
+    </Control.Resources>
+
     <d:Control.DataContext>
         <viewModels:MainViewModel />
     </d:Control.DataContext>
 
-    <Grid Margin = "{x:Static theme:UiSizes.OuterSpacingThickness}">
-        <views:MainRegion />
+    <Grid>
+        <Grid Margin = "{x:Static theme:UiSizes.OuterSpacingThickness}">
+            <views:MainRegion />
+        </Grid>
+
+        <!--PRE_LOADER-->
+        <Grid Cursor = "Wait">
+            <Grid.Style>
+                <Style TargetType = "Grid">
+                    <Style.Triggers>
+                        <DataTrigger Binding = "{Binding IsPreLoaderVisible}"
+                                     Value = "False">
+                            <Setter Property = "Visibility"
+                                    Value = "Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid Background = "{StaticResource BlackBrush}"
+                  Opacity = "{StaticResource DisabledOpacity}">
+                <Border CornerRadius = "20"
+                        Padding = "13 5 13 5"
+                        Background = "{StaticResource ProcessButtonBackgroundBrush}"
+                        VerticalAlignment = "Center"
+                        HorizontalAlignment = "Center">
+                    <TextBlock Text = "{Binding ProgressText, Mode=OneWay}"
+                               FontSize = "{StaticResource PreLoaderFontSize}"
+                               Foreground = "Transparent"
+                               VerticalAlignment = "Center"
+                               HorizontalAlignment = "Center" />
+                </Border>
+            </Grid>
+            <TextBlock Text = "{Binding ProgressText, Mode=OneWay}"
+                       Foreground = "{StaticResource BlackBrush}"
+                       FontSize = "{StaticResource PreLoaderFontSize}"
+                       VerticalAlignment = "Center"
+                       HorizontalAlignment = "Center" />
+        </Grid>
     </Grid>
 
 </Window>

@@ -89,7 +89,7 @@
                  Text = "{Binding OutputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  ContextMenu = "{StaticResource OutputContextMenu}">
             <b:Interaction.Behaviors>
-                <behaviors:UiElementClickBehavior Command = "{Binding CopyToClipboardCommand, Mode=OneTime}" />
+                <behaviors:TextBoxClickBehavior Command = "{Binding CopyToClipboardCommand, Mode=OneTime}" />
             </b:Interaction.Behaviors>
             <TextBox.Style>
                 <Style TargetType = "TextBox"

@@ -25,7 +25,7 @@ namespace WpfClient.Services
         {
             if (string.IsNullOrWhiteSpace(text))
             {
-                throw new ArgumentNullException(nameof(text));
+                throw new ArgumentException(nameof(text));
             }
 
             var dialog = new SaveFileDialog

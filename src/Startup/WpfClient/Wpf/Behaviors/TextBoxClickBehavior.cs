@@ -1,11 +1,13 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors;
 
 namespace WpfClient.Wpf.Behaviors
 {
-    internal class UiElementClickBehavior : Behavior<UIElement>
+    public class TextBoxClickBehavior : Behavior<TextBox>
     {
+        private const string TextBoxViewTypeName = "TextBoxView";
         private bool _isCanBeFired;
 
         protected override void OnAttached()
@@ -26,11 +28,21 @@ namespace WpfClient.Wpf.Behaviors
 
         private void AssociatedObjectOnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (e.OriginalSource.GetType().Name != TextBoxViewTypeName)
+            {
+                return;
+            }
+
             _isCanBeFired = true;
         }
 
         private void AssociatedObjectOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (e.OriginalSource.GetType().Name != TextBoxViewTypeName)
+            {
+                return;
+            }
+
             if (_isCanBeFired)
             {
                 Command?.Execute(null);
@@ -45,7 +57,7 @@ namespace WpfClient.Wpf.Behaviors
             DependencyProperty.Register(
                 nameof(Command),
                 typeof(ICommand),
-                typeof(UiElementClickBehavior),
+                typeof(TextBoxClickBehavior),
                 new PropertyMetadata(default(ICommand)));
 
         public ICommand Command

@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using BAJIEPA.Senticode.Wpf.Base;
+using Common.Constants;
 
 namespace ViewModels
 {
@@ -21,18 +22,16 @@ namespace ViewModels
         #region CopyFromClipboard command
 
         public ICommand CopyFromClipboardCommand => _copyFromClipboardCommand ??=
-                                                        new Command(ExecuteCopyFromClipboard);
+            new AsyncCommand(ExecuteCopyFromClipboardAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.CopyFromClipboard);
 
-        private Command _copyFromClipboardCommand;
+        private AsyncCommand _copyFromClipboardCommand;
 
-        private void ExecuteCopyFromClipboard(object parameter)
+        private async Task ExecuteCopyFromClipboardAsync(object parameter)
         {
-            var clipboardText = Clipboard.GetText();
+            await Task.Delay(0);
 
-            if (!string.IsNullOrWhiteSpace(clipboardText))
-            {
-                InputText = clipboardText;
-            }
+            this.CopyFromClipboard();
         }
 
         #endregion
@@ -40,13 +39,13 @@ namespace ViewModels
         #region ClearInput command
 
         public ICommand ClearInputCommand => _clearInputCommand ??=
-                                                 new Command(ExecuteClearInput);
+            new Command(ExecuteClearInput);
 
         private Command _clearInputCommand;
 
         private void ExecuteClearInput(object parameter)
         {
-            InputText = null;
+            this.ClearInput();
         }
 
         #endregion

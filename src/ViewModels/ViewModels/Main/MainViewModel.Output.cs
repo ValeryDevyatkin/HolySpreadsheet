@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using BAJIEPA.Senticode.Wpf;
 using BAJIEPA.Senticode.Wpf.Base;
+using BAJIEPA.Tools.Common.Items;
+using Common.Constants;
 using Common.Interfaces;
 using Common.Items;
 using Unity;
@@ -43,13 +46,13 @@ namespace ViewModels
         #region ClearOutput command
 
         public ICommand ClearOutputCommand => _clearOutputCommand ??=
-                                                  new Command(ExecuteClearOutput);
+            new Command(ExecuteClearOutput);
 
         private Command _clearOutputCommand;
 
         private void ExecuteClearOutput(object parameter)
         {
-            OutputText = null;
+            this.ClearOutput();
         }
 
         #endregion
@@ -57,20 +60,14 @@ namespace ViewModels
         #region ProcessOutput command
 
         public ICommand ProcessOutputCommand => _processOutputCommand ??=
-                                                    new Command(ExecuteProcessOutput);
+            new AsyncCommand(ExecuteProcessOutputAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.ProcessOutput);
 
-        private Command _processOutputCommand;
+        private AsyncCommand _processOutputCommand;
 
-        private void ExecuteProcessOutput(object parameter)
+        private async Task ExecuteProcessOutputAsync(object parameter)
         {
-            if (GridRowCount < 1)
-            {
-                return;
-            }
-
-            var parameters = this.GetOutputProcessParameters();
-            var rows = Container.Resolve<IDataGridService>().GetRows();
-            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters));
+            await this.ProcessOutputAsync();
         }
 
         #endregion
@@ -78,20 +75,14 @@ namespace ViewModels
         #region ProcessOutputToStringInsert command
 
         public ICommand ProcessOutputToStringInsertCommand => _processOutputToStringInsertCommand ??=
-                                                                  new Command(ExecuteProcessOutputToSqlStringInsert);
+            new AsyncCommand(ExecuteProcessOutputToSqlStringInsertAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.ProcessOutput);
 
-        private Command _processOutputToStringInsertCommand;
+        private AsyncCommand _processOutputToStringInsertCommand;
 
-        private void ExecuteProcessOutputToSqlStringInsert(object parameter)
+        private async Task ExecuteProcessOutputToSqlStringInsertAsync(object parameter)
         {
-            if (GridRowCount < 1)
-            {
-                return;
-            }
-
-            var parameters = SpreadsheetOutputProcessParameters.QuickSqlStringInsertPreset;
-            var rows = Container.Resolve<IDataGridService>().GetRows();
-            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters));
+            await this.ProcessOutputToStringInsertAsync();
         }
 
         #endregion
@@ -99,20 +90,14 @@ namespace ViewModels
         #region ProcessOutputToNumericInsert command
 
         public ICommand ProcessOutputToNumericInsertCommand => _processOutputToNumericInsertCommand ??=
-                                                                   new Command(ExecuteProcessOutputToNumericInsert);
+            new AsyncCommand(ExecuteProcessOutputToNumericInsertAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.ProcessOutput);
 
-        private Command _processOutputToNumericInsertCommand;
+        private AsyncCommand _processOutputToNumericInsertCommand;
 
-        private void ExecuteProcessOutputToNumericInsert(object parameter)
+        private async Task ExecuteProcessOutputToNumericInsertAsync(object parameter)
         {
-            if (GridRowCount < 1)
-            {
-                return;
-            }
-
-            var parameters = SpreadsheetOutputProcessParameters.QuickSqlNumericInsertPreset;
-            var rows = Container.Resolve<IDataGridService>().GetRows();
-            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters));
+            await this.ProcessOutputToNumericInsertAsync();
         }
 
         #endregion
@@ -120,20 +105,14 @@ namespace ViewModels
         #region ProcessOutputToStringIn command
 
         public ICommand ProcessOutputToStringInCommand => _processOutputToStringInCommand ??=
-                                                              new Command(ExecuteProcessOutputToStringIn);
+            new AsyncCommand(ExecuteProcessOutputToStringInAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.ProcessOutput);
 
-        private Command _processOutputToStringInCommand;
+        private AsyncCommand _processOutputToStringInCommand;
 
-        private void ExecuteProcessOutputToStringIn(object parameter)
+        private async Task ExecuteProcessOutputToStringInAsync(object parameter)
         {
-            if (GridRowCount < 1)
-            {
-                return;
-            }
-
-            var parameters = SpreadsheetOutputProcessParameters.QuickSqlStringInPreset;
-            var rows = Container.Resolve<IDataGridService>().GetRows();
-            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters));
+            await this.ProcessOutputToStringInAsync();
         }
 
         #endregion
@@ -141,20 +120,14 @@ namespace ViewModels
         #region ProcessOutputToNumericIn command
 
         public ICommand ProcessOutputToNumericInCommand => _processOutputToNumericInCommand ??=
-                                                               new Command(ExecuteProcessOutputToNumericIn);
+            new AsyncCommand(ExecuteProcessOutputToNumericInAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.ProcessOutput);
 
-        private Command _processOutputToNumericInCommand;
+        private AsyncCommand _processOutputToNumericInCommand;
 
-        private void ExecuteProcessOutputToNumericIn(object parameter)
+        private async Task ExecuteProcessOutputToNumericInAsync(object parameter)
         {
-            if (GridRowCount < 1)
-            {
-                return;
-            }
-
-            var parameters = SpreadsheetOutputProcessParameters.QuickSqlNumericInPreset;
-            var rows = Container.Resolve<IDataGridService>().GetRows();
-            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().ProcessOutput(rows, parameters));
+            await this.ProcessOutputToNumericInAsync();
         }
 
         #endregion
@@ -162,12 +135,15 @@ namespace ViewModels
         #region CopyToClipboard command
 
         public ICommand CopyToClipboardCommand => _copyToClipboardCommand ??=
-                                                      new Command(ExecuteCopyToClipboard);
+            new AsyncCommand(ExecuteCopyToClipboardAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.CopyToClipboard);
 
-        private Command _copyToClipboardCommand;
+        private AsyncCommand _copyToClipboardCommand;
 
-        private void ExecuteCopyToClipboard(object parameter)
+        private async Task ExecuteCopyToClipboardAsync(object parameter)
         {
+            await Task.Delay(0);
+
             if (!string.IsNullOrWhiteSpace(OutputText))
             {
                 Clipboard.SetText(OutputText);
@@ -179,13 +155,25 @@ namespace ViewModels
         #region RemoveDuplicates command
 
         public ICommand RemoveDuplicatesCommand => _removeDuplicatesCommand ??=
-                                                       new Command(ExecuteRemoveDuplicates);
+            new AsyncCommand(ExecuteRemoveDuplicatesAsync, shouldBlockUi: true,
+                progressText: CommandProgressTextStrings.RemoveDuplicates);
 
-        private Command _removeDuplicatesCommand;
+        private AsyncCommand _removeDuplicatesCommand;
 
-        private void ExecuteRemoveDuplicates(object parameter)
+        private async Task ExecuteRemoveDuplicatesAsync(object parameter)
         {
-            this.SetOutputProcessResult(Container.Resolve<ISpreadsheetProcessor>().RemoveRowDuplicates(OutputText));
+            SpreadsheetOutputProcessResult result = null;
+            await Task.Run(() =>
+            {
+                result = Container.Resolve<ISpreadsheetProcessor>().RemoveRowDuplicates(OutputText);
+            });
+
+            if (result == null)
+            {
+                throw new ThisShouldNotBeException();
+            }
+
+            this.SetOutputProcessResult(result);
         }
 
         #endregion

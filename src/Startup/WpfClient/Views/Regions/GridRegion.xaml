@@ -9,7 +9,8 @@
              xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
              xmlns:enums = "clr-namespace:Common.Enums;assembly=Common"
              mc:Ignorable = "d"
-             x:ClassModifier = "internal">
+             x:ClassModifier = "internal"
+             x:Name = "Root">
 
     <d:Control.DataContext>
         <viewModels:MainViewModel />
@@ -83,12 +84,12 @@
                   CanUserAddRows = "False"
                   CanUserDeleteRows = "False"
                   CanUserSortColumns = "False"
-                  CanUserReorderColumns = "False"
+                  CanUserReorderColumns = "True"
                   CanUserResizeRows = "False"
                   CanUserResizeColumns = "True"
-                  SelectionMode = "Single"
                   HorizontalScrollBarVisibility = "Auto"
                   VerticalScrollBarVisibility = "Auto"
+                  IsReadOnly = "True"
                   ColumnWidth = "*">
             <DataGrid.Resources>
                 <Style TargetType = "DataGridCell"
@@ -110,14 +111,146 @@
                     <Style.Triggers>
                         <DataTrigger Binding = "{Binding HasEmptyCells}"
                                      Value = "True">
-                            <Setter Property = "ToolTip"
-                                    Value = "There are empty cells." />
                             <Setter Property = "BorderBrush"
                                     Value = "{StaticResource AlertBrush}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.Style>
+            <DataGrid.RowStyle>
+                <Style TargetType = "DataGridRow">
+                    <Setter Property = "IsHitTestVisible"
+                            Value = "False" />
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType = "DataGridColumnHeader">
+                    <Setter Property = "Padding"
+                            Value = "0" />
+                    <Setter Property = "VerticalContentAlignment"
+                            Value = "Stretch" />
+                    <Setter Property = "HorizontalContentAlignment"
+                            Value = "Stretch" />
+                    <Setter Property = "Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType = "DataGridColumnHeader">
+                                <Grid x:Name = "Grid">
+                                    <d:Grid.DataContext>
+                                        <controls:CustomDataGridTextColumn />
+                                    </d:Grid.DataContext>
+                                    <Grid.DataContext>
+                                        <MultiBinding Converter = "{converters:DataGridColumnHeaderContextConverter}">
+                                            <Binding RelativeSource = "{RelativeSource AncestorType=DataGrid}" />
+                                            <Binding />
+                                        </MultiBinding>
+                                    </Grid.DataContext>
+                                    <Grid.Resources>
+                                        <ContextMenu x:Key = "ContextMenu">
+                                            <MenuItem Command = "{Binding SwitchDeactivatedCommand, Mode=OneTime}">
+                                                <MenuItem.Style>
+                                                    <Style TargetType = "MenuItem">
+                                                        <Setter Property = "Header"
+                                                                Value = "Deactivate" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding = "{Binding IsDeactivated}"
+                                                                         Value = "True">
+                                                                <Setter Property = "Header"
+                                                                        Value = "Activate" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </MenuItem.Style>
+                                            </MenuItem>
+                                            <MenuItem
+                                                Command = "{Binding SwitchFormattingDeactivatedCommand, Mode=OneTime}">
+                                                <MenuItem.Style>
+                                                    <Style TargetType = "MenuItem">
+                                                        <Setter Property = "Header"
+                                                                Value = "Disable cell wrapping" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding = "{Binding IsDeactivated}"
+                                                                         Value = "True">
+                                                                <Setter Property = "IsEnabled"
+                                                                        Value = "False" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding = "{Binding IsFormattingDeactivated}"
+                                                                         Value = "True">
+                                                                <Setter Property = "Header"
+                                                                        Value = "Enable cell wrapping" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </MenuItem.Style>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </Grid.Resources>
+                                    <Grid.ContextMenu>
+                                        <StaticResource ResourceKey = "ContextMenu" />
+                                    </Grid.ContextMenu>
+                                    <Grid.Style>
+                                        <Style TargetType = "Grid">
+                                            <Setter Property = "Background"
+                                                    Value = "Transparent" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding = "{Binding IsDeactivated}"
+                                                             Value = "True">
+                                                    <Setter Property = "Background"
+                                                            Value = "{StaticResource GridSplitterBrush}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding = "{Binding IsFormattingDeactivated}"
+                                                             Value = "True">
+                                                    <Setter Property = "Background"
+                                                            Value = "{StaticResource OrangeBrush}" />
+                                                </DataTrigger>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding = "{Binding IsDeactivated}"
+                                                                   Value = "False" />
+                                                        <Condition
+                                                            Binding = "{Binding ElementName=Grid, Path=IsMouseOver}"
+                                                            Value = "True" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <MultiDataTrigger.Setters>
+                                                        <Setter Property = "Background"
+                                                                Value = "{StaticResource HoverBrush}" />
+                                                    </MultiDataTrigger.Setters>
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Style>
+
+                                    <ContentPresenter HorizontalAlignment = "Center"
+                                                      VerticalAlignment = "Center" />
+
+                                    <Thumb x:Name = "PART_RightHeaderGripper"
+                                           HorizontalAlignment = "Right"
+                                           Cursor = "SizeWE">
+                                        <Thumb.Style>
+                                            <Style TargetType = "Thumb">
+                                                <Setter Property = "Background"
+                                                        Value = "Transparent" />
+                                                <Style.Triggers>
+                                                    <Trigger Property = "IsMouseOver"
+                                                             Value = "True">
+                                                        <Setter Property = "Background"
+                                                                Value = "{StaticResource BlackBrush}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Thumb.Style>
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType = "Thumb">
+                                                <Grid Background = "{TemplateBinding Background}"
+                                                      Width = "2" />
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
         </DataGrid>
 
         <StackPanel Grid.Row = "6"

@@ -30,7 +30,7 @@
                  Style = "{StaticResource DisplayBoxStyle}"
                  Text = "{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <b:Interaction.Behaviors>
-                <behaviors:UiElementClickBehavior Command = "{Binding CopyFromClipboardCommand, Mode=OneTime}" />
+                <behaviors:TextBoxClickBehavior Command = "{Binding CopyFromClipboardCommand, Mode=OneTime}" />
             </b:Interaction.Behaviors>
         </TextBox>
 

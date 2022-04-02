@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Threading;
 using BAJIEPA.Senticode.Wpf;
 using BAJIEPA.Senticode.Wpf.Helpers;
+using BAJIEPA.Senticode.Wpf.Interfaces;
 using Common.Interfaces;
 using Services;
 using Unity;
@@ -17,11 +19,23 @@ namespace WpfClient
         {
         }
 
+        public override void BlockUiForCommand(ICommandInfo command)
+        {
+            var mainViewModel = Container.Resolve<MainViewModel>();
+            mainViewModel.ProgressText = command.ProgressText;
+            mainViewModel.IsPreLoaderVisible = true;
+            MainWindow?.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() => { }));
+        }
+
+        public override void UnlockUiForCommand(ICommandInfo command)
+        {
+            var mainViewModel = Container.Resolve<MainViewModel>();
+            mainViewModel.IsPreLoaderVisible = false;
+            mainViewModel.ProgressText = null;
+        }
+
         protected override void OnStartup(StartupEventArgs args)
         {
-            ExceptionLogHelper.LogCriticalExceptionInRelease = exceptionItem => MessageBox.Show(
-                exceptionItem.Message, exceptionItem.Source, MessageBoxButton.OK, MessageBoxImage.Error);
-
             try
             {
                 base.OnStartup(args);
@@ -29,7 +43,7 @@ namespace WpfClient
             }
             catch (Exception e)
             {
-                this.LogCriticalException(e);
+                this.HandleException(e);
 
                 throw;
             }
@@ -62,8 +76,13 @@ namespace WpfClient
             }
             catch (Exception e)
             {
-                this.LogCriticalException(e);
+                this.HandleException(e);
             }
+        }
+
+        protected override void HandleExceptionExternal(ExceptionLogItem ex)
+        {
+            MessageBox.Show(ex.Message, ex.Source, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

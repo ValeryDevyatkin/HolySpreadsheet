@@ -6,7 +6,10 @@
     <Brush x:Key = "ButtonBackgroundBrush">#FFDDDDDD</Brush>
     <Brush x:Key = "GridSplitterBrush">Gray</Brush>
     <Brush x:Key = "AlertBrush">Red</Brush>
+    <Brush x:Key = "OrangeBrush">DarkOrange</Brush>
+    <Brush x:Key = "BlackBrush">Black</Brush>
     <Brush x:Key = "ProcessButtonBackgroundBrush">LightGreen</Brush>
+    <Brush x:Key = "HoverBrush">#BEE6FD</Brush>
 
     <!--Opacity-->
     <system:Double x:Key = "DisabledOpacity">0.7</system:Double>
@@ -14,6 +17,7 @@
     <!--Fonts-->
     <system:Double x:Key = "HeaderFontSize">14</system:Double>
     <system:Double x:Key = "TooltipFontSize">20</system:Double>
+    <system:Double x:Key = "PreLoaderFontSize">30</system:Double>
 
     <!--Sizes-->
     <system:Double x:Key = "ButtonHeight">30</system:Double>

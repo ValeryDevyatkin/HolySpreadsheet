@@ -7,7 +7,6 @@
         xmlns:views = "clr-namespace:WpfClient.Views"
         xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
         mc:Ignorable = "d"
-        Title = "Spreadsheet Tool"
         WindowStartupLocation = "CenterScreen"
         ResizeMode = "CanResize"
         x:ClassModifier = "internal"

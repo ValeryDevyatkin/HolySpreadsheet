@@ -24,6 +24,6 @@
 
     <!--Icons-->
     <BitmapImage x:Key = "ClearIcon"
-                 UriSource = "pack://application:,,,/Holy Spreadsheet;component/Theme/Icons/Clear50.png" />
+                 UriSource = "pack://application:,,,/HolySpreadsheet;component/Theme/Icons/Clear50.png" />
 
 </ResourceDictionary>

@@ -34,10 +34,11 @@ namespace WpfClient
             mainViewModel.ProgressText = null;
         }
 
-        protected override void OnStartup(StartupEventArgs args)
+        protected override async void OnStartup(StartupEventArgs args)
         {
             try
             {
+                await AppUpdateHelper.CheckForUpdatesAsync();
                 base.OnStartup(args);
                 CreateMainWindow().Show();
             }

@@ -24,7 +24,7 @@ namespace WpfClient.Wpf.Behaviors
             _collectionChangeNotifier.CollectionChanged -= CollectionChangedOnCollectionChanged;
         }
 
-        private void CollectionChangedOnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        private void CollectionChangedOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             ItemCount = AssociatedObject.Items.Count;
         }

@@ -13,7 +13,7 @@ namespace WpfClient.Wpf.Converters
         {
             if (values.Length == 2 && values[0] is DataGrid grid && values[1] is string columnHeader)
             {
-                var column = grid.Columns.FirstOrDefault(x => x.Header == columnHeader);
+                var column = grid.Columns.FirstOrDefault(x => (string)x.Header == columnHeader);
 
                 if (column != null)
                 {

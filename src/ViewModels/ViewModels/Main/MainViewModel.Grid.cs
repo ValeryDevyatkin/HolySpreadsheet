@@ -8,6 +8,18 @@ namespace ViewModels
 {
     public partial class MainViewModel
     {
+        #region ShouldPullInLine: bool
+
+        public bool ShouldPullInLine
+        {
+            get => _shouldPullInLine;
+            set => SetProperty(ref _shouldPullInLine, value);
+        }
+
+        private bool _shouldPullInLine;
+
+        #endregion
+
         #region Delimiter: DelimiterEnum
 
         public DelimiterEnum Delimiter
@@ -32,18 +44,6 @@ namespace ViewModels
 
         #endregion
 
-        #region HasEmptyCells: bool
-
-        public bool HasEmptyCells
-        {
-            get => _hasEmptyCells;
-            internal set => SetProperty(ref _hasEmptyCells, value);
-        }
-
-        private bool _hasEmptyCells;
-
-        #endregion
-
         #region GridRowCount: int
 
         public int GridRowCount
@@ -53,6 +53,18 @@ namespace ViewModels
         }
 
         private int _gridRowCount;
+
+        #endregion
+
+        #region GridColumnCount: int
+
+        public int GridColumnCount
+        {
+            get => _gridColumnCount;
+            set => SetProperty(ref _gridColumnCount, value);
+        }
+
+        private int _gridColumnCount;
 
         #endregion
 

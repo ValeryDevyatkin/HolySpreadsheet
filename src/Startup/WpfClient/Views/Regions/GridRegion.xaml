@@ -24,6 +24,8 @@
             <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
             <RowDefinition Height = "Auto" />
             <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "{x:Static theme:UiSizes.InnerSpacingGridLength}" />
             <RowDefinition Height = "*" />
         </Grid.RowDefinitions>
 
@@ -55,7 +57,16 @@
             </GroupBox>
         </StackPanel>
 
-        <Button Grid.Row = "4"
+        <StackPanel Grid.Row = "4">
+            <GroupBox Header = "Pull in line:"
+                      Width="90"
+                      HorizontalAlignment="Left"
+                      ToolTip="Pull all the rows into a single line and remove empty entries.">
+                <CheckBox IsChecked = "{Binding ShouldPullInLine, Mode=TwoWay}" />
+            </GroupBox>
+        </StackPanel>
+        
+        <Button Grid.Row = "6"
                 Content = "Process"
                 Background = "{StaticResource ProcessButtonBackgroundBrush}"
                 Command = "{Binding ProcessInputCommand, Mode=OneTime}">
@@ -77,7 +88,7 @@
             </Button.Style>
         </Button>
 
-        <DataGrid Grid.Row = "6"
+        <DataGrid Grid.Row = "8"
                   x:Name = "DataGrid"
                   HeadersVisibility = "Column"
                   AutoGenerateColumns = "True"
@@ -105,18 +116,6 @@
                     </Style.Triggers>
                 </Style>
             </DataGrid.Resources>
-            <DataGrid.Style>
-                <Style TargetType = "DataGrid"
-                       BasedOn = "{StaticResource {x:Type DataGrid}}">
-                    <Style.Triggers>
-                        <DataTrigger Binding = "{Binding HasEmptyCells}"
-                                     Value = "True">
-                            <Setter Property = "BorderBrush"
-                                    Value = "{StaticResource AlertBrush}" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </DataGrid.Style>
             <DataGrid.RowStyle>
                 <Style TargetType = "DataGridRow">
                     <Setter Property = "IsHitTestVisible"
@@ -253,7 +252,7 @@
             </DataGrid.ColumnHeaderStyle>
         </DataGrid>
 
-        <StackPanel Grid.Row = "6"
+        <StackPanel Grid.Row = "10"
                     Orientation = "Horizontal"
                     VerticalAlignment = "Bottom"
                     HorizontalAlignment = "Right">
@@ -272,8 +271,14 @@
             <TextBlock FontWeight = "Bold"
                        VerticalAlignment = "Bottom"
                        Background = "{StaticResource ButtonBackgroundBrush}"
-                       Padding = "{x:Static theme:UiSizes.InnerSpacingThickness}"
-                       Text = "{Binding GridRowCount, Mode=OneWay, StringFormat='{}Rows: {0}'}" />
+                       Padding = "{x:Static theme:UiSizes.InnerSpacingThickness}">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Rows: {0}, Columns: {1}">
+                        <Binding Path="GridRowCount" Mode="OneWay" />
+                        <Binding Path="GridColumnCount" Mode="OneWay" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
 
             <Button Command = "{Binding ClearGridCommand, Mode=OneTime}"
                     Style = "{StaticResource ClearButtonStyle}">

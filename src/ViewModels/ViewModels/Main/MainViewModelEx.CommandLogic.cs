@@ -31,8 +31,8 @@ namespace ViewModels
                 throw new ThisShouldNotBeException();
             }
 
-            viewModel.HasEmptyCells = result.HasEmptyCells;
             viewModel.GridRowCount = result.RowCount;
+            viewModel.GridColumnCount = result.ColumnCount;
             container.Resolve<IDataGridService>().PopulateRows(result);
         }
 
@@ -164,8 +164,8 @@ namespace ViewModels
 
         public static void ClearGrid(this MainViewModel viewModel)
         {
-            viewModel.HasEmptyCells = false;
             viewModel.GridRowCount = 0;
+            viewModel.GridColumnCount = 0;
             viewModel.Container.Resolve<IDataGridService>().Clear();
         }
 

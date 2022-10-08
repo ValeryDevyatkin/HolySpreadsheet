@@ -15,19 +15,19 @@ namespace Services.Services
         private static readonly Dictionary<DelimiterEnum, string> InputDelimiterMap =
             new()
             {
-                { DelimiterEnum.Comma, "," },
-                { DelimiterEnum.Semicolon, ";" },
-                { DelimiterEnum.Tab, "\t" },
-                { DelimiterEnum.Whitespace, " " }
+                {DelimiterEnum.Comma, ","},
+                {DelimiterEnum.Semicolon, ";"},
+                {DelimiterEnum.Tab, "\t"},
+                {DelimiterEnum.Whitespace, " "}
             };
 
         private static readonly Dictionary<DelimiterEnum, string> OutputDelimiterMap =
             new()
             {
-                { DelimiterEnum.Comma, "," },
-                { DelimiterEnum.Semicolon, ";" },
-                { DelimiterEnum.Tab, "\t" },
-                { DelimiterEnum.Whitespace, " " }
+                {DelimiterEnum.Comma, ","},
+                {DelimiterEnum.Semicolon, ";"},
+                {DelimiterEnum.Tab, "\t"},
+                {DelimiterEnum.Whitespace, " "}
             };
 
         public SpreadsheetProcessor(IUnityContainer container)
@@ -37,9 +37,8 @@ namespace Services.Services
 
         public SpreadsheetInputProcessResult ProcessInput(string text, SpreadsheetInputProcessParameters parameters)
         {
-            var result = new List<string[]>();
-            var maxRowLength = -1;
-            var hasEmptyCells = false;
+            var result = new List<IEnumerable<string>>();
+            var maxRowLength = 0;
 
             var delimiter = parameters.Delimiter == DelimiterEnum.Custom ?
                 parameters.CustomDelimiter :
@@ -51,35 +50,51 @@ namespace Services.Services
 
             var rows = text.Split(RowSeparator, StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (var row in rows)
+            if (parameters.ShouldPullInLine)
             {
-                var words = row.Split(delimiter, splitOptions);
-                var rowLength = words.Length;
+                var resultLine = new List<string>();
 
-                if (maxRowLength == -1)
+                foreach (var row in rows)
                 {
-                    maxRowLength = rowLength;
+                    var words = row
+                               .Split(delimiter, splitOptions)
+                               .Where(x => !string.IsNullOrEmpty(x))
+                               .ToArray();
+
+                    var rowLength = words.Length;
+                    maxRowLength += rowLength;
+                    resultLine.AddRange(words);
                 }
-                else
+
+                if (resultLine.Count > 0)
                 {
-                    if (rowLength != maxRowLength)
+                    result.Add(resultLine);
+                }
+            }
+            else
+            {
+                foreach (var row in rows)
+                {
+                    var words = row.Split(delimiter, splitOptions);
+                    var rowLength = words.Length;
+
+                    if (maxRowLength == 0)
                     {
-                        hasEmptyCells = true;
-
-                        if (rowLength > maxRowLength)
-                        {
-                            maxRowLength = rowLength;
-                        }
+                        maxRowLength = rowLength;
                     }
-                }
+                    else if (rowLength > maxRowLength)
+                    {
+                        maxRowLength = rowLength;
+                    }
 
-                if (words.Length > 0)
-                {
-                    result.Add(words);
+                    if (words.Length > 0)
+                    {
+                        result.Add(words);
+                    }
                 }
             }
 
-            return new SpreadsheetInputProcessResult(result, result.Count, maxRowLength, hasEmptyCells);
+            return new SpreadsheetInputProcessResult(result, result.Count, maxRowLength);
         }
 
         public SpreadsheetOutputProcessResult ProcessOutput(GridParsingResult gridParsingResult,

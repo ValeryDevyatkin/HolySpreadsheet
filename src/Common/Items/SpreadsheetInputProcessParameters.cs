@@ -6,5 +6,6 @@ namespace Common.Items
     {
         public DelimiterEnum Delimiter { get; set; }
         public string CustomDelimiter { get; set; }
+        public bool ShouldPullInLine { get; set; }
     }
 }

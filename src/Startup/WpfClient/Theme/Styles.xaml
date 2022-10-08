@@ -13,6 +13,14 @@
                 Value = "True" />
     </Style>
 
+    <Style TargetType = "CheckBox"
+           BasedOn = "{StaticResource {x:Type FrameworkElement}}">
+        <Setter Property = "HorizontalAlignment"
+                Value = "Stretch" />
+        <Setter Property = "VerticalAlignment"
+                Value = "Stretch" />
+    </Style>
+
     <Style TargetType = "ToolTip"
            BasedOn = "{StaticResource {x:Type FrameworkElement}}">
         <Setter Property = "FontSize"

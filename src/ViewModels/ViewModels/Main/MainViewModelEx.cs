@@ -73,7 +73,8 @@ namespace ViewModels
             new()
             {
                 CustomDelimiter = item.CustomDelimiter,
-                Delimiter = item.Delimiter
+                Delimiter = item.Delimiter,
+                ShouldPullInLine = item.ShouldPullInLine
             };
 
         public static void SetOutputProcessResult(this MainViewModel item, SpreadsheetOutputProcessResult result)

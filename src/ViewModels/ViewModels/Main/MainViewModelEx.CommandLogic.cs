@@ -176,6 +176,7 @@ namespace ViewModels
 
         public static void ClearOutput(this MainViewModel viewModel)
         {
+            viewModel.OutputRowCount = 0;
             viewModel.OutputText = null;
         }
 

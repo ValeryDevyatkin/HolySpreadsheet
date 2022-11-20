@@ -144,10 +144,7 @@ namespace ViewModels
         {
             await Task.Delay(0);
 
-            if (!string.IsNullOrWhiteSpace(OutputText))
-            {
-                Clipboard.SetText(OutputText);
-            }
+            Clipboard.SetText(OutputText);
         }
 
         #endregion

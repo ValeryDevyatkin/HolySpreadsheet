@@ -87,15 +87,24 @@
 
         <TextBox Grid.Row = "6"
                  Text = "{Binding OutputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 ContextMenu = "{StaticResource OutputContextMenu}">
+                 ContextMenuService.ShowOnDisabled = "True">
             <b:Interaction.Behaviors>
                 <behaviors:TextBoxClickBehavior Command = "{Binding CopyToClipboardCommand, Mode=OneTime}" />
             </b:Interaction.Behaviors>
             <TextBox.Style>
                 <Style TargetType = "TextBox"
                        BasedOn = "{StaticResource DisplayBoxStyle}">
+                    <Setter Property = "ContextMenu"
+                            Value = "{StaticResource OutputContextMenu}" />
                     <Style.Triggers>
                         <DataTrigger Binding = "{Binding GridRowCount, Mode=OneWay}"
+                                     Value = "0">
+                            <Setter Property = "IsEnabled"
+                                    Value = "False" />
+                            <Setter Property = "ContextMenu"
+                                    Value = "{x:Null}" />
+                        </DataTrigger>
+                        <DataTrigger Binding = "{Binding OutputRowCount, Mode=OneWay}"
                                      Value = "0">
                             <Setter Property = "IsEnabled"
                                     Value = "False" />

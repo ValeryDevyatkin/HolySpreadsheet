@@ -5,7 +5,6 @@ using System.Windows;
 using Common.Interfaces;
 using Common.Items;
 using Microsoft.Win32;
-using Unity;
 
 namespace WpfClient.Services
 {
@@ -15,11 +14,6 @@ namespace WpfClient.Services
 
         private readonly string _initialDirectory =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Downloads");
-
-        public FileDialogService(IUnityContainer container)
-        {
-            container.RegisterInstance(this);
-        }
 
         public async Task SaveToFileAsync(string text)
         {

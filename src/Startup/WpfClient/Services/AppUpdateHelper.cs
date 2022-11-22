@@ -21,6 +21,7 @@ namespace WpfClient.Services
             {
                 var versionString = updateResult.Version.Version.ToString();
 
+                // Do not extract this code block. It is under control of IoC.
                 MessageBox.Show($"A new version {versionString} was downloaded. Please restart the app.");
 
                 Application.Current.Shutdown();

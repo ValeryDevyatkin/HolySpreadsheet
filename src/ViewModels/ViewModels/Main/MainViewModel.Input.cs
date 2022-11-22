@@ -7,6 +7,18 @@ namespace ViewModels
 {
     public partial class MainViewModel
     {
+        #region IsEditModeOn: bool
+
+        public bool IsEditModeOn
+        {
+            get => _isEditModeOn;
+            set => SetProperty(ref _isEditModeOn, value);
+        }
+
+        private bool _isEditModeOn;
+
+        #endregion
+
         #region InputText: string
 
         public string InputText
@@ -46,6 +58,20 @@ namespace ViewModels
         private void ExecuteClearInput(object parameter)
         {
             this.ClearInput();
+        }
+
+        #endregion
+
+        #region SwitchEditMode command
+
+        public ICommand SwitchEditModeCommand => _switchEditModeCommand ??=
+            new Command(ExecuteSwitchEditMode);
+
+        private Command _switchEditModeCommand;
+
+        private void ExecuteSwitchEditMode(object parameter)
+        {
+            IsEditModeOn = !IsEditModeOn;
         }
 
         #endregion

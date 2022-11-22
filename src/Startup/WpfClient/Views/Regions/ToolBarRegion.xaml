@@ -29,7 +29,7 @@
                 </Style>
             </WrapPanel.Resources>
             <TextBlock Text = "Quick:"
-                       ToolTip = "Processes data from clipboard to Output using Grid settings."
+                       ToolTip = "Processes data from Clipboard to Output using Grid settings."
                        Style = "{StaticResource HeaderTextBlockStyle}" />
             <Button Content = "Process"
                     ToolTip = "Uses Grid and Output settings."

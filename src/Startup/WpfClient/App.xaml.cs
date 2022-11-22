@@ -59,8 +59,9 @@ namespace WpfClient
 
             // Services.
             Container
-               .RegisterType<IFileDialogService, FileDialogService>()
-               .RegisterType<IDataGridService, DataGridService>()
+               .RegisterSingleton<IFileDialogService, FileDialogService>()
+               .RegisterSingleton<IDataGridService, DataGridService>()
+               .RegisterSingleton<IMessageDialogService, MessageDialogService>()
                 ;
 
             // Views.
@@ -83,6 +84,7 @@ namespace WpfClient
 
         protected override void HandleExceptionExternal(ExceptionLogItem ex)
         {
+            // Do not extract this code block. It is under control of IoC.
             MessageBox.Show(ex.Message, ex.Source, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }

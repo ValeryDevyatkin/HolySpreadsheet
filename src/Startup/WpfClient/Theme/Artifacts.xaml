@@ -25,5 +25,9 @@
     <!--Icons-->
     <BitmapImage x:Key = "ClearIcon"
                  UriSource = "pack://application:,,,/HolySpreadsheet;component/Theme/Icons/Clear50.png" />
+    <BitmapImage x:Key = "EditIcon"
+                 UriSource = "pack://application:,,,/HolySpreadsheet;component/Theme/Icons/Edit50.png" />
+    <BitmapImage x:Key = "EditOffIcon"
+                 UriSource = "pack://application:,,,/HolySpreadsheet;component/Theme/Icons/EditOff50.png" />
 
 </ResourceDictionary>

@@ -11,6 +11,12 @@
 
   <ItemGroup>
     <None Remove="Theme\Icons\Clear50.png" />
+    <None Remove="Theme\Icons\Edit50.png" />
+    <None Remove="Theme\Icons\EditOff50.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Theme\Icons\Edit50.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +33,7 @@
 
   <ItemGroup>
     <Resource Include="Theme\Icons\Clear50.png" />
+    <Resource Include="Theme\Icons\EditOff50.png" />
   </ItemGroup>
 
 </Project>

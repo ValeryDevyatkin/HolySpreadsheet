@@ -28,6 +28,11 @@ namespace WpfClient.Wpf.Behaviors
 
         private void AssociatedObjectOnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (IsActionDisabled)
+            {
+                return;
+            }
+
             if (e.OriginalSource.GetType().Name != TextBoxViewTypeName)
             {
                 return;
@@ -38,6 +43,11 @@ namespace WpfClient.Wpf.Behaviors
 
         private void AssociatedObjectOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            if (IsActionDisabled)
+            {
+                return;
+            }
+
             if (e.OriginalSource.GetType().Name != TextBoxViewTypeName)
             {
                 return;
@@ -51,6 +61,23 @@ namespace WpfClient.Wpf.Behaviors
             _isCanBeFired = false;
         }
 
+        #region IsActionDisabled dependency: bool
+
+        public static readonly DependencyProperty IsActionDisabledProperty =
+            DependencyProperty.Register(
+                nameof(IsActionDisabled),
+                typeof(bool),
+                typeof(TextBoxClickBehavior),
+                new PropertyMetadata(default(bool)));
+
+        public bool IsActionDisabled
+        {
+            get => (bool) GetValue(IsActionDisabledProperty);
+            set => SetValue(IsActionDisabledProperty, value);
+        }
+
+        #endregion
+
         #region Command dependency: ICommand
 
         public static readonly DependencyProperty CommandProperty =
@@ -62,7 +89,7 @@ namespace WpfClient.Wpf.Behaviors
 
         public ICommand Command
         {
-            get => (ICommand)GetValue(CommandProperty);
+            get => (ICommand) GetValue(CommandProperty);
             set => SetValue(CommandProperty, value);
         }
 

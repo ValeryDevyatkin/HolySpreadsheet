@@ -16,7 +16,7 @@ namespace WpfClient.Services
 
         public DataGridService(IUnityContainer container)
         {
-            _container = container.RegisterInstance(this);
+            _container = container;
         }
 
         public void PopulateRows(SpreadsheetInputProcessResult spreadsheet)
@@ -36,7 +36,7 @@ namespace WpfClient.Services
                 dataGrid.Columns.Add(new CustomDataGridTextColumn
                 {
                     Header = columnNumber,
-                    Binding = new Binding($"[{i}]") { Mode = BindingMode.OneTime },
+                    Binding = new Binding($"[{i}]") {Mode = BindingMode.OneTime},
                     IsReadOnly = true
                 });
             }
@@ -73,14 +73,14 @@ namespace WpfClient.Services
                                                .Where(x => !x.IsDeactivated)
                                                .Select(x => new ColumnInfo
                                                 {
-                                                    Index = int.Parse((string)x.Header) - 1,
+                                                    Index = int.Parse((string) x.Header) - 1,
                                                     IsFormattingDisabled = x.IsFormattingDeactivated
                                                 })
                                                .ToArray();
 
             foreach (var item in dataGrid.Items)
             {
-                var sourceItems = (string[])item;
+                var sourceItems = (string[]) item;
                 var orderedItems = new List<string>();
 
                 for (var i = 0; i < activeOrderedColumns.Length; i++)

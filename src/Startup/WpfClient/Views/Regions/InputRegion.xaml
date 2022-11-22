@@ -27,30 +27,77 @@
                    Text = "Input" />
 
         <TextBox Grid.Row = "2"
-                 Style = "{StaticResource DisplayBoxStyle}"
                  Text = "{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            <b:Interaction.Behaviors>
-                <behaviors:TextBoxClickBehavior Command = "{Binding CopyFromClipboardCommand, Mode=OneTime}" />
-            </b:Interaction.Behaviors>
-        </TextBox>
-
-        <Button Grid.Row = "2"
-                Command = "{Binding ClearInputCommand, Mode=OneTime}">
-            <Image Source = "{StaticResource ClearIcon}" />
-            <Button.Style>
-                <Style BasedOn = "{StaticResource ClearButtonStyle}"
-                       TargetType = "Button">
+            <TextBox.Style>
+                <Style TargetType = "TextBox"
+                       BasedOn = "{StaticResource DisplayBoxStyle}">
                     <Style.Triggers>
-                        <DataTrigger
-                            Binding = "{Binding InputText, Mode=OneWay, Converter={converters:EmptyOrWhitespaceStringToBoolConverter}}"
-                            Value = "False">
-                            <Setter Property = "Visibility"
-                                    Value = "Collapsed" />
+                        <DataTrigger Binding = "{Binding  IsEditModeOn, Mode=OneWay}"
+                                     Value = "True">
+                            <Setter Property = "IsReadOnly"
+                                    Value = "False" />
+                            <Setter Property = "Focusable"
+                                    Value = "True" />
+                            <Setter Property = "Cursor"
+                                    Value = "IBeam" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Button.Style>
-        </Button>
+            </TextBox.Style>
+            <b:Interaction.Behaviors>
+                <behaviors:TextBoxClickBehavior Command = "{Binding CopyFromClipboardCommand, Mode=OneTime}"
+                                                IsActionDisabled = "{Binding IsEditModeOn, Mode=OneWay}" />
+                <behaviors:TextBoxNewlineInsertBehavior />
+            </b:Interaction.Behaviors>
+        </TextBox>
+
+        <StackPanel Orientation = "Horizontal"
+                    HorizontalAlignment = "Right"
+                    Grid.Row = "2">
+            <Button Command = "{Binding ClearInputCommand, Mode=OneTime}">
+                <Image Source = "{StaticResource ClearIcon}" />
+                <Button.Style>
+                    <Style BasedOn = "{StaticResource ClearButtonStyle}"
+                           TargetType = "Button">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding = "{Binding InputText, Mode=OneWay, Converter={converters:EmptyOrWhitespaceStringToBoolConverter}}"
+                                Value = "False">
+                                <Setter Property = "Visibility"
+                                        Value = "Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Command = "{Binding SwitchEditModeCommand, Mode=OneTime}">
+                <Button.Style>
+                    <Style TargetType = "Button"
+                           BasedOn = "{StaticResource ClearButtonStyle}">
+                        <Setter Property = "ToolTip"
+                                Value = "Edit On" />
+                        <Setter Property = "Content">
+                            <Setter.Value>
+                                <Image Source = "{StaticResource EditIcon}" />
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding = "{Binding IsEditModeOn, Mode=OneWay}"
+                                         Value = "True">
+                                <Setter Property = "ToolTip"
+                                        Value = "Edit Off" />
+                                <Setter Property = "Content">
+                                    <Setter.Value>
+                                        <Image Source = "{StaticResource EditOffIcon}" />
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
     </Grid>
 
 </UserControl>

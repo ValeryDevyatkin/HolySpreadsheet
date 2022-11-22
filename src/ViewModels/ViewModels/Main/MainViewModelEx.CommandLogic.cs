@@ -191,7 +191,12 @@ namespace ViewModels
         {
             var clipboardText = Clipboard.GetText();
 
-            if (!string.IsNullOrWhiteSpace(clipboardText))
+            if (string.IsNullOrWhiteSpace(clipboardText))
+            {
+                viewModel.Container.Resolve<IMessageDialogService>()
+                         .ShowWarning("Clipboard has no text.", "Copy from Clipboard");
+            }
+            else
             {
                 viewModel.InputText = clipboardText;
             }

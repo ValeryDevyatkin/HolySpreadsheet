@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using BAJIEPA.Senticode.Wpf.Base;
+using BAJIEPA.Senticode.MVVM;
 using Common.Constants;
 
-namespace ViewModels
+namespace ViewModels.Main
 {
     public partial class MainViewModel
     {
@@ -34,16 +34,18 @@ namespace ViewModels
         #region CopyFromClipboard command
 
         public ICommand CopyFromClipboardCommand => _copyFromClipboardCommand ??=
-            new AsyncCommand(ExecuteCopyFromClipboardAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteCopyFromClipboardAsync,
                 progressText: CommandProgressTextStrings.CopyFromClipboard);
 
         private AsyncCommand _copyFromClipboardCommand;
 
-        private async Task ExecuteCopyFromClipboardAsync(object parameter)
+        private Task ExecuteCopyFromClipboardAsync(object parameter)
         {
-            await Task.Delay(0);
-
             this.CopyFromClipboard();
+
+            return Task.CompletedTask;
         }
 
         #endregion

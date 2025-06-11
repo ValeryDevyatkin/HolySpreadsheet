@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.36105.23 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Startup", "Startup", "{1FA9BAA9-DB01-4B08-81EE-A55A35708126}"
 EndProject
@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModels", "..\src\ViewMo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\src\Common\Common.csproj", "{A6E2AAE7-3729-4F7D-A142-56F9A3511F52}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BAJIEPA.Tools.Common", "..\tools\src\BAJIEPA.Tools.Common\BAJIEPA.Tools.Common.csproj", "{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAJIEPA.Tools", "..\tools\src\BAJIEPA.Tools\BAJIEPA.Tools.csproj", "{2FDA6831-CF3A-41B1-18F5-BD1A69425733}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAJIEPA.Senticode.MVVM", "..\tools\src\BAJIEPA.Senticode.MVVM\BAJIEPA.Senticode.MVVM.csproj", "{E47ED0B0-17A9-DE06-6191-3BD90779D612}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +47,14 @@ Global
 		{A6E2AAE7-3729-4F7D-A142-56F9A3511F52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6E2AAE7-3729-4F7D-A142-56F9A3511F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6E2AAE7-3729-4F7D-A142-56F9A3511F52}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FDA6831-CF3A-41B1-18F5-BD1A69425733}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FDA6831-CF3A-41B1-18F5-BD1A69425733}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FDA6831-CF3A-41B1-18F5-BD1A69425733}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FDA6831-CF3A-41B1-18F5-BD1A69425733}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E47ED0B0-17A9-DE06-6191-3BD90779D612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E47ED0B0-17A9-DE06-6191-3BD90779D612}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E47ED0B0-17A9-DE06-6191-3BD90779D612}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E47ED0B0-17A9-DE06-6191-3BD90779D612}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,7 +62,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E6F2C13B-E5D6-4D2B-99B4-F03769E820EA} = {1FA9BAA9-DB01-4B08-81EE-A55A35708126}
 		{8378D77A-0820-4FFE-8B2C-863C5422C8A5} = {5913D9D5-C6F2-412D-96D0-10D0240F7181}
-		{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C} = {5913D9D5-C6F2-412D-96D0-10D0240F7181}
+		{2FDA6831-CF3A-41B1-18F5-BD1A69425733} = {5913D9D5-C6F2-412D-96D0-10D0240F7181}
+		{E47ED0B0-17A9-DE06-6191-3BD90779D612} = {5913D9D5-C6F2-412D-96D0-10D0240F7181}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0FA01F2F-68E0-4C49-BD90-923BB72BC1EF}

@@ -4,7 +4,7 @@
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:theme = "clr-namespace:WpfClient.Theme"
-             xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:viewModels = "clr-namespace:ViewModels.Main;assembly=ViewModels"
              xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
              mc:Ignorable = "d">
 
@@ -32,7 +32,7 @@
                        ToolTip = "Processes data from Clipboard to Output using Grid settings."
                        Style = "{StaticResource HeaderTextBlockStyle}" />
             <Button Content = "Process"
-                    ToolTip = "Uses Grid and Output settings."
+                    ToolTip = "Process with Grid and Output settings."
                     Command = "{Binding QuickProcessCommand, Mode=OneTime}" />
             <Button Content = "('cell', 'cell'),"
                     ToolTip = "('cell', 'cell', 'cell'),"

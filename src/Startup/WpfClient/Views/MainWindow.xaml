@@ -5,7 +5,7 @@
         xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:theme = "clr-namespace:WpfClient.Theme"
         xmlns:views = "clr-namespace:WpfClient.Views"
-        xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+        xmlns:viewModels="clr-namespace:ViewModels.Main;assembly=ViewModels"
         mc:Ignorable = "d"
         WindowStartupLocation = "CenterScreen"
         ResizeMode = "CanResize"
@@ -33,7 +33,7 @@
             <Grid.Style>
                 <Style TargetType = "Grid">
                     <Style.Triggers>
-                        <DataTrigger Binding = "{Binding IsPreLoaderVisible}"
+                        <DataTrigger Binding = "{Binding ShouldBlockUi}"
                                      Value = "False">
                             <Setter Property = "Visibility"
                                     Value = "Collapsed" />
@@ -48,14 +48,14 @@
                         Background = "{StaticResource ProcessButtonBackgroundBrush}"
                         VerticalAlignment = "Center"
                         HorizontalAlignment = "Center">
-                    <TextBlock Text = "{Binding ProgressText, Mode=OneWay}"
+                    <TextBlock Text = "{Binding CommandProgressText, Mode=OneWay}"
                                FontSize = "{StaticResource PreLoaderFontSize}"
                                Foreground = "Transparent"
                                VerticalAlignment = "Center"
                                HorizontalAlignment = "Center" />
                 </Border>
             </Grid>
-            <TextBlock Text = "{Binding ProgressText, Mode=OneWay}"
+            <TextBlock Text = "{Binding CommandProgressText, Mode=OneWay}"
                        Foreground = "{StaticResource BlackBrush}"
                        FontSize = "{StaticResource PreLoaderFontSize}"
                        VerticalAlignment = "Center"

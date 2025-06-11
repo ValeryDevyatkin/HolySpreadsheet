@@ -2,15 +2,14 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using BAJIEPA.Senticode.MVVM;
 using BAJIEPA.Senticode.Wpf;
-using BAJIEPA.Senticode.Wpf.Base;
-using BAJIEPA.Tools.Common.Items;
 using Common.Constants;
 using Common.Interfaces;
 using Common.Items;
 using Unity;
 
-namespace ViewModels
+namespace ViewModels.Main
 {
     public partial class MainViewModel
     {
@@ -60,7 +59,9 @@ namespace ViewModels
         #region ProcessOutput command
 
         public ICommand ProcessOutputCommand => _processOutputCommand ??=
-            new AsyncCommand(ExecuteProcessOutputAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteProcessOutputAsync,
                 progressText: CommandProgressTextStrings.ProcessOutput);
 
         private AsyncCommand _processOutputCommand;
@@ -75,7 +76,9 @@ namespace ViewModels
         #region ProcessOutputToStringInsert command
 
         public ICommand ProcessOutputToStringInsertCommand => _processOutputToStringInsertCommand ??=
-            new AsyncCommand(ExecuteProcessOutputToSqlStringInsertAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteProcessOutputToSqlStringInsertAsync,
                 progressText: CommandProgressTextStrings.ProcessOutput);
 
         private AsyncCommand _processOutputToStringInsertCommand;
@@ -90,7 +93,9 @@ namespace ViewModels
         #region ProcessOutputToNumericInsert command
 
         public ICommand ProcessOutputToNumericInsertCommand => _processOutputToNumericInsertCommand ??=
-            new AsyncCommand(ExecuteProcessOutputToNumericInsertAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteProcessOutputToNumericInsertAsync,
                 progressText: CommandProgressTextStrings.ProcessOutput);
 
         private AsyncCommand _processOutputToNumericInsertCommand;
@@ -105,7 +110,9 @@ namespace ViewModels
         #region ProcessOutputToStringIn command
 
         public ICommand ProcessOutputToStringInCommand => _processOutputToStringInCommand ??=
-            new AsyncCommand(ExecuteProcessOutputToStringInAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteProcessOutputToStringInAsync,
                 progressText: CommandProgressTextStrings.ProcessOutput);
 
         private AsyncCommand _processOutputToStringInCommand;
@@ -120,7 +127,9 @@ namespace ViewModels
         #region ProcessOutputToNumericIn command
 
         public ICommand ProcessOutputToNumericInCommand => _processOutputToNumericInCommand ??=
-            new AsyncCommand(ExecuteProcessOutputToNumericInAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteProcessOutputToNumericInAsync,
                 progressText: CommandProgressTextStrings.ProcessOutput);
 
         private AsyncCommand _processOutputToNumericInCommand;
@@ -135,16 +144,18 @@ namespace ViewModels
         #region CopyToClipboard command
 
         public ICommand CopyToClipboardCommand => _copyToClipboardCommand ??=
-            new AsyncCommand(ExecuteCopyToClipboardAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteCopyToClipboardAsync,
                 progressText: CommandProgressTextStrings.CopyToClipboard);
 
         private AsyncCommand _copyToClipboardCommand;
 
-        private async Task ExecuteCopyToClipboardAsync(object parameter)
+        private Task ExecuteCopyToClipboardAsync(object parameter)
         {
-            await Task.Delay(0);
-
             Clipboard.SetText(OutputText);
+
+            return Task.CompletedTask;
         }
 
         #endregion
@@ -152,7 +163,9 @@ namespace ViewModels
         #region RemoveDuplicates command
 
         public ICommand RemoveDuplicatesCommand => _removeDuplicatesCommand ??=
-            new AsyncCommand(ExecuteRemoveDuplicatesAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteRemoveDuplicatesAsync,
                 progressText: CommandProgressTextStrings.RemoveDuplicates);
 
         private AsyncCommand _removeDuplicatesCommand;
@@ -160,15 +173,13 @@ namespace ViewModels
         private async Task ExecuteRemoveDuplicatesAsync(object parameter)
         {
             SpreadsheetOutputProcessResult result = null;
+
             await Task.Run(() =>
             {
                 result = Container.Resolve<ISpreadsheetProcessor>().RemoveRowDuplicates(OutputText);
             });
 
-            if (result == null)
-            {
-                throw new ThisShouldNotBeException();
-            }
+            ArgumentNullException.ThrowIfNull(result);
 
             this.SetOutputProcessResult(result);
         }

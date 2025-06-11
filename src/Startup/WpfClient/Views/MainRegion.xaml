@@ -5,7 +5,7 @@
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:theme = "clr-namespace:WpfClient.Theme"
              xmlns:regions = "clr-namespace:WpfClient.Views.Regions"
-             xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:viewModels = "clr-namespace:ViewModels.Main;assembly=ViewModels"
              mc:Ignorable = "d"
              x:ClassModifier = "internal">
 

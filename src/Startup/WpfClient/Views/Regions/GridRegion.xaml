@@ -6,7 +6,7 @@
              xmlns:theme = "clr-namespace:WpfClient.Theme"
              xmlns:controls = "clr-namespace:WpfClient.Views.Controls"
              xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
-             xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:viewModels = "clr-namespace:ViewModels.Main;assembly=ViewModels"
              xmlns:enums = "clr-namespace:Common.Enums;assembly=Common"
              mc:Ignorable = "d"
              x:ClassModifier = "internal"
@@ -279,6 +279,36 @@
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>
+
+            <Button Command = "{Binding ActivateAllColumnsCommand, Mode=OneTime}">
+                <Button.Style>
+                    <Style TargetType = "Button"
+                           BasedOn = "{StaticResource ClearButtonStyle}">
+                        <Setter Property = "ToolTip"
+                                Value = "Activate all columns" />
+                        <Setter Property = "Content">
+                            <Setter.Value>
+                                <Image Source = "{StaticResource LightOnIcon}" />
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button Command = "{Binding DeactivateAllColumnsCommand, Mode=OneTime}">
+                <Button.Style>
+                    <Style TargetType = "Button"
+                           BasedOn = "{StaticResource ClearButtonStyle}">
+                        <Setter Property = "ToolTip"
+                                Value = "Deactivate all columns" />
+                        <Setter Property = "Content">
+                            <Setter.Value>
+                                <Image Source = "{StaticResource LightOffIcon}" />
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
+            </Button>
 
             <Button Command = "{Binding ClearGridCommand, Mode=OneTime}"
                     Style = "{StaticResource ClearButtonStyle}">

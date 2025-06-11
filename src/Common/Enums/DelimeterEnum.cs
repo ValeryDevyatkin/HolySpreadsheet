@@ -4,7 +4,7 @@ namespace Common.Enums
 {
     public enum DelimiterEnum : byte
     {
-        [Display(Name = "Whitespace", Description = "cell cell  ... cell")]
+        [Display(Name = "Whitespace", Description = "cell cell cell")]
         Whitespace,
 
         [Display(Name = "Tab", Description = "cell   cell   cell")]

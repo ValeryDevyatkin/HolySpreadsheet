@@ -32,7 +32,6 @@ namespace Services.Services
 
         public SpreadsheetProcessor(IUnityContainer container)
         {
-            container.RegisterInstance(this);
         }
 
         public SpreadsheetInputProcessResult ProcessInput(string text, SpreadsheetInputProcessParameters parameters)

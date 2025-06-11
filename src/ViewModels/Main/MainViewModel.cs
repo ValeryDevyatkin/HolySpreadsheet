@@ -1,45 +1,23 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using BAJIEPA.Senticode.Wpf.Base;
+using BAJIEPA.Senticode.MVVM;
 using Common.Constants;
 using Unity;
 
-namespace ViewModels
+namespace ViewModels.Main
 {
-    public partial class MainViewModel : ViewModelBase
+    public partial class MainViewModel : MainViewModelBase
     {
         public MainViewModel(IUnityContainer container) : base(container)
         {
         }
 
-        #region IsPreLoaderVisible: bool
-
-        public bool IsPreLoaderVisible
-        {
-            get => _isPreLoaderVisible;
-            set => SetProperty(ref _isPreLoaderVisible, value);
-        }
-
-        private bool _isPreLoaderVisible;
-
-        #endregion
-
-        #region ProgressText: string
-
-        public string ProgressText
-        {
-            get => _progressText;
-            set => SetProperty(ref _progressText, value);
-        }
-
-        private string _progressText;
-
-        #endregion
-
         #region QuickProcess command
 
         public ICommand QuickProcessCommand => _quickProcessCommand ??=
-            new AsyncCommand(ExecuteQuickProcessAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteQuickProcessAsync,
                 progressText: CommandProgressTextStrings.QuickProcess);
 
         private AsyncCommand _quickProcessCommand;
@@ -57,7 +35,9 @@ namespace ViewModels
         #region QuickProcessSqlStringInsert command
 
         public ICommand QuickProcessSqlStringInsertCommand => _quickProcessSqlStringInsertCommand ??=
-            new AsyncCommand(ExecuteQuickProcessSqlStringInsertAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteQuickProcessSqlStringInsertAsync,
                 progressText: CommandProgressTextStrings.QuickProcess);
 
         private AsyncCommand _quickProcessSqlStringInsertCommand;
@@ -75,7 +55,9 @@ namespace ViewModels
         #region QuickProcessSqlNumericInsert command
 
         public ICommand QuickProcessSqlNumericInsertCommand => _quickProcessSqlNumericInsertCommand ??=
-            new AsyncCommand(ExecuteQuickProcessSqlNumericInsertAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteQuickProcessSqlNumericInsertAsync,
                 progressText: CommandProgressTextStrings.QuickProcess);
 
         private AsyncCommand _quickProcessSqlNumericInsertCommand;
@@ -93,7 +75,9 @@ namespace ViewModels
         #region QuickProcessSqlStringIn command
 
         public ICommand QuickProcessSqlStringInCommand => _quickProcessSqlStringInCommand ??=
-            new AsyncCommand(ExecuteQuickProcessSqlStringInAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteQuickProcessSqlStringInAsync,
                 progressText: CommandProgressTextStrings.QuickProcess);
 
         private AsyncCommand _quickProcessSqlStringInCommand;
@@ -111,7 +95,9 @@ namespace ViewModels
         #region QuickProcessSqlNumericIn command
 
         public ICommand QuickProcessSqlNumericInCommand => _quickProcessSqlNumericInCommand ??=
-            new AsyncCommand(ExecuteQuickProcessSqlNumericInAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteQuickProcessSqlNumericInAsync,
                 progressText: CommandProgressTextStrings.QuickProcess);
 
         private AsyncCommand _quickProcessSqlNumericInCommand;

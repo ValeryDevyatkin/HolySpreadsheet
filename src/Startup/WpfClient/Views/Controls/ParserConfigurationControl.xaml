@@ -6,7 +6,7 @@
              xmlns:controls = "clr-namespace:WpfClient.Views.Controls"
              xmlns:theme = "clr-namespace:WpfClient.Theme"
              xmlns:enums = "clr-namespace:Common.Enums;assembly=Common"
-             xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:viewModels = "clr-namespace:ViewModels.Main;assembly=ViewModels"
              mc:Ignorable = "d"
              x:ClassModifier = "internal">
 

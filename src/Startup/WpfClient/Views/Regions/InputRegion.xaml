@@ -4,7 +4,7 @@
              xmlns:mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d = "http://schemas.microsoft.com/expression/blend/2008"
              xmlns:theme = "clr-namespace:WpfClient.Theme"
-             xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:viewModels = "clr-namespace:ViewModels.Main;assembly=ViewModels"
              xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
              xmlns:b = "http://schemas.microsoft.com/xaml/behaviors"
              xmlns:behaviors = "clr-namespace:WpfClient.Wpf.Behaviors"
@@ -54,6 +54,33 @@
         <StackPanel Orientation = "Horizontal"
                     HorizontalAlignment = "Right"
                     Grid.Row = "2">
+            <Button Command = "{Binding SwitchEditModeCommand, Mode=OneTime}">
+                <Button.Style>
+                    <Style TargetType = "Button"
+                           BasedOn = "{StaticResource ClearButtonStyle}">
+                        <Setter Property = "ToolTip"
+                                Value = "Enable edit" />
+                        <Setter Property = "Content">
+                            <Setter.Value>
+                                <Image Source = "{StaticResource EditIcon}" />
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding = "{Binding IsEditModeOn, Mode=OneWay}"
+                                         Value = "True">
+                                <Setter Property = "ToolTip"
+                                        Value = "Disable edit" />
+                                <Setter Property = "Content">
+                                    <Setter.Value>
+                                        <Image Source = "{StaticResource EditOffIcon}" />
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
             <Button Command = "{Binding ClearInputCommand, Mode=OneTime}">
                 <Image Source = "{StaticResource ClearIcon}" />
                 <Button.Style>
@@ -65,33 +92,6 @@
                                 Value = "False">
                                 <Setter Property = "Visibility"
                                         Value = "Collapsed" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-
-            <Button Command = "{Binding SwitchEditModeCommand, Mode=OneTime}">
-                <Button.Style>
-                    <Style TargetType = "Button"
-                           BasedOn = "{StaticResource ClearButtonStyle}">
-                        <Setter Property = "ToolTip"
-                                Value = "Edit On" />
-                        <Setter Property = "Content">
-                            <Setter.Value>
-                                <Image Source = "{StaticResource EditIcon}" />
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <DataTrigger Binding = "{Binding IsEditModeOn, Mode=OneWay}"
-                                         Value = "True">
-                                <Setter Property = "ToolTip"
-                                        Value = "Edit Off" />
-                                <Setter Property = "Content">
-                                    <Setter.Value>
-                                        <Image Source = "{StaticResource EditOffIcon}" />
-                                    </Setter.Value>
-                                </Setter>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

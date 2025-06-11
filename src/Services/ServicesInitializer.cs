@@ -9,7 +9,7 @@ namespace Services
         public static void Init(IUnityContainer container)
         {
             container
-               .RegisterType<ISpreadsheetProcessor, SpreadsheetProcessor>()
+               .RegisterSingleton<ISpreadsheetProcessor, SpreadsheetProcessor>()
                 ;
         }
     }

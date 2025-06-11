@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using BAJIEPA.Senticode.Wpf.Base;
+using BAJIEPA.Senticode.MVVM;
 using Common.Constants;
 using Common.Enums;
 
-namespace ViewModels
+namespace ViewModels.Main
 {
     public partial class MainViewModel
     {
@@ -71,7 +71,9 @@ namespace ViewModels
         #region ProcessInput command
 
         public ICommand ProcessInputCommand => _processInputCommand ??=
-            new AsyncCommand(ExecuteProcessInputAsync, shouldBlockUi: true,
+            new AsyncCommand(
+                Container,
+                ExecuteProcessInputAsync,
                 progressText: CommandProgressTextStrings.ProcessInput);
 
         private AsyncCommand _processInputCommand;
@@ -93,6 +95,34 @@ namespace ViewModels
         private void ExecuteClearGrid(object parameter)
         {
             this.ClearGrid();
+        }
+
+        #endregion
+
+        #region DeactivateAllColumns command
+
+        public ICommand DeactivateAllColumnsCommand => _deactivateAllColumnsCommand ??=
+            new Command(ExecuteDeactivateAllColumns);
+
+        private Command _deactivateAllColumnsCommand;
+
+        private void ExecuteDeactivateAllColumns(object parameter)
+        {
+            this.DeactivateAllColumns();
+        }
+
+        #endregion
+
+        #region ActivateAllColumns command
+
+        public ICommand ActivateAllColumnsCommand => _activateAllColumnsCommand ??=
+            new Command(ExecuteActivateAllColumns);
+
+        private Command _activateAllColumnsCommand;
+
+        private void ExecuteActivateAllColumns(object parameter)
+        {
+            this.ActivateAllColumns();
         }
 
         #endregion

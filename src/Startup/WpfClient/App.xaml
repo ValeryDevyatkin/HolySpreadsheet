@@ -2,9 +2,10 @@
                       x:TypeArguments = "views:MainWindow, viewModels:MainViewModel"
                       xmlns = "http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x = "http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:base = "clr-namespace:BAJIEPA.Senticode.Wpf.Base;assembly=BAJIEPA.Senticode.Wpf"
+                      xmlns:base = "clr-namespace:BAJIEPA.Senticode.Wpf;assembly=BAJIEPA.Senticode.Wpf"
                       xmlns:views = "clr-namespace:WpfClient.Views"
-                      xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+                      xmlns:viewModels = "clr-namespace:ViewModels.Main;assembly=ViewModels"
+                      xmlns:wpfclient="clr-namespace:WpfClient"
                       x:ClassModifier = "internal">
 
     <Application.Resources>

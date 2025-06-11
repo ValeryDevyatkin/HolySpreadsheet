@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
-using BAJIEPA.Tools.Common.Items;
 using Common.Interfaces;
 using Common.Items;
 using Unity;
 
-namespace ViewModels
+namespace ViewModels.Main
 {
     internal static partial class MainViewModelEx
     {
@@ -20,16 +20,15 @@ namespace ViewModels
             var parameters = viewModel.GetInputProcessParameters();
 
             SpreadsheetInputProcessResult result = null;
+
             await Task.Run(() =>
             {
-                result = container.Resolve<ISpreadsheetProcessor>()
-                                  .ProcessInput(viewModel.InputText, parameters);
+                result = container
+                    .Resolve<ISpreadsheetProcessor>()
+                    .ProcessInput(viewModel.InputText, parameters);
             });
 
-            if (result == null)
-            {
-                throw new ThisShouldNotBeException();
-            }
+            ArgumentNullException.ThrowIfNull(result);
 
             viewModel.GridRowCount = result.RowCount;
             viewModel.GridColumnCount = result.ColumnCount;
@@ -48,15 +47,15 @@ namespace ViewModels
             var gridParsingResult = container.Resolve<IDataGridService>().GetRows();
 
             SpreadsheetOutputProcessResult result = null;
+
             await Task.Run(() =>
             {
-                result = container.Resolve<ISpreadsheetProcessor>().ProcessOutput(gridParsingResult, parameters);
+                result = container
+                    .Resolve<ISpreadsheetProcessor>()
+                    .ProcessOutput(gridParsingResult, parameters);
             });
 
-            if (result == null)
-            {
-                throw new ThisShouldNotBeException();
-            }
+            ArgumentNullException.ThrowIfNull(result);
 
             viewModel.SetOutputProcessResult(result);
         }
@@ -73,15 +72,15 @@ namespace ViewModels
             var gridParsingResult = container.Resolve<IDataGridService>().GetRows();
 
             SpreadsheetOutputProcessResult result = null;
+
             await Task.Run(() =>
             {
-                result = container.Resolve<ISpreadsheetProcessor>().ProcessOutput(gridParsingResult, parameters);
+                result = container
+                    .Resolve<ISpreadsheetProcessor>()
+                    .ProcessOutput(gridParsingResult, parameters);
             });
 
-            if (result == null)
-            {
-                throw new ThisShouldNotBeException();
-            }
+            ArgumentNullException.ThrowIfNull(result);
 
             viewModel.SetOutputProcessResult(result);
         }
@@ -98,16 +97,15 @@ namespace ViewModels
             var gridParsingResult = container.Resolve<IDataGridService>().GetRows();
 
             SpreadsheetOutputProcessResult result = null;
+
             await Task.Run(() =>
             {
-                result = container.Resolve<ISpreadsheetProcessor>()
-                                  .ProcessOutput(gridParsingResult, parameters);
+                result = container
+                    .Resolve<ISpreadsheetProcessor>()
+                    .ProcessOutput(gridParsingResult, parameters);
             });
 
-            if (result == null)
-            {
-                throw new ThisShouldNotBeException();
-            }
+            ArgumentNullException.ThrowIfNull(result);
 
             viewModel.SetOutputProcessResult(result);
         }
@@ -124,15 +122,15 @@ namespace ViewModels
             var gridParsingResult = container.Resolve<IDataGridService>().GetRows();
 
             SpreadsheetOutputProcessResult result = null;
+
             await Task.Run(() =>
             {
-                result = container.Resolve<ISpreadsheetProcessor>().ProcessOutput(gridParsingResult, parameters);
+                result = container
+                    .Resolve<ISpreadsheetProcessor>()
+                    .ProcessOutput(gridParsingResult, parameters);
             });
 
-            if (result == null)
-            {
-                throw new ThisShouldNotBeException();
-            }
+            ArgumentNullException.ThrowIfNull(result);
 
             viewModel.SetOutputProcessResult(result);
         }
@@ -149,15 +147,15 @@ namespace ViewModels
             var gridParsingResult = container.Resolve<IDataGridService>().GetRows();
 
             SpreadsheetOutputProcessResult result = null;
+
             await Task.Run(() =>
             {
-                result = container.Resolve<ISpreadsheetProcessor>().ProcessOutput(gridParsingResult, parameters);
+                result = container
+                    .Resolve<ISpreadsheetProcessor>()
+                    .ProcessOutput(gridParsingResult, parameters);
             });
 
-            if (result == null)
-            {
-                throw new ThisShouldNotBeException();
-            }
+            ArgumentNullException.ThrowIfNull(result);
 
             viewModel.SetOutputProcessResult(result);
         }
@@ -193,13 +191,28 @@ namespace ViewModels
 
             if (string.IsNullOrWhiteSpace(clipboardText))
             {
-                viewModel.Container.Resolve<IMessageDialogService>()
-                         .ShowWarning("Clipboard has no text.", "Copy from Clipboard");
+                viewModel.Container
+                    .Resolve<IMessageDialogService>()
+                    .ShowWarning("Clipboard has no text.", "Copy from Clipboard");
             }
             else
             {
                 viewModel.InputText = clipboardText;
             }
+        }
+
+        public static void DeactivateAllColumns(this MainViewModel viewModel)
+        {
+            viewModel.Container
+                .Resolve<IDataGridService>()
+                .DeactivateAllColumns();
+        }
+
+        public static void ActivateAllColumns(this MainViewModel viewModel)
+        {
+            viewModel.Container
+                .Resolve<IDataGridService>()
+                .ActivateAllColumns();
         }
     }
 }

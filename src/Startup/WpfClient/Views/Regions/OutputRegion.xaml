@@ -6,7 +6,7 @@
              xmlns:theme = "clr-namespace:WpfClient.Theme"
              xmlns:controls = "clr-namespace:WpfClient.Views.Controls"
              xmlns:converters = "clr-namespace:WpfClient.Wpf.Converters"
-             xmlns:viewModels = "clr-namespace:ViewModels;assembly=ViewModels"
+             xmlns:viewModels = "clr-namespace:ViewModels.Main;assembly=ViewModels"
              xmlns:b = "http://schemas.microsoft.com/xaml/behaviors"
              xmlns:behaviors = "clr-namespace:WpfClient.Wpf.Behaviors"
              mc:Ignorable = "d"

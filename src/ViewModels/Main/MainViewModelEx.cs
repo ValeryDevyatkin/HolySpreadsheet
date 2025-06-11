@@ -1,7 +1,7 @@
 ﻿using Common.Enums;
 using Common.Items;
 
-namespace ViewModels
+namespace ViewModels.Main
 {
     internal static partial class MainViewModelEx
     {

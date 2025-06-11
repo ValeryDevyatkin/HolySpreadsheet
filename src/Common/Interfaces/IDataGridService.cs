@@ -7,5 +7,7 @@ namespace Common.Interfaces
         void PopulateRows(SpreadsheetInputProcessResult spreadsheet);
         GridParsingResult GetRows();
         void Clear();
+        public void DeactivateAllColumns();
+        public void ActivateAllColumns();
     }
 }

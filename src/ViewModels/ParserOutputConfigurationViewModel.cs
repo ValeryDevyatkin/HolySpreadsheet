@@ -1,4 +1,4 @@
-﻿using BAJIEPA.Senticode.Wpf.Base;
+﻿using BAJIEPA.Senticode.MVVM;
 using Common.Enums;
 using Unity;
 

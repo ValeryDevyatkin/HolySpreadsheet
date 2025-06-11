@@ -1,7 +1,7 @@
-﻿using System.Windows;
+﻿using BAJIEPA.Senticode.MVVM;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using BAJIEPA.Senticode.Wpf.Base;
 
 namespace WpfClient.Views.Controls
 {
@@ -50,11 +50,13 @@ namespace WpfClient.Views.Controls
 
         private void ExecuteSwitchDeactivated(object parameter)
         {
-            IsDeactivated = !IsDeactivated;
-
             if (IsDeactivated)
             {
-                IsFormattingDeactivated = false;
+                Activate();
+            }
+            else
+            {
+                Deactivate();
             }
         }
 
@@ -73,5 +75,16 @@ namespace WpfClient.Views.Controls
         }
 
         #endregion
+
+        public void Deactivate()
+        {
+            IsDeactivated = true;
+            IsFormattingDeactivated = false;
+        }
+
+        public void Activate()
+        {
+            IsDeactivated = false;
+        }
     }
 }

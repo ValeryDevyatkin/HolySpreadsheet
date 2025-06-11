@@ -21,10 +21,7 @@ namespace WpfClient.Services
 
         public void PopulateRows(SpreadsheetInputProcessResult spreadsheet)
         {
-            if (spreadsheet == null)
-            {
-                throw new ArgumentNullException(nameof(spreadsheet));
-            }
+            ArgumentNullException.ThrowIfNull(spreadsheet);
 
             Clear();
             var dataGrid = _container.Resolve<GridRegion>().DataGrid;
@@ -68,15 +65,15 @@ namespace WpfClient.Services
             var rows = new List<List<string>>();
 
             var activeOrderedColumns = dataGrid.Columns
-                                               .OfType<CustomDataGridTextColumn>()
-                                               .OrderBy(x => x.DisplayIndex)
-                                               .Where(x => !x.IsDeactivated)
-                                               .Select(x => new ColumnInfo
-                                                {
-                                                    Index = int.Parse((string) x.Header) - 1,
-                                                    IsFormattingDisabled = x.IsFormattingDeactivated
-                                                })
-                                               .ToArray();
+                .OfType<CustomDataGridTextColumn>()
+                .OrderBy(x => x.DisplayIndex)
+                .Where(x => !x.IsDeactivated)
+                .Select(x => new ColumnInfo
+                {
+                    Index = int.Parse((string) x.Header) - 1,
+                    IsFormattingDisabled = x.IsFormattingDeactivated
+                })
+                .ToArray();
 
             foreach (var item in dataGrid.Items)
             {
@@ -96,6 +93,33 @@ namespace WpfClient.Services
                 Rows = rows,
                 ColumnInfo = activeOrderedColumns
             };
+        }
+
+        public void ActivateAllColumns()
+        {
+            SwitchDeactivateAllColumns(false);
+        }
+
+        public void DeactivateAllColumns()
+        {
+            SwitchDeactivateAllColumns(true);
+        }
+
+        private void SwitchDeactivateAllColumns(bool shouldDeactivate)
+        {
+            var dataGrid = _container.Resolve<GridRegion>().DataGrid;
+
+            foreach (var item in dataGrid.Columns.OfType<CustomDataGridTextColumn>())
+            {
+                if (shouldDeactivate)
+                {
+                    item.Deactivate();
+                }
+                else
+                {
+                    item.Activate();
+                }
+            }
         }
     }
 }

@@ -5,19 +5,19 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Startup", "Startup", "{1FA9BAA9-DB01-4B08-81EE-A55A35708126}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfClient", "..\..\src\Startup\WpfClient\WpfClient.csproj", "{E6F2C13B-E5D6-4D2B-99B4-F03769E820EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfClient", "..\src\Startup\WpfClient\WpfClient.csproj", "{E6F2C13B-E5D6-4D2B-99B4-F03769E820EA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "..\..\src\Services\Services.csproj", "{3017785C-C191-401E-BF1D-A6DAE157B1AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "..\src\Services\Services.csproj", "{3017785C-C191-401E-BF1D-A6DAE157B1AE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{5913D9D5-C6F2-412D-96D0-10D0240F7181}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BAJIEPA.Senticode.Wpf", "..\..\tools\src\BAJIEPA.Senticode.Wpf\BAJIEPA.Senticode.Wpf.csproj", "{8378D77A-0820-4FFE-8B2C-863C5422C8A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BAJIEPA.Senticode.Wpf", "..\tools\src\BAJIEPA.Senticode.Wpf\BAJIEPA.Senticode.Wpf.csproj", "{8378D77A-0820-4FFE-8B2C-863C5422C8A5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModels", "..\..\src\ViewModels\ViewModels.csproj", "{806D3D7F-F346-4A83-BDFD-00FEEE10CD93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModels", "..\src\ViewModels\ViewModels.csproj", "{806D3D7F-F346-4A83-BDFD-00FEEE10CD93}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\..\src\Common\Common.csproj", "{A6E2AAE7-3729-4F7D-A142-56F9A3511F52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\src\Common\Common.csproj", "{A6E2AAE7-3729-4F7D-A142-56F9A3511F52}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BAJIEPA.Tools.Common", "..\..\tools\src\BAJIEPA.Tools.Common\BAJIEPA.Tools.Common.csproj", "{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BAJIEPA.Tools.Common", "..\tools\src\BAJIEPA.Tools.Common\BAJIEPA.Tools.Common.csproj", "{D5592D4F-DD2E-4506-8FB2-7CA9F3A90A1C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
